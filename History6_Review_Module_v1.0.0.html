@@ -801,9 +801,9 @@
   .modal-card .pq-progress { font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; font-style: italic; }
   .modal-card .pq-q { font-size: 17px; line-height: 1.4; color: var(--ink); margin-bottom: 16px; font-family: 'Fraunces', serif; font-weight: 600; }
   .modal-card .pq-options { display: flex; flex-direction: column; gap: 8px; }
-  .pq-option { background: white; border: 2px solid var(--bg-deep); padding: 12px 14px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14.5px; color: var(--ink); transition: all 0.2s; display: flex; align-items: center; gap: 10px; min-height: 48px; }
+  .pq-option { background: var(--cream); border: 2px solid var(--bg-deep); padding: 12px 14px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 14.5px; color: var(--ink); transition: all 0.2s; display: flex; align-items: center; gap: 10px; min-height: 48px; }
   .pq-option:hover:not(:disabled) { border-color: var(--leaf-bright); }
-  .pq-option .letter { width: 26px; height: 26px; border-radius: 50%; background: var(--bg-deep); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+  .pq-option .letter { width: 26px; height: 26px; border-radius: 50%; background: var(--bg-deep); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
   .pq-option.correct { border-color: var(--leaf-bright); background: rgba(74,138,79,0.15); animation: pop 0.4s; }
   .pq-option.correct .letter { background: var(--leaf-bright); color: white; }
   .pq-option.wrong { border-color: var(--berry); background: rgba(184,67,31,0.08); }
@@ -938,6 +938,61 @@
   .quiz-feedback.wrong { background: rgba(184,67,31,0.1); color: #6b2a14; border-left: 3px solid var(--berry); }
   .quiz-feedback strong { display: block; margin-bottom: 3px; font-family: 'Fraunces', serif; font-size: 14.5px; }
 
+  html[data-theme="dark"] .pq-feedback.right,
+  html[data-theme="dark"] .pq-feedback.try,
+  html[data-theme="dark"] .quiz-feedback.right,
+  html[data-theme="dark"] .quiz-feedback.wrong,
+  html[data-theme="galaxy"] .pq-feedback.right,
+  html[data-theme="galaxy"] .pq-feedback.try,
+  html[data-theme="galaxy"] .quiz-feedback.right,
+  html[data-theme="galaxy"] .quiz-feedback.wrong,
+  html[data-theme="bladeball"] .pq-feedback.right,
+  html[data-theme="bladeball"] .pq-feedback.try,
+  html[data-theme="bladeball"] .quiz-feedback.right,
+  html[data-theme="bladeball"] .quiz-feedback.wrong,
+  html[data-theme="moto"] .pq-feedback.right,
+  html[data-theme="moto"] .pq-feedback.try,
+  html[data-theme="moto"] .quiz-feedback.right,
+  html[data-theme="moto"] .quiz-feedback.wrong,
+  html[data-theme="blackpink"] .pq-feedback.right,
+  html[data-theme="blackpink"] .pq-feedback.try,
+  html[data-theme="blackpink"] .quiz-feedback.right,
+  html[data-theme="blackpink"] .quiz-feedback.wrong,
+  html[data-theme="nirvana"] .pq-feedback.right,
+  html[data-theme="nirvana"] .pq-feedback.try,
+  html[data-theme="nirvana"] .quiz-feedback.right,
+  html[data-theme="nirvana"] .quiz-feedback.wrong { color: var(--ink); }
+  html[data-theme="dark"] .study-tip strong,
+  html[data-theme="dark"] .time-pill,
+  html[data-theme="dark"] .streak-display,
+  html[data-theme="dark"] .biome-mnemonic strong,
+  html[data-theme="galaxy"] .study-tip strong,
+  html[data-theme="galaxy"] .time-pill,
+  html[data-theme="galaxy"] .streak-display,
+  html[data-theme="galaxy"] .biome-mnemonic strong,
+  html[data-theme="bladeball"] .study-tip strong,
+  html[data-theme="bladeball"] .time-pill,
+  html[data-theme="bladeball"] .streak-display,
+  html[data-theme="bladeball"] .biome-mnemonic strong,
+  html[data-theme="moto"] .study-tip strong,
+  html[data-theme="moto"] .time-pill,
+  html[data-theme="moto"] .streak-display,
+  html[data-theme="moto"] .biome-mnemonic strong,
+  html[data-theme="blackpink"] .study-tip strong,
+  html[data-theme="blackpink"] .time-pill,
+  html[data-theme="blackpink"] .streak-display,
+  html[data-theme="blackpink"] .biome-mnemonic strong,
+  html[data-theme="nirvana"] .study-tip strong,
+  html[data-theme="nirvana"] .time-pill,
+  html[data-theme="nirvana"] .streak-display,
+  html[data-theme="nirvana"] .biome-mnemonic strong { color: var(--sun); }
+
+  .exam-misses { text-align: left; margin: 4px auto 16px; max-width: 520px; max-height: 46vh; overflow: auto; }
+  .exam-misses h4 { font-family: 'Fraunces', serif; color: var(--ink); font-size: 18px; margin: 0 0 8px; text-align: left; }
+  .exam-miss { background: var(--bg); color: var(--ink); border-radius: 12px; padding: 12px 14px; margin: 8px 0; }
+  .exam-miss p { color: var(--ink); margin: 0 0 4px; max-width: none; text-align: left; font-size: 14px; line-height: 1.45; }
+  .exam-miss .why { color: var(--ink-soft); }
+
   .quiz-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 18px; align-items: center; flex-wrap: wrap; }
 
   /* RESULTS / REPORT CARD */
@@ -947,6 +1002,9 @@
   .quiz-results .score-total { font-size: 13px; opacity: 0.85; margin-top: 4px; }
   .quiz-results h3 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--leaf); margin-bottom: 8px; }
   .quiz-results p { color: var(--ink-soft); margin-bottom: 18px; max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.5; font-size: 14px; }
+  .quiz-results .exam-miss p { color: var(--ink); margin: 0 0 4px; max-width: none; text-align: left; }
+  .quiz-results .exam-miss .why { color: var(--ink-soft); }
+  .quiz-feedback p { margin: 6px 0 0; }
 
   /* REPORT CARD */
   .report-card { background: var(--cream); border-radius: 22px; padding: 28px; box-shadow: 0 4px 20px var(--shadow); max-width: 700px; margin: 0 auto 20px; }
@@ -4763,6 +4821,8 @@ function renderExamQuestion() {
       const val = (document.getElementById('examFill').value || '').trim();
       const accept = (q.accept || [q.ans]).map(x => String(x).toLowerCase());
       const ok = accept.indexOf(val.toLowerCase()) >= 0;
+      q._pickedText = val || '(blank)';
+      q._correctText = typeof q.ans === 'string' ? q.ans : String((q.accept && q.accept[0]) || q.ans);
       q.opts = [val || '(blank)', '(other)'];
       q.ans = 0;
       answerExam(ok ? 0 : 1, document.getElementById('examFillGo'));
@@ -4793,25 +4853,32 @@ function renderExamQuestion() {
   });
 }
 
+function escExam(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function answerExam(picked, btn) {
   const q = exam.questions[exam.idx];
   const correct = picked === q.ans;
-  exam.answers.push({ idx: exam.idx, picked, correct, topic: q.topic });
+  const pickedText = q._pickedText != null ? q._pickedText : ((q.opts && q.opts[picked] != null) ? q.opts[picked] : '');
+  const correctText = q._correctText != null ? q._correctText : ((q.opts && q.opts[q.ans] != null) ? q.opts[q.ans] : String(q.ans));
+  exam.answers.push({ idx: exam.idx, picked, correct, topic: q.topic, q: q.q, pickedText, correctText, why: q.why || '' });
   document.querySelectorAll('.quiz-option').forEach((b, i) => {
     b.disabled = true;
     if (i === q.ans) b.classList.add('correct');
     else if (i === picked && !correct) b.classList.add('wrong');
   });
   const fb = document.getElementById('examFb');
+  const whyHtml = q.why ? `<span class="why">${escExam(q.why)}</span>` : '';
   if (correct) {
     exam.score++;
     fb.className = 'quiz-feedback right show';
-    fb.innerHTML = `<strong>${ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]}</strong>${q.why}`;
+    fb.innerHTML = `<strong>${ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]}</strong><p>Answer: ${escExam(correctText)}.</p>${whyHtml ? `<p class="why">${escExam(q.why)}</p>` : ''}`;
   } else {
     if (!exam.missedTopics[q.topic]) exam.missedTopics[q.topic] = 0;
     exam.missedTopics[q.topic]++;
     fb.className = 'quiz-feedback wrong show';
-    fb.innerHTML = `<strong>Not quite — but you've got this</strong>${q.why}`;
+    fb.innerHTML = `<strong>Not quite — but you've got this</strong><p>You picked: ${escExam(pickedText)}.</p><p>Correct answer: ${escExam(correctText)}.</p>${whyHtml ? `<p class="why">${escExam(q.why)}</p>` : ''}`;
   }
   document.getElementById('examNext').disabled = false;
   document.getElementById('examNext').textContent = exam.idx === exam.questions.length - 1 ? 'See Results →' : 'Next →';
@@ -4851,7 +4918,10 @@ function finishExam(timedOut) {
   const min = Math.floor(elapsed / 60); const sec = elapsed % 60;
   const verdict = pct >= 90 ? '🏆 Outstanding!' : pct >= 80 ? '⭐ Great work!' : pct >= 70 ? '💚 Solid effort' : pct >= 60 ? '🌱 Keep practicing' : '🌿 More review needed';
   const verdictColor = pct >= 80 ? 'var(--leaf)' : pct >= 60 ? 'var(--sun)' : 'var(--berry)';
+  const misses = (exam.answers || []).filter(a => !a.correct);
+  const missHtml = misses.length ? `<div class="exam-misses"><h4>Wrong answers</h4>${misses.map(a => `<article class="exam-miss"><p>${escExam(a.q)}</p><p>You picked: ${escExam(a.pickedText)}</p><p>Correct answer: ${escExam(a.correctText)}</p>${a.why ? `<p class="why">${escExam(a.why)}</p>` : ''}</article>`).join('')}</div>` : '';
 
+  refreshAllUI();
   document.getElementById('examActive').innerHTML = `
     <div class="quiz-shell">
       <div class="quiz-results">
@@ -4864,6 +4934,7 @@ function finishExam(timedOut) {
         Time: ${min}:${sec.toString().padStart(2,'0')} ${timedOut ? '(timed out)' : ''}<br>
         XP earned: <strong>+${xpEarned}</strong></p>
         ${record.missedTopics.length > 0 ? `<p><strong>Topics to review:</strong> ${record.missedTopics.join(', ')}</p>` : ''}
+        ${missHtml}
         <div style="margin-top:16px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
           <button class="ctrl-btn primary" id="viewReport">📊 View Report Card</button>
           <button class="ctrl-btn" id="examAgain">↻ Retake Exam ${exam.examNum}</button>
@@ -4877,7 +4948,6 @@ function finishExam(timedOut) {
   document.getElementById('examAgain').addEventListener('click', () => startExam(exam.examNum));
   document.getElementById('otherExam').addEventListener('click', () => startExam(exam.examNum === 1 ? 2 : 1));
   exam = null;
-  refreshAllUI();
 }
 
 // ============================================================
