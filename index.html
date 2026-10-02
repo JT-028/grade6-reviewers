@@ -13,6 +13,7 @@
     --ink: #1f2a1c;
     --ink-soft: #4a5544;
     --leaf: #2e5d3a;
+    --leaf-bright: #4a8a4f;
     --cream: #faf6ec;
     --shadow: rgba(31, 42, 28, 0.12);
   }
@@ -51,12 +52,45 @@
     font-size: 1.05rem;
     line-height: 1.5;
   }
+  .quarter-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin: 1.5rem 0 1rem;
+    padding: 5px;
+    background: var(--cream);
+    border-radius: 100px;
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+  .quarter-tabs [role="tab"] {
+    min-height: 44px;
+    border: 0;
+    border-radius: 100px;
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .quarter-tabs [role="tab"]:hover {
+    color: var(--leaf);
+  }
+  .quarter-tabs [role="tab"][aria-selected="true"] {
+    background: var(--leaf);
+    color: var(--cream);
+    box-shadow: 0 2px 8px rgba(46, 93, 58, 0.3);
+  }
+  .quarter-tabs [role="tab"]:focus-visible {
+    outline: 3px solid var(--leaf-bright);
+    outline-offset: 2px;
+  }
+  .panel[hidden] { display: none; }
   nav {
     display: grid;
     gap: 0.75rem;
-    margin-top: 1.75rem;
   }
-  a {
+  nav a {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -69,8 +103,8 @@
     text-decoration: none;
     box-shadow: 0 8px 24px var(--shadow);
   }
-  a:hover { background: #fff; }
-  a:focus-visible {
+  nav a:hover { background: #fff; }
+  nav a:focus-visible {
     outline: 3px solid var(--leaf);
     outline-offset: 3px;
   }
@@ -90,45 +124,102 @@
 <main>
   <p class="eyebrow">Grade 6 · Mercury</p>
   <h1>Study guides</h1>
-  <p class="lead">Tap a subject. It opens in this browser.</p>
-  <p class="eyebrow" style="margin-top:1.75rem">Quarter 2</p>
-  <nav aria-label="Quarter 2 subjects">
-    <a href="History6_Q2_Review_Module_v1.0.0.html">
-      <span class="subject">History</span>
-      <span class="meta">Open</span>
-    </a>
-    <a href="Math6_Q2_Review_Module_v1.0.0.html">
-      <span class="subject">Math</span>
-      <span class="meta">Open</span>
-    </a>
-    <a href="Geography6_Q2_Review_Module_v1.0.0.html">
-      <span class="subject">Geography</span>
-      <span class="meta">Open</span>
-    </a>
-    <a href="Language6_Q2_Review_Module_v1.0.0.html">
-      <span class="subject">Language</span>
-      <span class="meta">Open</span>
-    </a>
-  </nav>
-  <p class="eyebrow" style="margin-top:1.75rem">Quarter 1</p>
-  <nav aria-label="Quarter 1 subjects">
-    <a href="History6_Review_Module_v1.0.0.html">
-      <span class="subject">History</span>
-      <span class="meta">Open</span>
-    </a>
-    <a href="Math6_Review_Module_v1.0.0.html">
-      <span class="subject">Math</span>
-      <span class="meta">Open</span>
-    </a>
-    <a href="Geography6_Review_Module_v1.0.0.html">
-      <span class="subject">Geography</span>
-      <span class="meta">Open</span>
-    </a>
-    <a href="Language6_Review_Module_v1.0.0.html">
-      <span class="subject">Language</span>
-      <span class="meta">Open</span>
-    </a>
-  </nav>
+  <p class="lead">Pick a quarter, then a subject. Each guide opens in this browser.</p>
+
+  <div class="quarter-tabs" role="tablist" aria-label="Quarter">
+    <button type="button" role="tab" id="tab-q2" aria-controls="panel-q2" aria-selected="true">Quarter 2</button>
+    <button type="button" role="tab" id="tab-q1" aria-controls="panel-q1" aria-selected="false" tabindex="-1">Quarter 1</button>
+  </div>
+
+  <div class="panel" id="panel-q2" role="tabpanel" aria-labelledby="tab-q2">
+    <nav aria-label="Quarter 2 subjects">
+      <a href="History6_Q2_Review_Module_v1.0.0.html">
+        <span class="subject">History</span>
+        <span class="meta">Open</span>
+      </a>
+      <a href="Math6_Q2_Review_Module_v1.0.0.html">
+        <span class="subject">Math</span>
+        <span class="meta">Open</span>
+      </a>
+      <a href="Geography6_Q2_Review_Module_v1.0.0.html">
+        <span class="subject">Geography</span>
+        <span class="meta">Open</span>
+      </a>
+      <a href="Language6_Q2_Review_Module_v1.0.0.html">
+        <span class="subject">Language</span>
+        <span class="meta">Open</span>
+      </a>
+    </nav>
+  </div>
+
+  <div class="panel" id="panel-q1" role="tabpanel" aria-labelledby="tab-q1" hidden>
+    <nav aria-label="Quarter 1 subjects">
+      <a href="History6_Review_Module_v1.0.0.html">
+        <span class="subject">History</span>
+        <span class="meta">Open</span>
+      </a>
+      <a href="Math6_Review_Module_v1.0.0.html">
+        <span class="subject">Math</span>
+        <span class="meta">Open</span>
+      </a>
+      <a href="Geography6_Review_Module_v1.0.0.html">
+        <span class="subject">Geography</span>
+        <span class="meta">Open</span>
+      </a>
+      <a href="Language6_Review_Module_v1.0.0.html">
+        <span class="subject">Language</span>
+        <span class="meta">Open</span>
+      </a>
+    </nav>
+  </div>
 </main>
+<script>
+(function () {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var panels = {
+    q2: document.getElementById("panel-q2"),
+    q1: document.getElementById("panel-q1")
+  };
+
+  function quarterFromHash() {
+    return location.hash === "#q1" ? "q1" : "q2";
+  }
+
+  function show(id, updateHash) {
+    tabs.forEach(function (tab) {
+      var on = tab.id === "tab-" + id;
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+      tab.tabIndex = on ? 0 : -1;
+    });
+    Object.keys(panels).forEach(function (key) {
+      panels[key].hidden = key !== id;
+    });
+    if (updateHash) {
+      history.replaceState(null, "", "#" + id);
+    }
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      show(tab.id === "tab-q1" ? "q1" : "q2", true);
+    });
+    tab.addEventListener("keydown", function (event) {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      var i = tabs.indexOf(tab);
+      var next = event.key === "ArrowRight"
+        ? tabs[(i + 1) % tabs.length]
+        : tabs[(i - 1 + tabs.length) % tabs.length];
+      next.focus();
+      next.click();
+    });
+  });
+
+  show(quarterFromHash(), false);
+  window.addEventListener("hashchange", function () {
+    show(quarterFromHash(), false);
+  });
+})();
+</script>
 </body>
 </html>

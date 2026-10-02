@@ -544,6 +544,42 @@
 
   /* HEADER */
   header { text-align: center; padding: 20px 8px 22px; }
+  .hub-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 8px 14px;
+    border-radius: 100px;
+    background: var(--cream);
+    color: var(--leaf);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .hub-back:hover { filter: brightness(1.06); }
+  .hub-back:focus-visible {
+    outline: 3px solid var(--leaf-bright);
+    outline-offset: 2px;
+  }
+  .hub-back-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 130;
+    display: flex;
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 8px 0 6px;
+    background: var(--bg);
+  }
+  .hub-back-welcome {
+    position: absolute;
+    top: max(12px, env(safe-area-inset-top));
+    left: max(12px, env(safe-area-inset-left));
+    z-index: 1001;
+  }
+
   .eyebrow { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px; }
   h1.main-title { font-family: 'Fraunces', serif; font-weight: 800; font-size: clamp(32px, 7vw, 56px); line-height: 0.95; letter-spacing: -0.02em; color: var(--leaf); }
   h1.main-title em { font-style: italic; color: var(--berry); font-weight: 400; }
@@ -555,7 +591,7 @@
   .leaf-divider span { width: 36px; height: 1px; background: var(--ink-soft); }
 
   /* TABS */
-  nav.tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin: 0 0 24px; padding: 5px; background: var(--cream); border-radius: 100px; box-shadow: 0 2px 12px var(--shadow); position: sticky; top: 8px; z-index: 100; }
+  nav.tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin: 0 0 24px; padding: 5px; background: var(--cream); border-radius: 100px; box-shadow: 0 2px 12px var(--shadow); position: sticky; top: 60px; z-index: 100; }
   .tab-btn { background: transparent; border: none; padding: 9px 14px; font-weight: 500; font-size: 13px; color: var(--ink-soft); cursor: pointer; border-radius: 100px; transition: all 0.25s; white-space: nowrap; position: relative; }
   .tab-btn:hover:not(.locked) { color: var(--leaf); }
   .tab-btn.active { background: var(--leaf); color: var(--cream); box-shadow: 0 2px 8px rgba(46,93,58,0.3); }
@@ -858,7 +894,7 @@
     body { background: #fff !important; color: #000 !important; }
     body::before, body::after { display: none !important; }
     /* Hide everything except the cheat sheet content */
-    header, .settings-bar, .tabs, .greeting-box, .home-grid, .progress-summary,
+    header, .hub-back, .settings-bar, .tabs, .greeting-box, .home-grid, .progress-summary,
     .study-rules, .popquiz-trigger, .audio-player, .speech-group, .break-toast,
     .modal-overlay, .welcome-overlay, .who-tag, .toast, footer, #rankCardWrap,
     .print-cheat-row, .leaf-divider, .time-pill {
@@ -1075,6 +1111,8 @@
 
 <!-- WELCOME OVERLAY -->
 <div class="welcome-overlay" id="welcomeOverlay">
+  <a class="hub-back hub-back-welcome" href="index.html#q1">← All subjects</a>
+
   <div class="welcome-card">
     <span class="leaf-icon">⚡</span>
     <div class="eyebrow">OB Montessori · Language 6 · Q1 · v1.0.0</div>
@@ -1094,6 +1132,8 @@
 </div>
 
 <div class="app">
+  <a class="hub-back hub-back-sticky" href="index.html#q1">← All subjects</a>
+
   <header>
     <div class="eyebrow">OB Montessori · Language 6 · Quarter 1 · v1.0.0</div>
     <h1 class="main-title">Words &amp; <em>Myths</em></h1>
