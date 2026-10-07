@@ -1310,7 +1310,10 @@
     </div>
     <div class="voice-picker">
       <label for="voiceSelect">🔊 Voice:</label>
-      <select id="voiceSelect"><option value="">Loading voices...</option></select>
+      <select id="voiceSelect" aria-label="Voice: off for no talking or highlights">
+        <option value="off">Off — no talking or highlights</option>
+        <option value="">Loading voices...</option>
+      </select>
     </div>
     <div class="highlight-picker" title="Highlight the word being spoken">
       <label for="highlightToggle">🖍️ Highlight:</label>
@@ -1419,55 +1422,47 @@
   <section class="tab-content" id="biomes">
     <h2 class="section-title">Concepts <span class="time-pill">⏱ ~10 min</span></h2>
     <p class="section-intro">The full Q2 toolkit: PMDAS, fractions, decimals, algebra, and volume. Tap any card.</p>
-    <div class="earth-cutaway">
-      <h3>Tap the number line</h3>
-      <p class="hint">Numbers get bigger as you move right. Zero is neither positive nor negative. Negatives live on the left.</p>
-      <svg viewBox="0 0 340 90" role="img" aria-label="Number line" style="width:100%;max-width:420px;display:block;margin:0 auto;">
-        <line x1="20" y1="45" x2="320" y2="45" stroke="#1f2a1c" stroke-width="3"/>
-        <polygon points="320,45 308,38 308,52" fill="#1f2a1c"/>
-        <g class="nl-tick" data-n="-8" id="tap-crust" style="cursor:pointer"><line x1="20.0" y1="36" x2="20.0" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="20.0" y="78" text-anchor="middle" font-size="11">-8</text></g>
-        <g class="nl-tick" data-n="-7" id="tick-7" style="cursor:pointer"><line x1="38.8" y1="36" x2="38.8" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="38.8" y="78" text-anchor="middle" font-size="11">-7</text></g>
-        <g class="nl-tick" data-n="-6" id="tick-6" style="cursor:pointer"><line x1="57.5" y1="36" x2="57.5" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="57.5" y="78" text-anchor="middle" font-size="11">-6</text></g>
-        <g class="nl-tick" data-n="-5" id="tap-inner" style="cursor:pointer"><line x1="76.2" y1="36" x2="76.2" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="76.2" y="78" text-anchor="middle" font-size="11">-5</text></g>
-        <g class="nl-tick" data-n="-4" id="tick-4" style="cursor:pointer"><line x1="95.0" y1="36" x2="95.0" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="95.0" y="78" text-anchor="middle" font-size="11">-4</text></g>
-        <g class="nl-tick" data-n="-3" id="tick-3" style="cursor:pointer"><line x1="113.8" y1="36" x2="113.8" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="113.8" y="78" text-anchor="middle" font-size="11">-3</text></g>
-        <g class="nl-tick" data-n="-2" id="tick-2" style="cursor:pointer"><line x1="132.5" y1="36" x2="132.5" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="132.5" y="78" text-anchor="middle" font-size="11">-2</text></g>
-        <g class="nl-tick" data-n="-1" id="tick-1" style="cursor:pointer"><line x1="151.2" y1="36" x2="151.2" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="151.2" y="78" text-anchor="middle" font-size="11">-1</text></g>
-        <g class="nl-tick" data-n="0" id="tap-mantle" style="cursor:pointer"><line x1="170.0" y1="36" x2="170.0" y2="54" stroke="#1f2a1c" stroke-width="4"/><text x="170.0" y="78" text-anchor="middle" font-size="11">0</text></g>
-        <g class="nl-tick" data-n="1" id="tick1" style="cursor:pointer"><line x1="188.8" y1="36" x2="188.8" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="188.8" y="78" text-anchor="middle" font-size="11">1</text></g>
-        <g class="nl-tick" data-n="2" id="tick2" style="cursor:pointer"><line x1="207.5" y1="36" x2="207.5" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="207.5" y="78" text-anchor="middle" font-size="11">2</text></g>
-        <g class="nl-tick" data-n="3" id="tick3" style="cursor:pointer"><line x1="226.2" y1="36" x2="226.2" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="226.2" y="78" text-anchor="middle" font-size="11">3</text></g>
-        <g class="nl-tick" data-n="4" id="tick4" style="cursor:pointer"><line x1="245.0" y1="36" x2="245.0" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="245.0" y="78" text-anchor="middle" font-size="11">4</text></g>
-        <g class="nl-tick" data-n="5" id="tap-culture" style="cursor:pointer"><line x1="263.8" y1="36" x2="263.8" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="263.8" y="78" text-anchor="middle" font-size="11">5</text></g>
-        <g class="nl-tick" data-n="6" id="tick6" style="cursor:pointer"><line x1="282.5" y1="36" x2="282.5" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="282.5" y="78" text-anchor="middle" font-size="11">6</text></g>
-        <g class="nl-tick" data-n="7" id="tick7" style="cursor:pointer"><line x1="301.2" y1="36" x2="301.2" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="301.2" y="78" text-anchor="middle" font-size="11">7</text></g>
-        <g class="nl-tick" data-n="8" id="tap-outer" style="cursor:pointer"><line x1="320.0" y1="36" x2="320.0" y2="54" stroke="#1f2a1c" stroke-width="2"/><text x="320.0" y="78" text-anchor="middle" font-size="11">8</text></g>
+                    <div class="earth-cutaway">
+      <h3>Tap the GEMDAS ladder</h3>
+      <p class="hint">Grouping innermost first. Then exponents. Then × and ÷ left to right. Then + and − left to right. Volume is prism vs pyramid.</p>
+      <svg viewBox="0 0 340 200" role="img" aria-label="GEMDAS ladder" style="width:100%;max-width:420px;display:block;margin:0 auto;">
+        <rect width="340" height="200" fill="#faf6ec"/>
+        <g id="tap-crust" style="cursor:pointer"><rect x="20" y="16" width="300" height="28" rx="8" fill="#c4a484"/><text x="170" y="35" text-anchor="middle" font-size="13">G · grouping { [ ( ) ] }</text></g>
+        <g id="tap-mantle" style="cursor:pointer"><rect x="40" y="52" width="260" height="28" rx="8" fill="#e8a838"/><text x="170" y="71" text-anchor="middle" font-size="13">E · exponents</text></g>
+        <g id="tap-outer" style="cursor:pointer"><rect x="60" y="88" width="220" height="28" rx="8" fill="#6b8e23"/><text x="170" y="107" text-anchor="middle" font-size="12" fill="#fff">MD · × ÷ left to right</text></g>
+        <g id="tap-inner" style="cursor:pointer"><rect x="80" y="124" width="180" height="28" rx="8" fill="#1e6f8a"/><text x="170" y="143" text-anchor="middle" font-size="12" fill="#fff">AS · + − left to right</text></g>
+        <g id="tap-culture" style="cursor:pointer"><rect x="50" y="164" width="240" height="28" rx="8" fill="#7eb6c4"/><text x="170" y="183" text-anchor="middle" font-size="12">Volume · prism vs pyramid</text></g>
       </svg>
-      <p id="earthTapNote" style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink);">Tap a tick. Right of 0 is positive. Left of 0 is negative.</p>
+      <p id="earthTapNote" style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink);">Tap a rung. Keep-change-flip lives with fractions after the ladder.</p>
     </div>
-    <div class="biome-grid" id="biomeGrid"></div>
+<div class="biome-grid" id="biomeGrid"></div>
     <div class="popquiz-trigger" id="trigger-biomes">
       <h3>Ready for the Concepts Pop Quiz?</h3>
-      <p>20 questions · ⏱ 6 min · lock in signs, operations, exponents, and SA.</p>
+      <p>20 questions · ⏱ 6 min · lock in PMDAS, fractions, algebra, and volume.</p>
     </div>
   </section>
 
   <!-- STEP-BY-STEP SOLVER -->
   <section class="tab-content" id="diagrams">
     <h2 class="section-title">Step-by-Step Solver 🧮 <span class="time-pill">⏱ ~12 min</span></h2>
-    <p class="section-intro">Four walkthroughs for the mix-ups: real-world signs, mixed-sign subtraction (the 9-A hole), multiply/divide signs, and scientific notation.</p>
+    <p class="section-intro">Four walkthroughs: GEMDAS first step, keep-change-flip fractions, polynomials, and volume.</p>
 
-    <div class="solver-block" id="solverA">
+                    <div class="solver-block" id="solverA">
       <div class="solver-header">
-        <h3>➕ Solver A - Integers in the Real World</h3>
-        <p class="solver-sub">Up, above, deposit, profit, east, north = <strong>positive</strong>. Down, below, withdrawal, debt, west, south = <strong>negative</strong>. Zero is neither.</p>
+        <h3>➕ Solver A - GEMDAS First Step</h3>
+        <p class="solver-sub"><strong>G</strong>rouping innermost first. <strong>E</strong>xponents. <strong>MD</strong> multiply and divide left to right. <strong>AS</strong> add and subtract left to right. Do not do all multiplication before all division.</p>
       </div>
       <div class="solver-pad">
-        <div class="solver-row"><label>Pick a situation: <select class="solver-op wide" id="solA-sample"></select></label></div>
+        <div class="solver-row"><label>Pick an expression: <select class="solver-op wide" id="solA-sample"></select></label></div>
         <div class="scenario-box" id="solA-scenario"></div>
         <div class="var-grid">
-          <label>Sign you think it is
-            <select class="solver-op wide" id="solA-iv"><option>positive</option><option>negative</option><option>zero</option></select>
+          <label>First step you think it is
+            <select class="solver-op wide" id="solA-iv">
+              <option>parentheses</option>
+              <option>exponents</option>
+              <option>multiply-divide LTR</option>
+              <option>add-subtract LTR</option>
+            </select>
           </label>
         </div>
         <div class="solver-controls">
@@ -1481,14 +1476,19 @@
 
     <div class="solver-block" id="solverB">
       <div class="solver-header">
-        <h3>➖ Solver B - Add / Subtract Integers</h3>
-        <p class="solver-sub">Like signs: add the sizes, keep the sign. Unlike signs: subtract the sizes, keep the sign of the bigger size. Subtraction means <strong>add the opposite</strong>. This is Practice Set 9-A.</p>
+        <h3>➗ Solver B - Keep-Change-Flip Fractions</h3>
+        <p class="solver-sub">Keep the first fraction, change ÷ to ×, flip the second (multiply by the reciprocal). Whole 8 has reciprocal 1/8, not 8. Type 1/2 or mixed 1 1/2.</p>
       </div>
       <div class="solver-pad">
         <div class="solver-row">
-          <input class="solver-num" id="solB-a" value="-12" aria-label="first integer">
-          <select class="solver-op" id="solB-op"><option value="+">+</option><option value="-">−</option></select>
-          <input class="solver-num" id="solB-b" value="-13" aria-label="second integer">
+          <input class="solver-num" id="solB-a" value="1/2" aria-label="first number">
+          <select class="solver-op" id="solB-op">
+            <option value="+">+</option>
+            <option value="-">−</option>
+            <option value="*">×</option>
+            <option value="/" selected>÷</option>
+          </select>
+          <input class="solver-num" id="solB-b" value="8/4" aria-label="second number">
         </div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solB-start" type="button">Walk me through it →</button>
@@ -1501,14 +1501,16 @@
 
     <div class="solver-block" id="solverC">
       <div class="solver-header">
-        <h3>✖️ Solver C - Multiply / Divide Integers</h3>
-        <p class="solver-sub">Same signs → positive product or quotient. Different signs → negative. This is the 12-B "answer at home" skill.</p>
+        <h3>🔣 Solver C - Polynomial Classifier</h3>
+        <p class="solver-sub">Count terms for monomial, binomial, trinomial. Not a polynomial if a variable is in a denominator, as an exponent, with a negative exponent, or inside a radical. √225 is the constant 15 — a monomial.</p>
       </div>
       <div class="solver-pad">
-        <div class="solver-row">
-          <input class="solver-num" id="solC-a" value="-6" aria-label="first integer">
-          <select class="solver-op" id="solC-op"><option value="*">×</option><option value="/">÷</option></select>
-          <input class="solver-num" id="solC-b" value="8" aria-label="second integer">
+        <div class="scenario-box" id="solC-clue"></div>
+        <div class="boundary-grid">
+          <button type="button" class="boundary-card" data-b="monomial" id="solC-div"><div class="b-name">Monomial</div><p style="font-size:12px;margin-top:6px;">one term · 30xy³z⁵</p></button>
+          <button type="button" class="boundary-card" data-b="binomial" id="solC-con"><div class="b-name">Binomial</div><p style="font-size:12px;margin-top:6px;">two terms · 2x + 3</p></button>
+          <button type="button" class="boundary-card" data-b="trinomial" id="solC-tr"><div class="b-name">Trinomial</div><p style="font-size:12px;margin-top:6px;">three terms · x² + 2x + 1</p></button>
+          <button type="button" class="boundary-card" data-b="not" id="solC-fl"><div class="b-name">Not a polynomial</div><p style="font-size:12px;margin-top:6px;">1/x + 2 · √x</p></button>
         </div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solC-start" type="button">Walk me through it →</button>
@@ -1521,26 +1523,28 @@
 
     <div class="solver-block" id="solverD">
       <div class="solver-header">
-        <h3>🔬 Solver D - Powers &amp; Scientific Notation</h3>
-        <p class="solver-sub">a<sup>n</sup> means a multiplied by itself n times, not added. a<sup>0</sup> = 1 (a ≠ 0). a<sup>−n</sup> = 1/a<sup>n</sup>. Scientific notation is a number 1 ≤ N &lt; 10 times a power of 10.</p>
+        <h3>📦 Solver D - Volume (Prism vs Pyramid)</h3>
+        <p class="solver-sub">Rectangular prism V = lwh (Yellow Material). Triangular prism V = bhH / 2. Pyramid V = lwh / 3 (Hollow Material square pyramid s²h / 3). π = 3.14. Trap: triangular pyramid /6, not /2.</p>
       </div>
       <div class="solver-pad">
         <div class="solver-row">
-          <label>Mode
+          <label>Solid
             <select class="solver-op wide" id="solD-mode">
-              <option value="pow">Evaluate a power</option>
-              <option value="sci">Standard → scientific</option>
-              <option value="std">Scientific → standard</option>
+              <option value="pow">Rectangular prism (lwh)</option>
+              <option value="sci">Triangular prism (bhH / 2)</option>
+              <option value="std">Pyramid (lwh / 3)</option>
             </select>
           </label>
         </div>
         <div class="solver-row" id="solD-powRow">
-          <input class="solver-num" id="solD-base" value="10" aria-label="base">
-          <span class="solver-unit">to the power</span>
-          <input class="solver-num" id="solD-exp" value="3" aria-label="exponent">
+          <span class="solver-unit" id="solD-lab1">length</span>
+          <input class="solver-num" id="solD-base" value="10" aria-label="first dimension">
+          <span class="solver-unit" id="solD-lab2">width</span>
+          <input class="solver-num" id="solD-exp" value="5" aria-label="second dimension">
         </div>
-        <div class="solver-row" id="solD-sciRow" style="display:none">
-          <label>Standard number <input class="solver-num wide" id="solD-std" value="4600"></label>
+        <div class="solver-row" id="solD-sciRow">
+          <span class="solver-unit" id="solD-lab3">height</span>
+          <input class="solver-num wide" id="solD-std" value="4" aria-label="third dimension">
         </div>
         <div class="solver-row" id="solD-fromRow" style="display:none">
           <label>N <input class="solver-num" id="solD-n" value="4.6"></label>
@@ -1558,11 +1562,10 @@
 
     <div class="popquiz-trigger" id="trigger-diagrams">
       <h3>Ready for the Step-by-Step Solver Pop Quiz?</h3>
-      <p>20 questions · ⏱ 6 min · add, subtract, multiply, divide, powers.</p>
+      <p>20 questions · ⏱ 6 min · GEMDAS, fractions, polynomials, and volume.</p>
     </div>
   </section>
-
-  <!-- TUTOR -->
+<!-- TUTOR -->
   <section class="tab-content" id="tutor">
     <h2 class="section-title">Tutor Mode 🦉 <span class="time-pill">⏱ ~14 min</span></h2>
     <p class="section-intro">Friendly walk-through of every topic. Tap ▶ to listen, ⏸ to pause, ⏹ to stop. Read along while it talks.</p>
@@ -2006,7 +2009,7 @@ function setUser(name) {
   document.getElementById('whoTag').style.display = 'inline-flex';
   document.getElementById('whoName').textContent = name;
   document.getElementById('greetTitle').textContent = `Hey ${name} 📚`;
-  document.getElementById('subtitleLine').textContent = `Signed numbers, exponents, scientific notation, and surface area: the Q2 Math review for ${name}`;
+  document.getElementById('subtitleLine').textContent = `PMDAS, fractions, algebra, and volume: the Q2 Math review for ${name}`;
   document.getElementById('footerLine').textContent = `Made with care for the 2026 Grade 6 Students @ O.B. Montessori \u2022 Q2 Math`;
   updateReportTabLabel();
   refreshAllUI();
@@ -2315,11 +2318,11 @@ window.rdbg = function(cat, ...args) { window.RDBG.log(cat, ...args); };
 
 
 const RANKS = [
-  { min: 0, name: 'Counter', icon: '1️⃣' },
-  { min: 100, name: 'Number Line', icon: '➖' },
-  { min: 300, name: 'Integer', icon: '➕' },
-  { min: 600, name: 'Exponent', icon: '²' },
-  { min: 1000, name: 'Scientist', icon: '🔬' },
+  { min: 0, name: 'Operator', icon: '➗' },
+  { min: 100, name: 'Fraction', icon: '½' },
+  { min: 300, name: 'Algebra', icon: '𝑥' },
+  { min: 600, name: 'Prism', icon: '📦' },
+  { min: 1000, name: 'Volume', icon: '🧊' },
   { min: 1500, name: 'Math Master', icon: '👑' },
 ];
 function getRank(xp) {
@@ -2357,7 +2360,7 @@ const ACHIEVEMENTS = {
   'streak-10': { name: 'On Fire', icon: '🔥', desc: '10 correct answers in a row' },
   'first-exam': { name: 'Exam Done', icon: '🎓', desc: 'Completed a Practice Exam' },
   'high-scorer': { name: 'High Scorer', icon: '🏆', desc: 'Scored 90%+ on a Practice Exam' },
-  'apex': { name: 'Scientist', icon: '🔬', desc: 'Earned the Scientist rank' },
+  'apex': { name: 'Volume', icon: '🧊', desc: 'Earned the Volume rank' },
 };
 function unlockAchievement(id) {
   if (!progress.achievements) progress.achievements = [];
@@ -2393,7 +2396,7 @@ function refreshHomeStats() {
   const rank = getRank(progress.totalXP || 0);
   document.getElementById('rankCardWrap').innerHTML =
     `<div class="rank-card"><span class="rank-icon">${rank.icon}</span><span>RANK <span class="rank-name">${rank.name}</span></span></div>`;
-  if (rank.name === 'Scientist') unlockAchievement('apex');
+  if (rank.name === 'Volume') unlockAchievement('apex');
 }
 
 function refreshTabs() {
@@ -2426,12 +2429,12 @@ function refreshProgressRing() {
 function refreshHomeGrid() {
   const grid = document.getElementById('homeGrid');
   const cards = [
-    { id:'flashcards', icon:'🎴', title:'Flashcards', time:'~12 min', desc:'Flip through every Math 6 term: integers, exponents, scientific notation, surface area.', module:'flashcards' },
-    { id:'biomes', icon:'📖', title:'Concepts', time:'~12 min', desc:'Number line, signs, absolute value, operations, exponents, and boxes.', module:'biomes' },
-    { id:'diagrams', icon:'🧮', title:'Step-by-Step Solver', time:'~12 min', desc:'Signs, mixed-sign subtract, multiply/divide signs, and scientific notation.', module:'diagrams' },
+    { id:'flashcards', icon:'🎴', title:'Flashcards', time:'~12 min', desc:'Flip through every Math 6 term: PMDAS, fractions, algebra, and volume.', module:'flashcards' },
+    { id:'biomes', icon:'📖', title:'Concepts', time:'~12 min', desc:'PMDAS, fractions, algebra, and volume — all explained.', module:'biomes' },
+    { id:'diagrams', icon:'🧮', title:'Step-by-Step Solver', time:'~12 min', desc:'GEMDAS, keep-change-flip, polynomials, and volume.', module:'diagrams' },
     { id:'tutor', icon:'🦉', title:'Tutor Mode', time:'~14 min', desc:'Concepts explained with read-aloud.', module:'tutor' },
     { id:'cheat', icon:'⚡', title:'Cheat Sheet', time:'~6 min', desc:'The night-before page.', module:'cheat' },
-    { id:'practice', icon:'📝', title:'Practice Sets', time:'~12 min', desc:'Practice sets like 1-A through 20: integers, exponents, scientific notation.', module:'practice' },
+    { id:'practice', icon:'📝', title:'Practice Sets', time:'~12 min', desc:'Practice sets like the booklet: PMDAS, fractions, algebra, and volume.', module:'practice' },
     { id:'exam', icon: allModulesComplete() ? '📝' : '🔒', title:'Practice Exam', time:'~29 min', desc: allModulesComplete() ? '🔓 Unlocked! 70 questions, 2 different exams.' : 'Finish all 6 modules above to unlock.', module:null }
   ];
   grid.innerHTML = '';
@@ -2725,6 +2728,10 @@ class SpeechController {
 
   play() {
     if (window.rdbg) rdbg('CLICK', this._id, 'play() called, current state=' + this.state + ', enabled=' + (this._enabled !== false) + ', sentences=' + this.sentences.length + ', currentIdx=' + this.currentIdx);
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) {
+      if (window.rdbg) rdbg('VOICE', this._id, 'play() skipped: voice off');
+      return;
+    }
     if (!('speechSynthesis' in window)) {
       if (window.rdbg) rdbg('ERROR', this._id, 'no speechSynthesis');
       return;
@@ -3970,7 +3977,7 @@ const TUTOR_TOPICS = [
 ];
 
 const tutorShell = document.getElementById('tutorShell');
-TUTOR_TOPICS.forEach(t => {
+if (tutorShell) TUTOR_TOPICS.forEach(t => {
   const el = document.createElement('div');
   el.className = 'tutor-card';
   el.style.setProperty('--accent', t.accent);
@@ -4235,162 +4242,248 @@ function fmt(n, maxDec = 4) {
 
 
 // ===========================================================
-// SOLVER A — Variable sorter
+// SOLVER A — PMDAS / GEMDAS first step
 // ===========================================================
-
-
 const SOL_A_SCENARIOS = [
-  { title:"9 steps going up", text:"A person walks 9 steps going up.", ans:"+9", sign:"positive", why:"Up / above / elevated = positive." },
-  { title:"99 feet below sea level", text:"A spot is 99 feet below sea level.", ans:"-99", sign:"negative", why:"Below / down / south / west / withdrawal / debt = negative." },
-  { title:"withdrawal of Php 5,000", text:"Someone withdraws 5,000 pesos from a bank.", ans:"-5000", sign:"negative", why:"Withdrawal takes money out. Negative. Deposit would be positive." },
-  { title:"deposit of Php 10,000", text:"Someone deposits 10,000 pesos.", ans:"+10000", sign:"positive", why:"Deposit adds money." },
-  { title:"a drop of 11 degrees", text:"Temperature drops 11 degrees.", ans:"-11", sign:"negative", why:"Drop / decrease / demerit = negative." },
-  { title:"70 feet above sea level", text:"A hill is 70 feet above sea level.", ans:"+70", sign:"positive", why:"Above sea level is positive." },
-  { title:"went 150 km east", text:"A trip goes 150 km east.", ans:"+150", sign:"positive", why:"The booklet treats east as positive (and west as negative), like north vs south." },
-  { title:"Gillian owes the canteen Php 8", text:"Allowance Php 60, expenses Php 68.", ans:"-8", sign:"negative", why:"Debt / owe = negative. Anissa's leftover +40 is the opposite story." }
+  { title:"8 + 14 ÷ 7 × 3 − 5", text:"Mixed operations, no grouping symbols.", iv:"multiply-divide LTR", why:"× and ÷ left to right before + and −. 14 ÷ 7 = 2, then 2 × 3 = 6, then 8 + 6 − 5 = 9." },
+  { title:"17 + 2 − (12 + 6) ÷ 3 × 2", text:"Parentheses, then ×÷ left to right.", iv:"parentheses", why:"(12 + 6) = 18, then 18 ÷ 3 × 2 = 12, then 17 + 2 − 12 = 7." },
+  { title:"−3 × (24 + 5 ÷ 5) − 18 ÷ 9", text:"Innermost grouping first.", iv:"parentheses", why:"Inside: 5 ÷ 5 = 1, 24 + 1 = 25. Then −3 × 25 − 18 ÷ 9 = −75 − 2 = −77." },
+  { title:"36 ÷ 6 × 4", text:"Only multiplication and division.", iv:"multiply-divide LTR", why:"Left to right: 36 ÷ 6 = 6, 6 × 4 = 24. Not 36 ÷ 24." },
+  { title:"6.2 − 3.1 × 2", text:"Multiplication before subtraction.", iv:"multiply-divide LTR", why:"3.1 × 2 = 6.2, then 6.2 − 6.2 = 0. Do not do 6.2 − 3.1 first." },
+  { title:"2³ + 4 × 5", text:"A power sits beside multiplication.", iv:"exponents", why:"GEMDAS: 8 + 20 = 28. Exponents before ×." },
+  { title:"(7 + 2) × 3 − (54 ÷ 6)", text:"Two pairs of parentheses.", iv:"parentheses", why:"9 × 3 − 9 = 18. The statement “= 22” is false." },
+  { title:"−20 − 3 + 5", text:"Only addition and subtraction.", iv:"add-subtract LTR", why:"−23 + 5 = −18. Left to right, do not add 3 + 5 first." }
 ];
 
 function solA_fillSelects(idx) {
+  const sc = SOL_A_SCENARIOS[idx];
   const sel = document.getElementById("solA-sample");
   if (sel && sel.options.length !== SOL_A_SCENARIOS.length) {
-    sel.innerHTML = SOL_A_SCENARIOS.map((x,i)=>"<option value=\""+i+"\">"+x.title+"</option>").join("");
+    sel.innerHTML = SOL_A_SCENARIOS.map((x,i) => "<option value=\""+i+"\">"+x.title.replace(/"/g,"&quot;")+"</option>").join("");
   }
-  const sc = SOL_A_SCENARIOS[idx];
-  const box = document.getElementById("solA-scenario");
-  if (box) box.innerHTML = "<strong>"+sc.title+"</strong><br>"+sc.text;
+  document.getElementById("solA-scenario").innerHTML = "<strong>" + sc.title + "</strong><br>" + sc.text;
 }
 
 function solA_solve() {
-  const idx = Number(document.getElementById("solA-sample").value)||0;
+  const outEl = document.getElementById("solA-output");
+  const idx = Number(document.getElementById("solA-sample").value) || 0;
   const sc = SOL_A_SCENARIOS[idx];
-  const guess = document.getElementById("solA-iv").value;
-  const ok = guess === sc.sign;
-  SolverRenderer.render(document.getElementById("solA-output"), [
-    { title:"Hunt the direction word", body:"Look for up/down, above/below, deposit/withdraw, profit/loss, north/south, east/west, increase/decrease.", deeper:"The booklet lists these on the number-line page. They are the whole game." },
-    { title:"This one is "+sc.sign, body: ok ? "You said <strong>"+guess+"</strong>. That matches." : "You said <strong>"+guess+"</strong>. The integer is <strong>"+sc.ans+"</strong> because: "+sc.why, math: sc.ans, deeper: sc.why },
-    { title:"Check the opposite", body:"Every signed situation has an opposite integer. Deposit +10,000 pairs with withdrawal −10,000. That is how integers were invented for real life (the booklet even mentions Indian mathematicians in the 6th–7th centuries).", altMethod:"Other Methods to Consider: sketch a tiny number line and put a dot. If the story goes left of zero, it is negative." }
-  ]);
+  const pick = document.getElementById("solA-iv").value;
+  const ok = pick === sc.iv;
+  const steps = [
+    { title:"Order of symbols", body:"<strong>G</strong>rouping innermost first { [ ( ) ] }. <strong>E</strong>xponents. <strong>MD</strong> multiply and divide left to right. <strong>AS</strong> add and subtract left to right. After a pair is done, erase the grouping symbols. 2(3) means 2 × 3.", deeper:"MDAS/PMDAS/GEMDAS are the same ladder. Do not do all multiplication before all division." },
+    { title:"First step: " + sc.iv, body: ok ? "You tagged <strong>"+pick+"</strong>." : "You tagged <strong>"+pick+"</strong>. First do <strong>"+sc.iv+"</strong>.", math: sc.iv, deeper: sc.why },
+    { title:"Traps", body:"(−1)³ = −1 (odd power keeps the minus). Adding a negative is not “make it more negative blindly”: (10 − 5) + (−36) ÷ 9 = 1.", altMethod:"Rewrite ×÷ on one pass, then +− on the next. Box each finished pair." }
+  ];
+  SolverRenderer.render(outEl, steps);
+}
+
+// ===========================================================
+// SOLVER B — Fraction keep-change-flip
+// ===========================================================
+function parseFrac(s, label) {
+  if (s === null || s === undefined) return { ok:false, msg:"Missing " + label + "." };
+  const t = String(s).trim().replace(/,/g, "");
+  if (t === "") return { ok:false, msg:"Type a number or fraction for " + label + "." };
+  const mixed = t.match(/^(-?)(\d+)\s+(\d+)\s*\/\s*(\d+)$/);
+  if (mixed) {
+    const sign = mixed[1] === "-" ? -1 : 1;
+    const w = Number(mixed[2]), n = Number(mixed[3]), d = Number(mixed[4]);
+    if (!d) return { ok:false, msg:"Denominator cannot be 0 for " + label + "." };
+    return { ok:true, val: sign * (w + n / d), pretty: t };
+  }
+  const frac = t.match(/^(-?)(\d+)\s*\/\s*(-?\d+)$/);
+  if (frac) {
+    const sign = frac[1] === "-" ? -1 : 1;
+    const n = Number(frac[2]), d = Number(frac[3]);
+    if (!d) return { ok:false, msg:"Denominator cannot be 0 for " + label + "." };
+    return { ok:true, val: sign * n / d, pretty: t };
+  }
+  const n = Number(t);
+  if (!isFinite(n)) return { ok:false, msg:"\"" + s + "\" is not a number or fraction for " + label + ". Try 1/2 or 1 1/2." };
+  return { ok:true, val:n, pretty: t };
+}
+
+function gcdInt(a, b) {
+  a = Math.abs(Math.round(a)); b = Math.abs(Math.round(b));
+  while (b) { const t = a % b; a = b; b = t; }
+  return a || 1;
+}
+
+function fmtFrac(n) {
+  if (!isFinite(n)) return String(n);
+  const sign = n < 0 ? "-" : "";
+  n = Math.abs(n);
+  const w = Math.floor(n + 1e-12);
+  const rem = n - w;
+  if (Math.abs(rem) < 1e-12) return sign + String(w);
+  let bestN = 1, bestD = 1, best = 1;
+  for (let d = 1; d <= 24; d++) {
+    const nu = Math.round(rem * d);
+    const err = Math.abs(rem - nu / d);
+    if (err < best) { best = err; bestN = nu; bestD = d; }
+  }
+  const g = gcdInt(bestN, bestD);
+  bestN /= g; bestD /= g;
+  if (w === 0) return sign + bestN + "/" + bestD;
+  if (bestN === 0) return sign + String(w);
+  return sign + w + " " + bestN + "/" + bestD;
 }
 
 function solB_solve() {
-  const out = document.getElementById("solB-output");
-  const A = parseNum(document.getElementById("solB-a").value, "the first integer");
-  const B = parseNum(document.getElementById("solB-b").value, "the second integer");
-  if (!A.ok) return SolverRenderer.showError(out, A.msg);
-  if (!B.ok) return SolverRenderer.showError(out, B.msg);
+  const outEl = document.getElementById("solB-output");
+  const A = parseFrac(document.getElementById("solB-a").value, "the first number");
+  const B = parseFrac(document.getElementById("solB-b").value, "the second number");
+  if (!A.ok) return SolverRenderer.showError(outEl, A.msg);
+  if (!B.ok) return SolverRenderer.showError(outEl, B.msg);
   const op = document.getElementById("solB-op").value;
-  const a = A.val, b = B.val;
-  let steps = [];
-  if (op === "+") {
-    const like = (a===0 || b===0) ? "zero" : ((a>0)===(b>0) ? "like" : "unlike");
-    let ans;
-    if (like === "like") {
-      ans = a + b;
-      steps.push({ title:"Like signs: add the sizes, keep the sign", body:"Both numbers are on the same side of zero. Add |"+fmt(a)+"| and |"+fmt(b)+"| = "+fmt(Math.abs(a)+Math.abs(b))+", then keep the shared sign.", math: fmt(a)+" + "+fmt(b)+" = "+fmt(ans), deeper:"(+7)+(+13)=+20. (−9)+(−6)=−15." });
-    } else if (like === "zero") {
-      ans = a + b;
-      steps.push({ title:"Zero is the silent partner", body:"Adding zero does not change the other number.", math: fmt(a)+" + "+fmt(b)+" = "+fmt(ans), deeper:"0 is neither positive nor negative." });
-    } else {
-      ans = a + b;
-      const keep = Math.abs(a)>=Math.abs(b) ? a : b;
-      steps.push({ title:"Unlike signs: subtract the sizes, keep the sign of the bigger size", body:"| "+fmt(a)+" | and | "+fmt(b)+" | differ. Subtract the smaller absolute value from the larger. The answer takes the sign of the number with the larger absolute value ("+fmt(keep)+").", math: fmt(a)+" + "+fmt(b)+" = "+fmt(ans), deeper:"This is Practice Set 5-A / 6-A. A lot of worksheets go wrong here by adding instead of subtracting sizes." });
-    }
-    steps.push({ title:"Final sum", body:"The sum is <strong>"+fmt(ans)+"</strong>.", math: fmt(ans), altMethod:"Other Methods to Consider: start at "+fmt(a)+" on a number line and walk "+fmt(Math.abs(b))+" steps "+(b>=0?"right":"left")+"." });
-  } else {
-    steps.push({ title:"Subtraction means add the opposite", body:"a − b = a + (−b). Keep the first number. Change the minus to plus. Flip the second number's sign.", math: fmt(a)+" − ("+fmt(b)+") = "+fmt(a)+" + ("+fmt(-b)+")", deeper:"This is the 9-A move. (+15) − (−15) becomes (+15)+(+15)=+30. People freeze when they see two minuses." });
-    const ans = a - b;
-    const like = (a===0 || (-b)===0) ? "zero" : ((a>0)===((-b)>0) ? "like" : "unlike");
-    steps.push({ title:"Now it is an addition problem", body:"You are adding "+fmt(a)+" and "+fmt(-b)+". "+(like==="like"?"Like signs: add sizes, keep the sign.": like==="zero"?"Zero stays quiet.":"Unlike signs: subtract sizes, keep the sign of the bigger size."), math: fmt(a)+" + ("+fmt(-b)+") = "+fmt(ans) });
-    steps.push({ title:"Final difference", body:"The difference is <strong>"+fmt(ans)+"</strong>.", math: fmt(ans), altMethod:"Other Methods to Consider: on a number line, start at the first number and move the second number's size left if subtracting a positive, right if subtracting a negative." });
+  let ans, method;
+  if (op === "+") { ans = A.val + B.val; method = "Add. Use a common denominator, then lowest terms."; }
+  else if (op === "-") { ans = A.val - B.val; method = "Subtract. Same denominator; mixed numbers convert the fraction part first."; }
+  else if (op === "*") { ans = A.val * B.val; method = "Multiply numerators, multiply denominators, then lowest terms."; }
+  else {
+    if (B.val === 0) return SolverRenderer.showError(outEl, "Cannot divide by 0.");
+    ans = A.val / B.val;
+    method = "Keep the first fraction, change ÷ to ×, flip the second (multiply by the reciprocal). Whole 8 has reciprocal 1/8, not 8.";
   }
-  SolverRenderer.render(out, steps);
+  const steps = [
+    { title:"Read the fractions", body:"First = <strong>"+A.pretty+"</strong> ("+fmt(A.val)+"). Second = <strong>"+B.pretty+"</strong> ("+fmt(B.val)+").", math: A.pretty + "  " + op + "  " + B.pretty },
+    { title:"Choose the move", body: method, deeper:"1/2 ÷ 8/4 = 1/2 × 4/8 = 1/4. 11/15 + 3/5 = 20/15 = 4/3 = 1 1/3." },
+    { title:"Lowest terms", body:"The value is <strong>"+fmtFrac(ans)+"</strong>.", math: fmtFrac(ans), altMethod:"Check with decimals: "+fmt(A.val)+" "+op+" "+fmt(B.val)+" = "+fmt(ans)+"." }
+  ];
+  SolverRenderer.render(outEl, steps);
+}
+
+function solB_example() {
+  const samples = [
+    ["1/2", "/", "8/4"],
+    ["11/15", "+", "3/5"],
+    ["1 1/2", "-", "1/4"],
+    ["2/3", "*", "3/4"],
+    ["5/15", "+", "6/15"]
+  ];
+  const s = samples[Math.floor(Math.random() * samples.length)];
+  document.getElementById("solB-a").value = s[0];
+  document.getElementById("solB-op").value = s[1];
+  document.getElementById("solB-b").value = s[2];
+}
+
+// ===========================================================
+// SOLVER C — Polynomial classifier
+// ===========================================================
+const SOL_C_CLUES = [
+  { text:"30xy³z⁵ — one product, no + or − separating terms.", ans:"monomial", extra:"Count terms after looking at + and − that separate them, not factors inside a product." },
+  { text:"2x + 3 — two terms.", ans:"binomial", extra:"Binomial = two terms." },
+  { text:"x² + 2x + 1 — three terms.", ans:"trinomial", extra:"Trinomial = three terms." },
+  { text:"−2x² and x²/2 — same variables with the same exponents.", ans:"monomial", extra:"They are similar terms (you could add them). 2x² and 4x²y are not similar." },
+  { text:"(y + 5)/20 — divided by a constant.", ans:"binomial", extra:"Still a polynomial. Dividing by a constant does not break it." },
+  { text:"√225 — a constant 15.", ans:"monomial", extra:"A constant is a polynomial of degree 0. √x is not (variable inside a radical)." },
+  { text:"1/x + 2 — variable in a denominator.", ans:"not", extra:"Not a polynomial: variable in a denominator, as an exponent, with a negative exponent, or inside a radical." },
+  { text:"Missing numerical coefficient on x⁴.", ans:"monomial", extra:"The numerical coefficient is 1. A constant with no variable written has literal coefficient none. Missing constant term is 0." }
+];
+let solC_idx = 0;
+let solC_pick = "";
+
+function solC_show(idx) {
+  solC_idx = idx;
+  solC_pick = "";
+  document.getElementById("solC-clue").textContent = SOL_C_CLUES[idx].text;
+  document.querySelectorAll(".boundary-card").forEach(b => b.classList.remove("selected"));
 }
 
 function solC_solve() {
-  const out = document.getElementById("solC-output");
-  const A = parseNum(document.getElementById("solC-a").value, "the first integer");
-  const B = parseNum(document.getElementById("solC-b").value, "the second integer");
-  if (!A.ok) return SolverRenderer.showError(out, A.msg);
-  if (!B.ok) return SolverRenderer.showError(out, B.msg);
-  const op = document.getElementById("solC-op").value;
-  const a = A.val, b = B.val;
-  if (op === "/" && b === 0) return SolverRenderer.showError(out, "Cannot divide by zero.");
-  const same = (a===0 || b===0) ? "zero" : ((a>0)===(b>0) ? "same" : "different");
-  const mag = op === "*" ? Math.abs(a)*Math.abs(b) : Math.abs(a)/Math.abs(b);
-  let sign = 1;
-  if (same === "different") sign = -1;
-  if (a===0) sign = 1;
-  const ans = op === "*" ? a*b : a/b;
+  const outEl = document.getElementById("solC-output");
+  const c = SOL_C_CLUES[solC_idx];
+  const pick = solC_pick || "(none yet)";
+  const ok = pick === c.ans;
   const steps = [
-    { title:"Ignore signs for one breath. Multiply or divide the sizes.", body:"|"+fmt(a)+"| "+(op==="*"?"×":"÷")+" |"+fmt(b)+"| = "+fmt(mag)+".", math: fmt(Math.abs(a))+(op==="*"?" × ":" ÷ ")+fmt(Math.abs(b))+" = "+fmt(mag) },
-    { title:"Then the sign rule", body: same==="same" ? "Same signs → the answer is <strong>positive</strong>." : same==="zero" ? "Zero times anything is 0. Zero divided by a non-zero is 0." : "Different signs → the answer is <strong>negative</strong>.", math: (same==="different"?"−":"+") + fmt(mag), deeper:"(+6)×(+4)=+24. (−6)×(−4)=+24. (−6)×(+4)=−24. Division uses the same sign rule. This is Practice Set 12." },
-    { title:"Final answer", body:"<strong>"+fmt(ans)+"</strong>.", math: fmt(a)+(op==="*"?" × ":" ÷ ")+fmt(b)+" = "+fmt(ans), altMethod:"Other Methods to Consider: count negatives. An even number of negative factors → positive. Odd → negative." }
+    { title:"Count terms, then test polynomial", body:"Monomial / binomial / trinomial count terms. Not a polynomial if a variable is in a denominator, as an exponent, with a negative exponent, or inside a radical.", deeper:"Similar terms need the same variables with the same exponents." },
+    { title:"This clue is " + c.ans, body: ok ? "You tapped <strong>"+pick+"</strong>." : "You tapped <strong>"+pick+"</strong>. The match is <strong>"+c.ans+"</strong>.", math: c.ans, deeper: c.extra },
+    { title:"Lock the coefficient", body:"Missing numerical coefficient = 1. Missing constant term = 0. A constant’s numerical coefficient is itself.", altMethod:"Circle every + or − that sits between terms, not the minus of a negative coefficient." }
   ];
-  SolverRenderer.render(out, steps);
+  SolverRenderer.render(outEl, steps);
 }
 
-function toSci(n) {
-  if (n === 0) return { N: 0, k: 0 };
-  const k = Math.floor(Math.log10(Math.abs(n)));
-  const N = n / Math.pow(10, k);
-  return { N: Math.round(N*10000)/10000, k: k };
+// ===========================================================
+// SOLVER D — Volume (prism vs pyramid)
+// ===========================================================
+function solD_showMode() {
+  const powRow = document.getElementById("solD-powRow");
+  const sciRow = document.getElementById("solD-sciRow");
+  const fromRow = document.getElementById("solD-fromRow");
+  if (powRow) powRow.style.display = "";
+  if (sciRow) sciRow.style.display = "";
+  if (fromRow) fromRow.style.display = "none";
+  const m = document.getElementById("solD-mode");
+  const lab1 = document.getElementById("solD-lab1");
+  const lab2 = document.getElementById("solD-lab2");
+  const lab3 = document.getElementById("solD-lab3");
+  if (!m) return;
+  if (m.value === "pow") {
+    if (lab1) lab1.textContent = "length";
+    if (lab2) lab2.textContent = "width";
+    if (lab3) lab3.textContent = "height";
+  } else if (m.value === "sci") {
+    if (lab1) lab1.textContent = "base b";
+    if (lab2) lab2.textContent = "altitude h";
+    if (lab3) lab3.textContent = "prism height H";
+  } else {
+    if (lab1) lab1.textContent = "length";
+    if (lab2) lab2.textContent = "width";
+    if (lab3) lab3.textContent = "pyramid height";
+  }
 }
 
 function solD_solve() {
-  const out = document.getElementById("solD-output");
+  const outEl = document.getElementById("solD-output");
   const mode = document.getElementById("solD-mode").value;
+  const A = parseNum(document.getElementById("solD-base").value, "first dimension");
+  const B = parseNum(document.getElementById("solD-exp").value, "second dimension");
+  const C = parseNum(document.getElementById("solD-std").value, "third dimension");
+  if (!A.ok) return SolverRenderer.showError(outEl, A.msg);
+  if (!B.ok) return SolverRenderer.showError(outEl, B.msg);
+  if (!C.ok) return SolverRenderer.showError(outEl, C.msg);
+  const a = A.val, b = B.val, c = C.val;
+  let title, formula, vol, trap;
   if (mode === "pow") {
-    const B = parseNum(document.getElementById("solD-base").value, "the base");
-    const E = parseNum(document.getElementById("solD-exp").value, "the exponent");
-    if (!B.ok) return SolverRenderer.showError(out, B.msg);
-    if (!E.ok) return SolverRenderer.showError(out, E.msg);
-    const a = B.val, n = E.val;
-    if (n !== Math.floor(n)) return SolverRenderer.showError(out, "Use a whole-number exponent for this solver.");
-    if (n === 0 && a === 0) return SolverRenderer.showError(out, "0 to the 0 is not used here.");
-    let steps = [];
-    if (n > 0) {
-      const parts = Array(n).fill(fmt(a));
-      const ans = Math.pow(a, n);
-      steps = [
-        { title:"Exponential means repeated multiplication", body: fmt(a)+"<sup>"+n+"</sup> is "+parts.join(" × ")+", not "+fmt(a)+" added "+n+" times.", math: parts.join(" × "), deeper:"Practice Set 16-B trap: 3³ is 3×3×3=27, not 3+3+3=9." },
-        { title:"Evaluate", body:"The value is <strong>"+fmt(ans)+"</strong>.", math: fmt(a)+"^"+n+" = "+fmt(ans) }
-      ];
-    } else if (n === 0) {
-      steps = [
-        { title:"Anything (except 0) to the power 0 is 1", body: fmt(a)+"<sup>0</sup> = 1. Practice Set 18 uses this with 3^0 and 30^0.", math: fmt(a)+"^0 = 1" }
-      ];
-    } else {
-      const m = -n;
-      const den = Math.pow(a, m);
-      steps = [
-        { title:"Negative exponent means a fraction", body: "a<sup>−n</sup> = 1 / a<sup>n</sup>. So "+fmt(a)+"<sup>"+n+"</sup> = 1 / "+fmt(a)+"<sup>"+m+"</sup>.", math: "1 / "+fmt(den), deeper:"Practice Set 19. Also 1 / a<sup>−n</sup> = a<sup>n</sup>." },
-        { title:"Value", body:"<strong>1/"+fmt(den)+"</strong>.", math: "1/"+fmt(den) }
-      ];
-    }
-    steps.push({ title:"Sanity", body:"If the exponent is a counting number, the answer should look like a growing product, not a sum.", altMethod:"Other Methods to Consider: write the base in a column n times and multiply down." });
-    SolverRenderer.render(out, steps);
-    return;
+    title = "Rectangular prism (Yellow Material)";
+    formula = "V = l × w × h";
+    vol = a * b * c;
+    trap = "A cube of side 3 has volume 27, not 9. Units are cubic (cm³), not cm².";
+  } else if (mode === "sci") {
+    title = "Triangular prism";
+    formula = "V = b h H / 2";
+    vol = a * b * c / 2;
+    trap = "Triangular prism divides by 2. Triangular pyramid / tetrahedron divides by 6. The p.74 printed prism that used /6 is the booklet mix-up.";
+  } else {
+    title = "Rectangular pyramid";
+    formula = "V = l w h / 3";
+    vol = a * b * c / 3;
+    trap = "Pyramid = 1/3 of a prism with the same base and height. Square pyramid V = s²h / 3 (Hollow Material). Forgetting ÷ 3 turns a pyramid into a prism.";
   }
-  if (mode === "sci") {
-    const N = parseNum(document.getElementById("solD-std").value, "the standard number");
-    if (!N.ok) return SolverRenderer.showError(out, N.msg);
-    if (N.val === 0) return SolverRenderer.showError(out, "Zero in scientific notation is 0 × 10^0, but the booklet drills positive numbers.");
-    const sc = toSci(N.val);
-    SolverRenderer.render(out, [
-      { title:"Park the decimal so there is ONE non-zero digit to the left", body:"Scientific notation looks like N × 10<sup>k</sup> with 1 ≤ N &lt; 10.", math: fmt(N.val)+" → "+fmt(sc.N)+" × 10^"+sc.k, deeper:"460 → 4.6 × 10^2 because the decimal moved 2 places left." },
-      { title:"k is how many places the decimal moved", body:"Moved left → k is positive (big numbers). The booklet Q1 drills are whole numbers bigger than 1, so k is a counting number.", math: fmt(sc.N)+" × 10^{"+sc.k+"}", altMethod:"Other Methods to Consider: count digits after the first one. 85,000 has 4 digits after 8, so 8.5 × 10^4." }
-    ]);
-    return;
-  }
-  const Nn = parseNum(document.getElementById("solD-n").value, "N");
-  const K = parseNum(document.getElementById("solD-k").value, "the power of 10");
-  if (!Nn.ok) return SolverRenderer.showError(out, Nn.msg);
-  if (!K.ok) return SolverRenderer.showError(out, K.msg);
-  const val = Nn.val * Math.pow(10, K.val);
-  SolverRenderer.render(out, [
-    { title:"Move the decimal k places to the right (for positive k)", body: fmt(Nn.val)+" × 10<sup>"+fmt(K.val)+"</sup> means the decimal in "+fmt(Nn.val)+" hops "+fmt(K.val)+" places.", math: fmt(val), deeper:"3.4 × 10^2 = 340. 8.13 × 10^4 = 81,300." },
-    { title:"Standard form", body:"<strong>"+fmt(val)+"</strong>.", math: fmt(val), altMethod:"Write the 10^k as 1 followed by k zeros, then multiply." }
-  ]);
+  const steps = [
+    { title: title, body: formula + ". Plug in " + fmt(a) + ", " + fmt(b) + ", " + fmt(c) + ".", math: formula, deeper:"π = 3.14 on cone/sphere pages. Round non-terminating decimals to two places when the page says to." },
+    { title:"Volume", body:"V = <strong>"+fmt(vol, 2)+"</strong> cubic units.", math: fmt(vol, 2), deeper: trap },
+    { title:"Prism vs pyramid", body:"Same base and height: pyramid volume is one-third of the prism. Cone is one-third of a cylinder. Radius vs diameter: sphere uses r, and πr² is area, not volume.", altMethod:"Yellow Material → rectangular prism lwh. Hollow Material → square-based pyramid (1/3)s²h." }
+  ];
+  SolverRenderer.render(outEl, steps);
+}
+
+function solD_example() {
+  const m = document.getElementById("solD-mode");
+  const samples = {
+    pow: ["30", "20", "15"],
+    sci: ["3", "4", "8"],
+    std: ["8", "6", "10"]
+  };
+  const keys = Object.keys(samples);
+  const k = keys[Math.floor(Math.random() * keys.length)];
+  m.value = k;
+  const s = samples[k];
+  document.getElementById("solD-base").value = s[0];
+  document.getElementById("solD-exp").value = s[1];
+  document.getElementById("solD-std").value = s[2];
+  solD_showMode();
 }
 
 (function wireGeoSolvers() {
@@ -4400,66 +4493,74 @@ function solD_solve() {
     aSel.addEventListener("change", () => solA_fillSelects(Number(aSel.value)));
     document.getElementById("solA-start").addEventListener("click", solA_solve);
     document.getElementById("solA-example").addEventListener("click", () => {
-      const i = Math.floor(Math.random()*SOL_A_SCENARIOS.length);
-      aSel.value = String(i); solA_fillSelects(i);
+      const i = Math.floor(Math.random() * SOL_A_SCENARIOS.length);
+      aSel.value = String(i);
+      solA_fillSelects(i);
     });
-    document.getElementById("solA-clear").addEventListener("click", () => { document.getElementById("solA-output").innerHTML=""; });
+    document.getElementById("solA-clear").addEventListener("click", () => {
+      document.getElementById("solA-output").innerHTML = "";
+      solA_fillSelects(Number(aSel.value) || 0);
+    });
   }
+
   const bStart = document.getElementById("solB-start");
   if (bStart) {
     bStart.addEventListener("click", solB_solve);
-    document.getElementById("solB-example").addEventListener("click", () => {
-      const samples = [[-12,-13,"-"],[15,-15,"-"],[-24,20,"+"],[0,-36,"+"],[22,33,"+"]];
-      const s = samples[Math.floor(Math.random()*samples.length)];
-      document.getElementById("solB-a").value = s[0];
-      document.getElementById("solB-b").value = s[1];
-      document.getElementById("solB-op").value = s[2];
+    document.getElementById("solB-example").addEventListener("click", solB_example);
+    document.getElementById("solB-clear").addEventListener("click", () => {
+      document.getElementById("solB-output").innerHTML = "";
+      document.getElementById("solB-a").value = "1/2";
+      document.getElementById("solB-op").value = "/";
+      document.getElementById("solB-b").value = "8/4";
     });
-    document.getElementById("solB-clear").addEventListener("click", () => { document.getElementById("solB-output").innerHTML=""; });
   }
+
+  document.querySelectorAll(".boundary-card").forEach(card => {
+    card.addEventListener("click", () => {
+      solC_pick = card.getAttribute("data-b");
+      document.querySelectorAll(".boundary-card").forEach(c => c.classList.remove("selected"));
+      card.classList.add("selected");
+    });
+  });
+  if (document.getElementById("solC-clue")) solC_show(0);
   const cStart = document.getElementById("solC-start");
   if (cStart) {
     cStart.addEventListener("click", solC_solve);
-    document.getElementById("solC-example").addEventListener("click", () => {
-      const samples = [[-6,8,"*"],[18,-2,"/"],[-28,-4,"/"],[-6,-4,"*"],[7,-15,"*"]];
-      const s = samples[Math.floor(Math.random()*samples.length)];
-      document.getElementById("solC-a").value = s[0];
-      document.getElementById("solC-b").value = s[1];
-      document.getElementById("solC-op").value = s[2];
-    });
-    document.getElementById("solC-clear").addEventListener("click", () => { document.getElementById("solC-output").innerHTML=""; });
+    document.getElementById("solC-example").addEventListener("click", () => solC_show(Math.floor(Math.random()*SOL_C_CLUES.length)));
+    document.getElementById("solC-clear").addEventListener("click", () => { document.getElementById("solC-output").innerHTML=""; solC_show(solC_idx); });
   }
+
   const mode = document.getElementById("solD-mode");
-  function showMode() {
-    const m = mode.value;
-    document.getElementById("solD-powRow").style.display = m==="pow" ? "" : "none";
-    document.getElementById("solD-sciRow").style.display = m==="sci" ? "" : "none";
-    document.getElementById("solD-fromRow").style.display = m==="std" ? "" : "none";
-  }
-  if (mode) { mode.addEventListener("change", showMode); showMode(); }
-  const dStart = document.getElementById("solD-start");
-  if (dStart) {
-    dStart.addEventListener("click", solD_solve);
-    document.getElementById("solD-example").addEventListener("click", () => {
-      const m = mode.value;
-      if (m==="pow") { document.getElementById("solD-base").value = [2,4,5,10][Math.floor(Math.random()*4)]; document.getElementById("solD-exp").value = [0,2,3,-2][Math.floor(Math.random()*4)]; }
-      if (m==="sci") document.getElementById("solD-std").value = [460,5000,98700,350000000][Math.floor(Math.random()*4)];
-      if (m==="std") { document.getElementById("solD-n").value = 3.4; document.getElementById("solD-k").value = 2; }
+  if (mode) {
+    mode.addEventListener("change", solD_showMode);
+    solD_showMode();
+    document.getElementById("solD-start").addEventListener("click", solD_solve);
+    document.getElementById("solD-example").addEventListener("click", solD_example);
+    document.getElementById("solD-clear").addEventListener("click", () => {
+      document.getElementById("solD-output").innerHTML = "";
+      document.getElementById("solD-base").value = "10";
+      document.getElementById("solD-exp").value = "5";
+      document.getElementById("solD-std").value = "4";
+      solD_showMode();
     });
-    document.getElementById("solD-clear").addEventListener("click", () => { document.getElementById("solD-output").innerHTML=""; });
   }
-  document.querySelectorAll(".nl-tick").forEach(g => {
-    g.addEventListener("click", () => {
-      const n = Number(g.getAttribute("data-n"));
-      const note = document.getElementById("earthTapNote");
-      if (!note) return;
-      if (n === 0) note.textContent = "0 is an integer that is neither positive nor negative. Center of the line.";
-      else if (n > 0) note.textContent = n+" is positive (right of zero). Values increase as we move right.";
-      else note.textContent = n+" is negative (left of zero). "+n+" is less than "+(n+1)+". Colder, deeper, more left.";
+  const earthNotes = {
+    "tap-crust": "Grouping first. Innermost { [ ( ) ] }. After a pair is done, erase the grouping symbols. 2(3) means 2 × 3.",
+    "tap-mantle": "Exponents next. (−1)³ = −1. Odd power keeps the minus. Then × and ÷ left to right.",
+    "tap-outer": "Multiply and divide left to right, then add and subtract left to right. 36 ÷ 6 × 4 = 24, not 1.5.",
+    "tap-inner": "Keep-change-flip for ÷ of fractions. 1/2 ÷ 8/4 = 1/2 × 4/8 = 1/4. Whole 8 → reciprocal 1/8.",
+    "tap-culture": "Volume: prism lwh or bhH/2. Pyramid lwh/3 or bhH/6. Yellow Material = rectangular prism. Hollow = square pyramid."
+  };
+  Object.keys(earthNotes).forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.cursor = "pointer";
+    el.addEventListener("click", () => {
+      const n = document.getElementById("earthTapNote");
+      if (n) n.textContent = earthNotes[id];
     });
   });
 })();
-
 
 const PRACTICE_SETS = [
   { id: 'ex1', icon: '🔢', title: 'Exercise 1 style: Order of operations', desc: 'MDAS, PMDAS, GEMDAS, and integer signs.' },
@@ -5451,7 +5552,7 @@ const BREAK_MSGS = [
   '💧 Quick water break! Then crush the next 25 min',
   '🌱 Tiny break = bigger memory. Take 2 min',
 ];
-let breakTimer = null;
+var breakTimer = null;
 function scheduleBreakReminder() {
   if (breakTimer) clearInterval(breakTimer);
   breakTimer = setInterval(() => {
@@ -5635,8 +5736,19 @@ function rankVoiceQuality(v) {
   return score;
 }
 
+function isVoiceOff() {
+  return selectedVoiceURI === 'off';
+}
+
 function loadVoices() {
-  if (!window.speechSynthesis) return;
+  if (!window.speechSynthesis) {
+    const sel = document.getElementById('voiceSelect');
+    if (sel) {
+      sel.innerHTML = '<option value="off" selected>Off — no talking or highlights</option>';
+      selectedVoiceURI = 'off';
+    }
+    return;
+  }
   availableVoices = window.speechSynthesis.getVoices() || [];
   // Strict filter first
   let filtered = availableVoices.filter(isVoiceAllowed);
@@ -5648,27 +5760,35 @@ function loadVoices() {
 
   const sel = document.getElementById('voiceSelect');
   if (!sel) return;
-  if (filtered.length === 0) {
-    sel.innerHTML = '<option value="">No voices available on this device</option>';
-    return;
-  }
   let saved = null;
   try { saved = localStorage.getItem(VOICE_KEY); } catch {}
-  // If saved choice is no longer allowed, reset to top-ranked
-  if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
-  if (!saved) saved = filtered[0].voiceURI;
-  selectedVoiceURI = saved;
+  if (saved === 'off') {
+    selectedVoiceURI = 'off';
+  } else {
+    // If saved choice is no longer allowed, reset to top-ranked
+    if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
+    if (!saved && filtered[0]) saved = filtered[0].voiceURI;
+    selectedVoiceURI = saved || 'off';
+  }
 
-  sel.innerHTML = filtered.map((v, i) => {
-    const stars = i === 0 ? ' ⭐' : '';
-    const label = `${v.name} (${v.lang})${stars}`;
-    const selAttr = v.voiceURI === saved ? ' selected' : '';
-    return `<option value="${v.voiceURI}"${selAttr}>${label}</option>`;
-  }).join('');
+  const offSelected = selectedVoiceURI === 'off' ? ' selected' : '';
+  const offOpt = '<option value="off"' + offSelected + '>Off — no talking or highlights</option>';
+  if (filtered.length === 0) {
+    sel.innerHTML = offOpt + '<option value="">No voices available on this device</option>';
+  } else {
+    sel.innerHTML = offOpt + filtered.map((v, i) => {
+      const stars = i === 0 ? ' ⭐' : '';
+      const label = v.name + ' (' + v.lang + ')' + stars;
+      const selAttr = v.voiceURI === selectedVoiceURI ? ' selected' : '';
+      return '<option value="' + v.voiceURI + '"' + selAttr + '>' + label + '</option>';
+    }).join('');
+  }
+  if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
   sel.onchange = () => {
     if (window.rdbg) rdbg('VOICE', 'change requested: ' + sel.value + ' (was: ' + selectedVoiceURI + ')');
     selectedVoiceURI = sel.value;
     try { localStorage.setItem(VOICE_KEY, selectedVoiceURI); } catch {}
+    if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
     // Pause every active controller before resetting voice and playing sample.
     // This prevents the case where mid-utterance cancel + voice swap leaves
     // a controller in a bad state.
@@ -5677,6 +5797,9 @@ function loadVoices() {
     }
     if (window.speechSynthesis) {
       try { window.speechSynthesis.cancel(); } catch {}
+    }
+    if (isVoiceOff()) return;
+    if (window.speechSynthesis) {
       const u = new SpeechSynthesisUtterance("Hi! This is your new voice for reading the study material.");
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) u.voice = v;
@@ -5709,7 +5832,8 @@ if (window.speechSynthesis) {
   if (!window.speechSynthesis) return;
   const origSpeak = window.speechSynthesis.speak.bind(window.speechSynthesis);
   window.speechSynthesis.speak = function(utt) {
-    if (utt && selectedVoiceURI) {
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) return;
+    if (utt && selectedVoiceURI && selectedVoiceURI !== 'off') {
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) utt.voice = v; // always overwrite
     }
@@ -5732,7 +5856,12 @@ function applyHighlightPrefs() {
     if (VALID_HL_COLORS.includes(storedColor)) color = storedColor;
   } catch {}
   // Apply on/off via class on <html>
-  document.documentElement.classList.toggle('highlight-off', on === 'off');
+  const voiceOff = typeof isVoiceOff === 'function' && isVoiceOff();
+  document.documentElement.classList.toggle('highlight-off', on === 'off' || voiceOff);
+  const hlSel = document.getElementById('highlightToggle');
+  if (hlSel) hlSel.disabled = voiceOff;
+  const hlRow = document.getElementById('hlColorRow');
+  if (hlRow) hlRow.style.display = (on === 'off' || voiceOff) ? 'none' : '';
   // Apply color via data attribute
   document.documentElement.setAttribute('data-hl-color', color);
   // Reflect in UI

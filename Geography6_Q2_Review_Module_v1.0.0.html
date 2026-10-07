@@ -1310,7 +1310,10 @@
     </div>
     <div class="voice-picker">
       <label for="voiceSelect">🔊 Voice:</label>
-      <select id="voiceSelect"><option value="">Loading voices...</option></select>
+      <select id="voiceSelect" aria-label="Voice: off for no talking or highlights">
+        <option value="off">Off — no talking or highlights</option>
+        <option value="">Loading voices...</option>
+      </select>
     </div>
     <div class="highlight-picker" title="Highlight the word being spoken">
       <label for="highlightToggle">🖍️ Highlight:</label>
@@ -1419,24 +1422,25 @@
   <section class="tab-content" id="biomes">
     <h2 class="section-title">Concepts <span class="time-pill">⏱ ~10 min</span></h2>
     <p class="section-intro">The full Q2 toolkit: push and pull, scalars and vectors, types of force, speed, work, and energy. Tap any card to open it.</p>
-    <div class="earth-cutaway">
-      <h3>Tap a layer</h3>
-      <p class="hint">Chemical cut: crust, mantle, core. Gold ring is the crust. Orange is mantle. Red/yellow center is the core.</p>
-      <svg viewBox="0 0 260 260" role="img" aria-label="Earth cross-section" style="width:100%;max-width:280px;display:block;margin:0 auto;">
+                    <div class="earth-cutaway">
+      <h3>Tap a force</h3>
+      <p class="hint">Contact forces need touch. Gravity and magnets act at a distance. Gold ring = applied. Orange = friction. Red = gravity. Yellow center = magnetic.</p>
+      <svg viewBox="0 0 260 260" role="img" aria-label="Force types" style="width:100%;max-width:280px;display:block;margin:0 auto;">
         <circle id="tap-crust" cx="130" cy="130" r="118" fill="#c4a484" stroke="#6b4423" stroke-width="2"/>
         <circle id="tap-mantle" cx="130" cy="130" r="96" fill="#d97706"/>
         <circle id="tap-outer" cx="130" cy="130" r="46" fill="#b8431f"/>
         <circle id="tap-inner" cx="130" cy="130" r="22" fill="#f5c542"/>
-        <text x="130" y="22" text-anchor="middle" font-size="11" fill="#1f2a1c">crust</text>
-        <text x="130" y="70" text-anchor="middle" font-size="11" fill="#1f2a1c">mantle</text>
-        <text x="130" y="128" text-anchor="middle" font-size="10" fill="#fff">core</text>
+        <text x="130" y="22" text-anchor="middle" font-size="11" fill="#1f2a1c">applied</text>
+        <text x="130" y="70" text-anchor="middle" font-size="11" fill="#1f2a1c">friction</text>
+        <text x="130" y="118" text-anchor="middle" font-size="10" fill="#fff">gravity</text>
+        <text x="130" y="138" text-anchor="middle" font-size="9" fill="#1f2a1c">magnet</text>
       </svg>
-      <p id="earthTapNote" style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink);">Tap the crust, mantle, or core.</p>
+      <p id="earthTapNote" style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink);">Tap applied, friction, gravity, or magnetic.</p>
     </div>
-    <div class="biome-grid" id="biomeGrid"></div>
+<div class="biome-grid" id="biomeGrid"></div>
     <div class="popquiz-trigger" id="trigger-biomes">
       <h3>Ready for the Concepts Pop Quiz?</h3>
-      <p>20 questions · ⏱ 6 min · lock in inquiry, layers, plates, and safety.</p>
+      <p>20 questions · ⏱ 6 min · lock in force, motion, work, and energy.</p>
     </div>
   </section>
 
@@ -1445,31 +1449,31 @@
     <h2 class="section-title">Step-by-Step Solver 🧮 <span class="time-pill">⏱ ~12 min</span></h2>
     <p class="section-intro">Four interactive walkthroughs for the topics that mix people up the most: scalar vs vector, contact vs non-contact force, speed vs velocity, and work vs energy. Tap, try, and walk through it.</p>
 
-    <div class="solver-block" id="solverA">
+                    <div class="solver-block" id="solverA">
       <div class="solver-header">
-        <h3>🔬 Solver A - Variable Sorter</h3>
-        <p class="solver-sub">Independent = what you <strong>change on purpose</strong>. Dependent = what you <strong>measure</strong>. Controlled = what you <strong>keep the same</strong> so the test is fair.</p>
+        <h3>🔬 Solver A - Force Type Sorter</h3>
+        <p class="solver-sub">Force is a <strong>push or a pull</strong>. Name the force (applied, friction, gravity…). Then say if it is <strong>contact</strong> or <strong>non-contact</strong>.</p>
       </div>
       <div class="solver-pad">
         <div class="solver-row">
           <label>Pick a scenario:
             <select class="solver-op wide" id="solA-sample">
-              <option value="0">Sunlight and plant height</option>
-              <option value="1">Fertilizer and plant height</option>
-              <option value="2">Rainfall and flood depth</option>
-              <option value="3">Study time and test scores</option>
+              <option value="0">Shopping cart</option>
+              <option value="1">Shoe soles on a wet floor</option>
+              <option value="2">Desk and backpack</option>
+              <option value="3">Tug-of-war</option>
             </select>
           </label>
         </div>
         <div class="scenario-box" id="solA-scenario"></div>
         <div class="var-grid">
-          <label>Independent variable (you change it)
+          <label>Push or pull
             <select class="solver-op wide" id="solA-iv"></select>
           </label>
-          <label>Dependent variable (you measure it)
+          <label>Named force
             <select class="solver-op wide" id="solA-dv"></select>
           </label>
-          <label>Controlled variable (stays the same)
+          <label>Contact or non-contact
             <select class="solver-op wide" id="solA-cv"></select>
           </label>
         </div>
@@ -1484,11 +1488,11 @@
 
     <div class="solver-block" id="solverB">
       <div class="solver-header">
-        <h3>🌍 Solver B - Layer Matcher</h3>
-        <p class="solver-sub">Chemical layers = what it is <strong>made of</strong> (crust, mantle, core). Physical layers = how it <strong>behaves</strong> (lithosphere, asthenosphere, mesosphere, outer core, inner core). Do not mix those two lists.</p>
+        <h3>📐 Solver B - Scalar vs Vector</h3>
+        <p class="solver-sub"><strong>Scalar</strong> = size only (distance, speed, time, mass, energy). <strong>Vector</strong> = size and direction (force, velocity, acceleration, displacement).</p>
       </div>
       <div class="solver-pad">
-        <div class="scenario-box" id="solB-clue">Tap a sample, then pick the layer that matches the clue.</div>
+        <div class="scenario-box" id="solB-clue">Tap a sample, then pick scalar or vector.</div>
         <div class="layer-grid" id="solB-grid"></div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solB-start" type="button">Walk me through it →</button>
@@ -1501,23 +1505,23 @@
 
     <div class="solver-block" id="solverC">
       <div class="solver-header">
-        <h3>🧩 Solver C - Boundary Classifier</h3>
-        <p class="solver-sub">Convergent = plates collide. Divergent = plates move apart (new crust). Transform = plates slide past (earthquakes). Tap the picture that matches the clue.</p>
+        <h3>🏃 Solver C - Speed, Velocity, Acceleration</h3>
+        <p class="solver-sub">Speed = distance / time (scalar). Velocity = displacement / time (vector). Acceleration a = (v<sub>f</sub> − v<sub>i</sub>) / t. Convert minutes to seconds when the unit is m/s.</p>
       </div>
       <div class="solver-pad">
         <div class="scenario-box" id="solC-clue"></div>
         <div class="boundary-grid">
-          <button type="button" class="boundary-card" data-b="divergent" id="solC-div">
-            <svg viewBox="0 0 160 80" aria-hidden="true"><rect width="160" height="80" fill="#e8f4ea"/><path d="M10 50 L70 50 L80 30 L90 50 L150 50" fill="none" stroke="#2e5d3a" stroke-width="4"/><path d="M80 30 L80 18" stroke="#c1440e" stroke-width="3"/><polygon points="74,22 80,12 86,22" fill="#c1440e"/><text x="80" y="72" text-anchor="middle" font-size="11" fill="#2e5d3a">apart</text></svg>
-            <div class="b-name">Divergent</div>
+          <button type="button" class="boundary-card" data-b="speed" id="solC-div">
+            <div class="b-name">Speed</div>
+            <p style="font-size:12px;margin-top:6px;">distance / time · no direction</p>
           </button>
-          <button type="button" class="boundary-card" data-b="convergent" id="solC-con">
-            <svg viewBox="0 0 160 80" aria-hidden="true"><rect width="160" height="80" fill="#f8eee4"/><path d="M10 58 L70 58 L80 22 L90 58 L150 58" fill="#6b4423"/><polygon points="80 22 68 58 92 58" fill="#8a5a32"/><circle cx="80" cy="18" r="6" fill="#c1440e"/><text x="80" y="74" text-anchor="middle" font-size="11" fill="#6b4423">collide</text></svg>
-            <div class="b-name">Convergent</div>
+          <button type="button" class="boundary-card" data-b="velocity" id="solC-con">
+            <div class="b-name">Velocity</div>
+            <p style="font-size:12px;margin-top:6px;">displacement / time · keep east</p>
           </button>
-          <button type="button" class="boundary-card" data-b="transform" id="solC-tr">
-            <svg viewBox="0 0 160 80" aria-hidden="true"><rect width="160" height="80" fill="#eef3f6"/><path d="M20 30 H140" stroke="#1e6f8a" stroke-width="5"/><path d="M20 50 H140" stroke="#1e6f8a" stroke-width="5"/><polygon points="120,24 132,30 120,36" fill="#1e6f8a"/><polygon points="40,44 28,50 40,56" fill="#1e6f8a"/><text x="80" y="72" text-anchor="middle" font-size="11" fill="#1e6f8a">slide</text></svg>
-            <div class="b-name">Transform</div>
+          <button type="button" class="boundary-card" data-b="acceleration" id="solC-tr">
+            <div class="b-name">Acceleration</div>
+            <p style="font-size:12px;margin-top:6px;">(v<sub>f</sub> − v<sub>i</sub>) / t</p>
           </button>
         </div>
         <div class="solver-controls">
@@ -1531,20 +1535,20 @@
 
     <div class="solver-block" id="solverD">
       <div class="solver-header">
-        <h3>📳 Solver D - Quake Vocab</h3>
-        <p class="solver-sub">Focus (hypocenter) is where the quake <strong>starts inside</strong> the Earth. Epicenter is the point on the <strong>surface above</strong> the focus. <strong>Magnitude</strong> = energy released. <strong>Intensity</strong> = shaking or damage felt in a place. This pair is easy to mix up.</p>
+        <h3>⚡ Solver D - Energy Transformer</h3>
+        <p class="solver-sub">Work W = F × d. <strong>PE</strong> is stored at the top of the ramp. <strong>KE</strong> is motion at the bottom. Energy is conserved: it changes form. PhET Energy Skate Park: Basics is the Q2 lab.</p>
       </div>
       <div class="solver-pad">
         <div class="quake-svg-wrap" id="solD-svg"></div>
-        <p style="font-size:13px;color:var(--ink-soft);margin:8px 0;">Tap the diagram: which dot is the focus? Then pick magnitude or intensity for the clue.</p>
+        <p style="font-size:13px;color:var(--ink-soft);margin:8px 0;">Tap the diagram: gold top is PE, red bottom is KE. Then name work or conservation.</p>
         <div class="choice-grid">
-          <button type="button" class="choice-chip" data-pick="focus" id="solD-focus">Focus / hypocenter</button>
-          <button type="button" class="choice-chip" data-pick="epicenter" id="solD-epi">Epicenter</button>
+          <button type="button" class="choice-chip" data-pick="pe" id="solD-focus">Potential energy (PE)</button>
+          <button type="button" class="choice-chip" data-pick="ke" id="solD-epi">Kinetic energy (KE)</button>
         </div>
         <div class="scenario-box" id="solD-clue"></div>
         <div class="choice-grid">
-          <button type="button" class="choice-chip" data-pick="magnitude" id="solD-mag">Magnitude (energy)</button>
-          <button type="button" class="choice-chip" data-pick="intensity" id="solD-int">Intensity (damage felt)</button>
+          <button type="button" class="choice-chip" data-pick="work" id="solD-mag">Work W = F × d</button>
+          <button type="button" class="choice-chip" data-pick="conserve" id="solD-int">Conservation of energy</button>
         </div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solD-start" type="button">Walk me through it →</button>
@@ -1557,11 +1561,10 @@
 
     <div class="popquiz-trigger" id="trigger-diagrams">
       <h3>Ready for the Step-by-Step Solver Pop Quiz?</h3>
-      <p>20 questions · ⏱ 6 min · variables, layers, boundaries, and quake vocab.</p>
+      <p>20 questions · ⏱ 6 min · force types, scalars, speed, and energy.</p>
     </div>
   </section>
-
-  <!-- TUTOR -->
+<!-- TUTOR -->
   <section class="tab-content" id="tutor">
     <h2 class="section-title">Tutor Mode 🦉 <span class="time-pill">⏱ ~14 min</span></h2>
     <p class="section-intro">Friendly walk-through of every topic. Tap ▶ to listen, ⏸ to pause, ⏹ to stop. Read along while it talks.</p>
@@ -2314,12 +2317,12 @@ window.rdbg = function(cat, ...args) { window.RDBG.log(cat, ...args); };
 
 
 const RANKS = [
-  { min: 0, name: 'Pebble', icon: '🪨' },
-  { min: 100, name: 'Crust Explorer', icon: '🌍' },
-  { min: 300, name: 'Lithosphere', icon: '🧱' },
-  { min: 600, name: 'Mantle Walker', icon: '🔥' },
-  { min: 1000, name: 'Ring of Fire', icon: '🌋' },
-  { min: 1500, name: 'Earth Master', icon: '👑' },
+  { min: 0, name: 'Newton Scout', icon: '🧭' },
+  { min: 100, name: 'Vector', icon: '➡️' },
+  { min: 300, name: 'Accelerator', icon: '🏃' },
+  { min: 600, name: 'Worker', icon: '💪' },
+  { min: 1000, name: 'Energy Master', icon: '⚡' },
+  { min: 1500, name: 'Force Master', icon: '👑' },
 ];
 function getRank(xp) {
   let r = RANKS[0];
@@ -2356,7 +2359,7 @@ const ACHIEVEMENTS = {
   'streak-10': { name: 'On Fire', icon: '🔥', desc: '10 correct answers in a row' },
   'first-exam': { name: 'Exam Done', icon: '🎓', desc: 'Completed a Practice Exam' },
   'high-scorer': { name: 'High Scorer', icon: '🏆', desc: 'Scored 90%+ on a Practice Exam' },
-  'apex': { name: 'Ring of Fire', icon: '🌋', desc: 'Earned the Ring of Fire rank' },
+  'apex': { name: 'Energy Master', icon: '⚡', desc: 'Earned the Energy Master rank' },
 };
 function unlockAchievement(id) {
   if (!progress.achievements) progress.achievements = [];
@@ -2392,7 +2395,7 @@ function refreshHomeStats() {
   const rank = getRank(progress.totalXP || 0);
   document.getElementById('rankCardWrap').innerHTML =
     `<div class="rank-card"><span class="rank-icon">${rank.icon}</span><span>RANK <span class="rank-name">${rank.name}</span></span></div>`;
-  if (rank.name === 'Ring of Fire') unlockAchievement('apex');
+  if (rank.name === 'Energy Master') unlockAchievement('apex');
 }
 
 function refreshTabs() {
@@ -2427,10 +2430,10 @@ function refreshHomeGrid() {
   const cards = [
     { id:'flashcards', icon:'🎴', title:'Flashcards', time:'~12 min', desc:'Flip through every glossary term from the booklet.', module:'flashcards' },
     { id:'biomes', icon:'📖', title:'Concepts', time:'~12 min', desc:'Force, motion, work, and energy — all explained.', module:'biomes' },
-    { id:'diagrams', icon:'🧮', title:'Step-by-Step Solver', time:'~12 min', desc:'Variables, layers, boundaries, and quake vocab walk-throughs.', module:'diagrams' },
+    { id:'diagrams', icon:'🧮', title:'Step-by-Step Solver', time:'~12 min', desc:'Force types, scalars vs vectors, speed, and energy walk-throughs.', module:'diagrams' },
     { id:'tutor', icon:'🦉', title:'Tutor Mode', time:'~14 min', desc:'Concepts explained with read-aloud.', module:'tutor' },
     { id:'cheat', icon:'⚡', title:'Cheat Sheet', time:'~6 min', desc:'The night-before page.', module:'cheat' },
-    { id:'practice', icon:'📝', title:'Practice Sets', time:'~12 min', desc:'Exercises like the booklet: investigations, layers, plates, safety.', module:'practice' },
+    { id:'practice', icon:'📝', title:'Practice Sets', time:'~12 min', desc:'Exercises like the booklet: force, motion, work, and energy.', module:'practice' },
     { id:'exam', icon: allModulesComplete() ? '📝' : '🔒', title:'Practice Exam', time:'~29 min', desc: allModulesComplete() ? '🔓 Unlocked! 70 questions, 2 different exams.' : 'Finish all 6 modules above to unlock.', module:null }
   ];
   grid.innerHTML = '';
@@ -2708,6 +2711,10 @@ class SpeechController {
 
   play() {
     if (window.rdbg) rdbg('CLICK', this._id, 'play() called, current state=' + this.state + ', enabled=' + (this._enabled !== false) + ', sentences=' + this.sentences.length + ', currentIdx=' + this.currentIdx);
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) {
+      if (window.rdbg) rdbg('VOICE', this._id, 'play() skipped: voice off');
+      return;
+    }
     if (!('speechSynthesis' in window)) {
       if (window.rdbg) rdbg('ERROR', this._id, 'no speechSynthesis');
       return;
@@ -3952,7 +3959,7 @@ const TUTOR_TOPICS = [
 ];
 
 const tutorShell = document.getElementById('tutorShell');
-TUTOR_TOPICS.forEach(t => {
+if (tutorShell) TUTOR_TOPICS.forEach(t => {
   const el = document.createElement('div');
   el.className = 'tutor-card';
   el.style.setProperty('--accent', t.accent);
@@ -4217,45 +4224,35 @@ function fmt(n, maxDec = 4) {
 
 
 // ===========================================================
-// SOLVER A — Variable sorter
+// SOLVER A — Force type sorter
 // ===========================================================
 const SOL_A_SCENARIOS = [
-  {
-    title: "Sunlight and plant height",
-    text: "A student gives one plant more sunlight and keeps the other in shade. She waters both the same, uses the same soil and pot, and measures height every 3 days.",
-    factors: ["amount of sunlight", "height of the plant", "type of soil and pot", "color of the classroom"],
-    iv: "amount of sunlight", dv: "height of the plant", cv: "type of soil and pot"
-  },
-  {
-    title: "Fertilizer and plant height",
-    text: "A student changes how much fertilizer each plant gets. She measures height weekly. Same plant type, same water, same pot size.",
-    factors: ["amount of fertilizer", "height of the plant", "plant type and water", "the day of the week"],
-    iv: "amount of fertilizer", dv: "height of the plant", cv: "plant type and water"
-  },
-  {
-    title: "Rainfall and flood depth",
-    text: "A barangay team wonders if heavier rainfall makes street floods deeper. They measure flood depth after storms. They compare the same street with the same drain size.",
-    factors: ["amount of rainfall", "flood depth on the street", "same street and drain size", "the mayor's name"],
-    iv: "amount of rainfall", dv: "flood depth on the street", cv: "same street and drain size"
-  },
-  {
-    title: "Study time and test scores",
-    text: "A class tests whether more study time raises scores. Students study different numbers of minutes. Everyone takes the same quiz, same room, same time of day.",
-    factors: ["time spent studying", "test scores", "same quiz and room", "the student's favorite color"],
-    iv: "time spent studying", dv: "test scores", cv: "same quiz and room"
-  }
+  { title:"Shopping cart", text:"A student pushes a shopping cart down the aisle.", factors:["push","pull","Applied force","Frictional force","contact","non-contact"], iv:"push", dv:"Applied force", cv:"contact" },
+  { title:"Shoe soles on a wet floor", text:"Shoe soles keep a student from slipping on a wet floor.", factors:["push","pull","Frictional force","Applied force","contact","non-contact"], iv:"push", dv:"Frictional force", cv:"contact" },
+  { title:"Desk and backpack", text:"A desk holds up a heavy backpack.", factors:["push","pull","Normal force","Gravitational force","contact","non-contact"], iv:"push", dv:"Normal force", cv:"contact" },
+  { title:"Tug-of-war", text:"Two teams pull a rope in opposite directions.", factors:["push","pull","Tension force","Spring force","contact","non-contact"], iv:"pull", dv:"Tension force", cv:"contact" },
+  { title:"Parachute", text:"A parachute slows a skydiver.", factors:["push","pull","Air resistance","Frictional force","contact","non-contact"], iv:"push", dv:"Air resistance", cv:"contact" },
+  { title:"Slingshot", text:"A stretched slingshot returns to its original shape.", factors:["push","pull","Spring force","Tension force","contact","non-contact"], iv:"pull", dv:"Spring force", cv:"contact" },
+  { title:"Apple from a tree", text:"An apple falls from a tree toward Earth.", factors:["push","pull","Gravitational force","Magnetic force","contact","non-contact"], iv:"pull", dv:"Gravitational force", cv:"non-contact" },
+  { title:"Fridge magnet", text:"A refrigerator magnet sticks to the door.", factors:["push","pull","Magnetic force","Electrostatic force","contact","non-contact"], iv:"pull", dv:"Magnetic force", cv:"non-contact" },
+  { title:"Rubbed balloon", text:"A rubbed balloon sticks to the wall.", factors:["push","pull","Electrostatic force","Magnetic force","contact","non-contact"], iv:"pull", dv:"Electrostatic force", cv:"non-contact" },
+  { title:"Soccer kick", text:"A soccer player kicks a ball.", factors:["push","pull","Applied force","Normal force","contact","non-contact"], iv:"push", dv:"Applied force", cv:"contact" }
 ];
 
 function solA_fillSelects(idx) {
   const sc = SOL_A_SCENARIOS[idx];
+  const sel = document.getElementById("solA-sample");
+  if (sel && sel.options.length !== SOL_A_SCENARIOS.length) {
+    sel.innerHTML = SOL_A_SCENARIOS.map((x,i) => "<option value=\""+i+"\">"+x.title+"</option>").join("");
+  }
   document.getElementById("solA-scenario").innerHTML = "<strong>" + sc.title + "</strong><br>" + sc.text;
   ["solA-iv","solA-dv","solA-cv"].forEach(id => {
-    const sel = document.getElementById(id);
-    sel.innerHTML = sc.factors.map(f => "<option value=\""+f.replace(/"/g,"&quot;")+"\">"+f+"</option>").join("");
+    const el = document.getElementById(id);
+    el.innerHTML = sc.factors.map(f => "<option value=\""+f.replace(/"/g,"&quot;")+"\">"+f+"</option>").join("");
   });
   document.getElementById("solA-iv").value = sc.factors[0];
-  document.getElementById("solA-dv").value = sc.factors[1];
-  document.getElementById("solA-cv").value = sc.factors[2];
+  document.getElementById("solA-dv").value = sc.factors[2];
+  document.getElementById("solA-cv").value = sc.factors[4];
 }
 
 function solA_solve() {
@@ -4265,57 +4262,32 @@ function solA_solve() {
   const iv = document.getElementById("solA-iv").value;
   const dv = document.getElementById("solA-dv").value;
   const cv = document.getElementById("solA-cv").value;
-  const ivOk = iv === sc.iv;
-  const dvOk = dv === sc.dv;
-  const cvOk = cv === sc.cv;
   const steps = [
-    {
-      title: "Name the question being tested",
-      body: "The investigation asks: does <strong>" + sc.iv + "</strong> change <strong>" + sc.dv + "</strong>? That is the testable question.",
-      deeper: "A testable question can be observed or measured. \"Why is the sky pretty?\" is not testable here. \"Does more sunlight make plants taller?\" is."
-    },
-    {
-      title: "Independent variable: what you change on purpose",
-      body: ivOk
-        ? "You tagged <strong>" + iv + "</strong>. That is the independent variable. Nice."
-        : "You tagged <strong>" + iv + "</strong>. The independent variable is actually <strong>" + sc.iv + "</strong> because that is the one factor changed on purpose.",
-      math: "IV = " + sc.iv,
-      deeper: "Memory hook: Independent = I change it."
-    },
-    {
-      title: "Dependent variable: what you measure",
-      body: dvOk
-        ? "You tagged <strong>" + dv + "</strong>. That is what gets measured because of the IV."
-        : "You tagged <strong>" + dv + "</strong>. The dependent variable is <strong>" + sc.dv + "</strong>: it depends on the change you made.",
-      math: "DV = " + sc.dv,
-      deeper: "Memory hook: Dependent = data you collect."
-    },
-    {
-      title: "Controlled variables: keep the test fair",
-      body: cvOk
-        ? "You tagged <strong>" + cv + "</strong>. Those stay the same so only one thing is being tested."
-        : "Controlled variables are <strong>" + sc.cv + "</strong>. If you change two things at once, you cannot tell which one caused the result.",
-      math: "CV = " + sc.cv,
-      altMethod: "Some teachers say MANTRA: Manipulate (IV), Respond (DV), Constants (CV). Same three jobs, different nicknames. The school booklet uses Independent, Dependent, Controlled."
-    }
+    { title:"Push or pull?", body: iv===sc.iv ? "You tagged <strong>"+iv+"</strong>. A push moves an object away. A pull moves it toward." : "You tagged <strong>"+iv+"</strong>. This situation is a <strong>"+sc.iv+"</strong>. Push = away. Pull = toward.", math: sc.iv, deeper:"Force is a push or a pull. SI unit: newton (N). It can start, stop, speed up, slow down, change direction, or change shape." },
+    { title:"Name the force", body: dv===sc.dv ? "Yes: <strong>"+sc.dv+"</strong>." : "You tagged <strong>"+dv+"</strong>. The booklet name is <strong>"+sc.dv+"</strong>.", math: sc.dv, deeper:"Contact: applied, friction, normal, tension, air resistance, spring. Non-contact: gravitational, magnetic, electrostatic." },
+    { title:"Contact or non-contact?", body: cv===sc.cv ? "You tagged <strong>"+cv+"</strong>. Objects must touch for contact forces. Gravity, magnets, and charge act at a distance." : "This one is <strong>"+sc.cv+"</strong>. Gravity is not a contact force. Similar magnetic poles do not attract.", math: sc.cv, altMethod:"Exercise 1B trap list: cart = applied, soles = friction, desk = normal, tug-of-war = tension, parachute = air resistance, slingshot = spring, apple = gravity, magnet = magnetic, balloon = electrostatic, kick = applied." }
   ];
   SolverRenderer.render(outEl, steps);
 }
 
 // ===========================================================
-// SOLVER B — Layer matcher
+// SOLVER B — Scalar vs vector
 // ===========================================================
 const SOL_B_CLUES = [
-  { clue: "Thinnest layer. Less than 1% of Earth's volume. Oceanic kind is basalt. Continental kind is granite.", ans: "crust", list: "chemical" },
-  { clue: "About 84% of Earth's volume. Convection currents here move the plates.", ans: "mantle", list: "chemical" },
-  { clue: "Innermost layer, mostly iron and nickel. Has a liquid outer part and a solid inner part.", ans: "core", list: "chemical" },
-  { clue: "Rigid outer shell. Crust plus uppermost mantle. Broken into tectonic plates.", ans: "lithosphere", list: "physical" },
-  { clue: "Soft, semi-fluid layer under the lithosphere. Plates move on this.", ans: "asthenosphere", list: "physical" },
-  { clue: "Liquid iron and nickel. Makes Earth's magnetic field.", ans: "outer core", list: "physical" },
-  { clue: "Solid because of extreme pressure even though it is extremely hot (about 5,200-6,000°C).", ans: "inner core", list: "physical" },
-  { clue: "Stronger, more solid lower mantle. Also called mesosphere in the physical-layer list.", ans: "mesosphere", list: "physical" }
+  { clue:"The car is moving at 60 km/h. No direction is given.", ans:"scalar" },
+  { clue:"The car is moving at 60 km/h East.", ans:"vector" },
+  { clue:"Distance: total length traveled, no direction.", ans:"scalar" },
+  { clue:"Displacement: change in position with direction.", ans:"vector" },
+  { clue:"Speed of a runner (how fast, no direction).", ans:"scalar" },
+  { clue:"Velocity of a rescue drone, 6 m/s east.", ans:"vector" },
+  { clue:"Time in seconds or minutes.", ans:"scalar" },
+  { clue:"Force in newtons, including the direction of the push or pull.", ans:"vector" },
+  { clue:"Acceleration of a car after a green light.", ans:"vector" },
+  { clue:"Energy in joules.", ans:"scalar" },
+  { clue:"Mass of a backpack.", ans:"scalar" },
+  { clue:"Temperature of the classroom.", ans:"scalar" }
 ];
-const SOL_B_LAYERS = ["crust","mantle","core","lithosphere","asthenosphere","mesosphere","outer core","inner core"];
+const SOL_B_LAYERS = ["scalar","vector"];
 let solB_idx = 0;
 let solB_pick = "";
 
@@ -4323,7 +4295,7 @@ function solB_show(idx) {
   solB_idx = idx;
   solB_pick = "";
   const c = SOL_B_CLUES[idx];
-  document.getElementById("solB-clue").innerHTML = "<strong>Clue (" + c.list + " layers):</strong> " + c.clue;
+  document.getElementById("solB-clue").innerHTML = "<strong>Clue:</strong> " + c.clue;
   document.querySelectorAll("#solB-grid .layer-chip").forEach(b => b.classList.remove("selected","correct","wrong"));
 }
 
@@ -4333,40 +4305,25 @@ function solB_solve() {
   const pick = solB_pick || "(none yet)";
   const ok = pick === c.ans;
   const steps = [
-    {
-      title: "Which list is this clue from?",
-      body: "This clue is about <strong>" + c.list + " layers</strong>. Chemical = made of (crust, mantle, core). Physical = how it behaves (lithosphere, asthenosphere, mesosphere, outer core, inner core).",
-      deeper: "Crust is not the same word as lithosphere. Lithosphere = crust + uppermost mantle, the rigid plates."
-    },
-    {
-      title: "Match the clue",
-      body: ok
-        ? "You picked <strong>" + pick + "</strong>. That matches."
-        : "You picked <strong>" + pick + "</strong>. The matching layer is <strong>" + c.ans + "</strong>.",
-      math: c.ans,
-      deeper: c.ans === "outer core"
-        ? "Outer core is liquid metal. Flowing iron makes the magnetic field that shields us."
-        : c.ans === "inner core"
-        ? "Inner core is solid from pressure, not because it is cold. It is hotter than the surface of the Sun's photosphere in some estimates, but the pressure locks it solid."
-        : "Say the clue out loud, then say the layer. If you mix crust with lithosphere, ask: am I talking about the material, or the rigid plate?"
-    },
-    {
-      title: "Why the mix-up happens",
-      body: "Tests love asking you to compare chemical vs physical. If the question says \"how it behaves\" or \"rigid / plastic / liquid\", use the physical list. If it says \"made of\" or names granite and basalt, use chemical.",
-      altMethod: "Picture nested bowls: oceanic crust, continental crust, lithosphere, asthenosphere, upper mantle, lower mantle, outer core, inner core. Chemical is the simpler 3-layer cut (crust, mantle, core)."
-    }
+    { title:"Magnitude only, or magnitude and direction?", body:"<strong>Scalar</strong> = size only (distance, speed, time, mass, temperature, energy). <strong>Vector</strong> = size and direction (force, velocity, acceleration, displacement).", deeper:"Magnitude means size, amount, or measurement." },
+    { title:"This clue is " + c.ans, body: ok ? "You picked <strong>"+pick+"</strong>. That matches." : "You picked <strong>"+pick+"</strong>. The match is <strong>"+c.ans+"</strong>.", math: c.ans, deeper:"Why force is a vector: pushing upward vs pulling downward changes the motion. 60 km/h with no direction is speed, not velocity." },
+    { title:"Lock the pair", body:"If the question names a direction (east, up, toward Earth), it is a vector. If it is only an amount, it is a scalar.", altMethod:"Say the sentence with and without a compass word. If dropping the compass word still describes it, it was a scalar." }
   ];
   SolverRenderer.render(outEl, steps);
 }
 
 // ===========================================================
-// SOLVER C — Boundary classifier
+// SOLVER C — Speed, velocity, acceleration
 // ===========================================================
 const SOL_C_CLUES = [
-  { text: "Two plates collide. Magma rises. A volcano like Mayon can form.", ans: "convergent", extra: "The Philippines sits near the collision of the Philippine Sea Plate and the Eurasian Plate. Mayon is the school booklet's example." },
-  { text: "Plates move apart. Magma rises and cools into new oceanic crust. Think Mid-Atlantic Ridge.", ans: "divergent", extra: "New crust is born at divergent boundaries. Sea-floor spreading is the big example." },
-  { text: "Plates slide past each other. They grind. Earthquakes are common. Think West Valley Fault.", ans: "transform", extra: "Transform boundaries do not usually build volcanoes. They shake." },
-  { text: "Himalayan Mountains keep growing because two continental plates crashed and are still pushing.", ans: "convergent", extra: "Continent-continent collision piles up mountains instead of a simple volcanic arc." }
+  { text:"John runs 480 m in 8 min. Find speed in m/s. Convert minutes first: 8 × 60 = 480 s. 480/480 = 1 m/s.", ans:"speed", extra:"Trap: 480/8 = 60 m/min if you forget 1 min = 60 s." },
+  { text:"Maria bikes 1,200 m in 15 min. Speed in m/s: 15 × 60 = 900 s. 1200/900 = 4/3 m/s ≈ 1.33 m/s.", ans:"speed", extra:"Trap: 1200/15 = 80 m/min if you skip the conversion." },
+  { text:"A rescue drone flies 300 m east in 50 s with no direction change. 300/50 = 6 m/s east.", ans:"velocity", extra:"Velocity = displacement / time, and it keeps the direction word." },
+  { text:"A car goes from 8 m/s to 28 m/s in 5 s. a = (28 − 8)/5 = 4 m/s².", ans:"acceleration", extra:"Positive acceleration: the object speeds up." },
+  { text:"A school bus goes from 24 m/s to 9 m/s in 3 s. a = (9 − 24)/3 = −5 m/s².", ans:"acceleration", extra:"Negative acceleration is deceleration. Force acts opposite the motion." },
+  { text:"80 km/h with no direction named.", ans:"speed", extra:"Speed is scalar. Add a compass word and it becomes velocity." },
+  { text:"70 km/h north.", ans:"velocity", extra:"Direction is in the measurement, so this is velocity." },
+  { text:"A bicycle speeds up downhill.", ans:"acceleration", extra:"Acceleration happens when velocity changes: speed up, slow down, or change direction." }
 ];
 let solC_idx = 0;
 let solC_pick = "";
@@ -4384,35 +4341,21 @@ function solC_solve() {
   const pick = solC_pick || "(none yet)";
   const ok = pick === c.ans;
   const steps = [
-    {
-      title: "Watch the arrows",
-      body: "Ask: are the plates coming together, moving apart, or sliding past? That one question picks the boundary type.",
-      deeper: "Convergent = together. Divergent = divide / go apart. Transform = slide."
-    },
-    {
-      title: "This clue is " + c.ans,
-      body: ok
-        ? "You tapped <strong>" + pick + "</strong>. That is the one."
-        : "You tapped <strong>" + pick + "</strong>. The booklet answer is <strong>" + c.ans + "</strong>.",
-      math: c.ans,
-      deeper: c.extra
-    },
-    {
-      title: "Philippine check",
-      body: "We live on the Pacific Ring of Fire. That is why PHIVOLCS watches earthquakes, volcanoes, and tsunamis. PAGASA is the weather and typhoon agency, a different job.",
-      altMethod: "Hand motions work: two fists push together (convergent), pull apart (divergent), scrape past (transform). Use that on the test if the picture is tiny."
-    }
+    { title:"Name the quantity", body:"Speed = distance / time (scalar). Velocity = displacement / time (vector). Acceleration a = (v<sub>f</sub> − v<sub>i</sub>) / t.", deeper:"Units: m/s or km/h for speed and velocity; m/s² for acceleration." },
+    { title:"This clue is " + c.ans, body: ok ? "You tapped <strong>"+pick+"</strong>. That is the one." : "You tapped <strong>"+pick+"</strong>. The booklet answer is <strong>"+c.ans+"</strong>.", math: c.ans, deeper: c.extra },
+    { title:"Convert minutes when the unit is m/s", body:"1 minute = 60 seconds. 8 min = 480 s. 15 min = 900 s. 6 min = 360 s.", altMethod:"If the question leaves time in minutes, the unit can stay m/min (Maria 360 m in 6 min = 60 m/min). Read the required unit first." }
   ];
   SolverRenderer.render(outEl, steps);
 }
 
 // ===========================================================
-// SOLVER D — Quake vocab
+// SOLVER D — Work and energy
 // ===========================================================
 const SOL_D_CLUES = [
-  { text: "This number is the amount of energy released by the earthquake.", ans: "magnitude", trap: "intensity" },
-  { text: "This describes how strong the shaking or damage felt in a specific town.", ans: "intensity", trap: "magnitude" },
-  { text: "The 2013 Bohol earthquake was reported as 7.2. That 7.2 is a measure of energy released.", ans: "magnitude", trap: "intensity" }
+  { text:"A force of 10 N moves a box 3 m in the direction of the force. W = F × d.", ans:"work", dot:"ke", extra:"W = 10 × 3 = 30 J. Work needs both force and distance in the same line." },
+  { text:"A skater is paused at the top of the ramp. Energy is stored because of height.", ans:"pe", dot:"pe", extra:"Gravitational potential energy is greatest at the top. PhET Energy Skate Park: Basics is the Q2 lab." },
+  { text:"The skater is fastest at the bottom of the ramp.", ans:"ke", dot:"ke", extra:"Kinetic energy is energy of motion. PE at the top becomes KE at the bottom." },
+  { text:"Energy is not created or destroyed; it changes form. PE + KE stays the same if we ignore friction.", ans:"conserve", dot:"pe", extra:"Law of conservation of energy. Friction turns some mechanical energy into heat." }
 ];
 let solD_idx = 0;
 let solD_dot = "";
@@ -4421,27 +4364,25 @@ let solD_mi = "";
 function solD_draw() {
   const wrap = document.getElementById("solD-svg");
   if (!wrap) return;
-  wrap.innerHTML = `<svg viewBox="0 0 360 180" role="img" aria-label="Earthquake diagram">
+  wrap.innerHTML = `<svg viewBox="0 0 360 180" role="img" aria-label="Energy skate park">
     <rect width="360" height="180" fill="#e7f0e8"/>
-    <path d="M0 70 Q80 50 160 72 T360 60 L360 0 L0 0 Z" fill="#8ecae6"/>
-    <path d="M0 70 Q80 50 160 72 T360 60 L360 180 L0 180 Z" fill="#c4a484"/>
-    <circle class="quake-hot" id="solD-dotFocus" cx="160" cy="118" r="10" fill="#c1440e" stroke="#1f2a1c" stroke-width="2"/>
-    <circle class="quake-hot" id="solD-dotEpi" cx="160" cy="62" r="10" fill="#e8a838" stroke="#1f2a1c" stroke-width="2"/>
-    <line x1="160" y1="72" x2="160" y2="108" stroke="#1f2a1c" stroke-dasharray="4 3"/>
-    <text x="178" y="66" font-size="12" fill="#1f2a1c">surface</text>
-    <text x="178" y="124" font-size="12" fill="#1f2a1c">inside Earth</text>
-    <text x="12" y="24" font-size="11" fill="#1f2a1c">Tap a dot: gold = surface, red = underground</text>
+    <path d="M20 40 Q80 40 120 90 Q180 160 240 90 Q280 40 340 40" fill="none" stroke="#2e5d3a" stroke-width="8"/>
+    <circle class="quake-hot" id="solD-dotEpi" cx="50" cy="42" r="10" fill="#e8a838" stroke="#1f2a1c" stroke-width="2"/>
+    <circle class="quake-hot" id="solD-dotFocus" cx="180" cy="148" r="10" fill="#c1440e" stroke="#1f2a1c" stroke-width="2"/>
+    <text x="64" y="36" font-size="12" fill="#1f2a1c">top · PE</text>
+    <text x="196" y="164" font-size="12" fill="#1f2a1c">bottom · KE</text>
+    <text x="12" y="22" font-size="11" fill="#1f2a1c">Tap a dot: gold = top (PE), red = bottom (KE)</text>
   </svg>`;
   const f = document.getElementById("solD-dotFocus");
   const e = document.getElementById("solD-dotEpi");
-  if (f) f.addEventListener("click", () => { solD_dot = "focus"; highlightDot(); });
-  if (e) e.addEventListener("click", () => { solD_dot = "epicenter"; highlightDot(); });
+  if (f) f.addEventListener("click", () => { solD_dot = "ke"; highlightDot(); });
+  if (e) e.addEventListener("click", () => { solD_dot = "pe"; highlightDot(); });
 }
 function highlightDot() {
   const f = document.getElementById("solD-dotFocus");
   const e = document.getElementById("solD-dotEpi");
-  if (f) f.setAttribute("r", solD_dot === "focus" ? 14 : 10);
-  if (e) e.setAttribute("r", solD_dot === "epicenter" ? 14 : 10);
+  if (f) f.setAttribute("r", solD_dot === "ke" ? 14 : 10);
+  if (e) e.setAttribute("r", solD_dot === "pe" ? 14 : 10);
 }
 function solD_show(idx) {
   solD_idx = idx;
@@ -4453,32 +4394,12 @@ function solD_show(idx) {
 function solD_solve() {
   const outEl = document.getElementById("solD-output");
   const c = SOL_D_CLUES[solD_idx];
-  const dotOk = solD_dot === "focus";
-  const miOk = solD_mi === c.ans;
+  const dotOk = solD_dot === c.dot;
+  const nameOk = (solD_mi === c.ans) || (solD_dot === c.ans);
   const steps = [
-    {
-      title: "Find the focus",
-      body: dotOk
-        ? "You tapped the red underground dot. That is the <strong>focus</strong> (hypocenter): where the quake starts."
-        : (solD_dot === "epicenter"
-          ? "You tapped the gold surface dot. That is the <strong>epicenter</strong>: the point on the surface above the focus. The start of the quake is the red dot underground."
-          : "Tap the red underground dot. That is the focus. The gold dot on the surface is the epicenter."),
-      math: "focus = underground start · epicenter = surface above it",
-      deeper: "Seismic waves travel out from the focus. The epicenter is just the map pin people hear on the news."
-    },
-    {
-      title: "Magnitude vs intensity",
-      body: miOk
-        ? "You picked <strong>" + solD_mi + "</strong>. That matches this clue."
-        : "You picked <strong>" + (solD_mi || "nothing") + "</strong>. This clue is <strong>" + c.ans + "</strong>. The easy mix-up is calling energy \"intensity.\" Intensity is how hard a place felt it.",
-      math: "Magnitude = energy · Intensity = damage/shaking felt",
-      deeper: "A magnitude 7.2 (Bohol 2013) is one number for the whole event. Intensity can be different in Tagbilaran vs a farther town."
-    },
-    {
-      title: "Lock the pair",
-      body: "If a question says \"amount of energy released,\" the answer is magnitude. If it says \"shaking felt in a specific area,\" the answer is intensity. That is the Exercise 4 trap, rewritten with new wording so you own it.",
-      altMethod: "Some news reports say \"strength\" for both. On an OB test, use the booklet words: magnitude and intensity."
-    }
+    { title:"Find PE and KE on the ramp", body: dotOk ? "You tapped the matching dot for this clue." : (solD_dot === "pe" ? "Gold top is <strong>potential energy</strong> (stored because of height). Red bottom is kinetic energy." : solD_dot === "ke" ? "Red bottom is <strong>kinetic energy</strong> (motion). Gold top is potential energy." : "Tap the gold top (PE) or the red bottom (KE)."), math: "PE top · KE bottom", deeper:"Work W = F × d. Energy is the ability to do work. Both use joules." },
+    { title:"Name the idea", body: nameOk ? "You picked <strong>"+(solD_mi || solD_dot)+"</strong>. That matches." : "You picked <strong>"+(solD_mi || solD_dot || "nothing")+"</strong>. This clue is <strong>"+c.ans+"</strong>.", math: c.ans, deeper: c.extra },
+    { title:"Lock the pair", body:"Work needs force and distance. PE is stored. KE is motion. Conservation means the total does not vanish; it transforms.", altMethod:"PhET Energy Skate Park: Basics — watch the bar graphs as the skater moves." }
   ];
   SolverRenderer.render(outEl, steps);
 }
@@ -4554,10 +4475,10 @@ function solD_solve() {
     document.getElementById("solD-clear").addEventListener("click", () => { document.getElementById("solD-output").innerHTML=""; solD_dot=""; solD_mi=""; solD_show(solD_idx); solD_draw(); });
   }
   const earthNotes = {
-    "tap-crust": "Crust: thinnest chemical layer. Oceanic = basalt. Continental = granite.",
-    "tap-mantle": "Mantle: about 84% of Earth. Convection currents here move the plates.",
-    "tap-outer": "Outer core: liquid iron and nickel. This flow makes the magnetic field.",
-    "tap-inner": "Inner core: solid from pressure, even though it is extremely hot."
+    "tap-crust": "Applied force: a person or object pushes or pulls directly. Shopping cart, kicking a ball.",
+    "tap-mantle": "Friction: opposes motion between surfaces that touch. Shoe soles, bicycle brakes.",
+    "tap-outer": "Gravity: a non-contact pull toward Earth. Rain, fruit dropping, an apple from a tree.",
+    "tap-inner": "Magnetic force: magnets attract or repel at a distance. Opposite poles attract. Similar poles repel."
   };
   Object.keys(earthNotes).forEach(id => {
     const el = document.getElementById(id);
@@ -4570,9 +4491,6 @@ function solD_solve() {
   });
 })();
 
-// ============================================================
-// PRACTICE SETS
-// ============================================================
 const PRACTICE_SETS = [
   { id: "ex1", icon: "💪", title: "Exercise 1 style: Force", desc: "Push vs pull, scalar vs vector, name the force." },
   { id: "ex2", icon: "🏃", title: "Exercise 2 style: Motion MC", desc: "Motion, distance, speed, velocity, acceleration." },
@@ -5560,7 +5478,7 @@ const BREAK_MSGS = [
   '💧 Quick water break! Then crush the next 25 min',
   '🌱 Tiny break = bigger memory. Take 2 min',
 ];
-let breakTimer = null;
+var breakTimer = null;
 function scheduleBreakReminder() {
   if (breakTimer) clearInterval(breakTimer);
   breakTimer = setInterval(() => {
@@ -5744,8 +5662,19 @@ function rankVoiceQuality(v) {
   return score;
 }
 
+function isVoiceOff() {
+  return selectedVoiceURI === 'off';
+}
+
 function loadVoices() {
-  if (!window.speechSynthesis) return;
+  if (!window.speechSynthesis) {
+    const sel = document.getElementById('voiceSelect');
+    if (sel) {
+      sel.innerHTML = '<option value="off" selected>Off — no talking or highlights</option>';
+      selectedVoiceURI = 'off';
+    }
+    return;
+  }
   availableVoices = window.speechSynthesis.getVoices() || [];
   // Strict filter first
   let filtered = availableVoices.filter(isVoiceAllowed);
@@ -5757,27 +5686,35 @@ function loadVoices() {
 
   const sel = document.getElementById('voiceSelect');
   if (!sel) return;
-  if (filtered.length === 0) {
-    sel.innerHTML = '<option value="">No voices available on this device</option>';
-    return;
-  }
   let saved = null;
   try { saved = localStorage.getItem(VOICE_KEY); } catch {}
-  // If saved choice is no longer allowed, reset to top-ranked
-  if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
-  if (!saved) saved = filtered[0].voiceURI;
-  selectedVoiceURI = saved;
+  if (saved === 'off') {
+    selectedVoiceURI = 'off';
+  } else {
+    // If saved choice is no longer allowed, reset to top-ranked
+    if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
+    if (!saved && filtered[0]) saved = filtered[0].voiceURI;
+    selectedVoiceURI = saved || 'off';
+  }
 
-  sel.innerHTML = filtered.map((v, i) => {
-    const stars = i === 0 ? ' ⭐' : '';
-    const label = `${v.name} (${v.lang})${stars}`;
-    const selAttr = v.voiceURI === saved ? ' selected' : '';
-    return `<option value="${v.voiceURI}"${selAttr}>${label}</option>`;
-  }).join('');
+  const offSelected = selectedVoiceURI === 'off' ? ' selected' : '';
+  const offOpt = '<option value="off"' + offSelected + '>Off — no talking or highlights</option>';
+  if (filtered.length === 0) {
+    sel.innerHTML = offOpt + '<option value="">No voices available on this device</option>';
+  } else {
+    sel.innerHTML = offOpt + filtered.map((v, i) => {
+      const stars = i === 0 ? ' ⭐' : '';
+      const label = v.name + ' (' + v.lang + ')' + stars;
+      const selAttr = v.voiceURI === selectedVoiceURI ? ' selected' : '';
+      return '<option value="' + v.voiceURI + '"' + selAttr + '>' + label + '</option>';
+    }).join('');
+  }
+  if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
   sel.onchange = () => {
     if (window.rdbg) rdbg('VOICE', 'change requested: ' + sel.value + ' (was: ' + selectedVoiceURI + ')');
     selectedVoiceURI = sel.value;
     try { localStorage.setItem(VOICE_KEY, selectedVoiceURI); } catch {}
+    if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
     // Pause every active controller before resetting voice and playing sample.
     // This prevents the case where mid-utterance cancel + voice swap leaves
     // a controller in a bad state.
@@ -5786,6 +5723,9 @@ function loadVoices() {
     }
     if (window.speechSynthesis) {
       try { window.speechSynthesis.cancel(); } catch {}
+    }
+    if (isVoiceOff()) return;
+    if (window.speechSynthesis) {
       const u = new SpeechSynthesisUtterance("Hi! This is your new voice for reading the study material.");
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) u.voice = v;
@@ -5818,7 +5758,8 @@ if (window.speechSynthesis) {
   if (!window.speechSynthesis) return;
   const origSpeak = window.speechSynthesis.speak.bind(window.speechSynthesis);
   window.speechSynthesis.speak = function(utt) {
-    if (utt && selectedVoiceURI) {
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) return;
+    if (utt && selectedVoiceURI && selectedVoiceURI !== 'off') {
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) utt.voice = v; // always overwrite
     }
@@ -5841,7 +5782,12 @@ function applyHighlightPrefs() {
     if (VALID_HL_COLORS.includes(storedColor)) color = storedColor;
   } catch {}
   // Apply on/off via class on <html>
-  document.documentElement.classList.toggle('highlight-off', on === 'off');
+  const voiceOff = typeof isVoiceOff === 'function' && isVoiceOff();
+  document.documentElement.classList.toggle('highlight-off', on === 'off' || voiceOff);
+  const hlSel = document.getElementById('highlightToggle');
+  if (hlSel) hlSel.disabled = voiceOff;
+  const hlRow = document.getElementById('hlColorRow');
+  if (hlRow) hlRow.style.display = (on === 'off' || voiceOff) ? 'none' : '';
   // Apply color via data attribute
   document.documentElement.setAttribute('data-hl-color', color);
   // Reflect in UI

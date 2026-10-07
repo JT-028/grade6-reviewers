@@ -1310,7 +1310,10 @@
     </div>
     <div class="voice-picker">
       <label for="voiceSelect">🔊 Voice:</label>
-      <select id="voiceSelect"><option value="">Loading voices...</option></select>
+      <select id="voiceSelect" aria-label="Voice: off for no talking or highlights">
+        <option value="off">Off — no talking or highlights</option>
+        <option value="">Loading voices...</option>
+      </select>
     </div>
     <div class="highlight-picker" title="Highlight the word being spoken">
       <label for="highlightToggle">🖍️ Highlight:</label>
@@ -1419,28 +1422,29 @@
   <section class="tab-content" id="biomes">
     <h2 class="section-title">Concepts <span class="time-pill">⏱ ~10 min</span></h2>
     <p class="section-intro">The full Q2 toolkit: WWII, constitutions, presidents, EDSA, and civic issues. Tap any card.</p>
-    <div class="earth-cutaway">
-      <h3>Tap the Cosmic Organization chart</h3>
-      <p class="hint">Man's responsibility: a balance of life. Kingdoms feed the human in the center. History sits with the other sciences in the mineral/earth studies.</p>
-      <svg viewBox="0 0 320 280" role="img" aria-label="Cosmic Organization" style="width:100%;max-width:340px;display:block;margin:0 auto;">
+                    <div class="earth-cutaway">
+      <h3>Tap a Q2 History landmark</h3>
+      <p class="hint">WWII: Open City and Bataan. Then constitutions, presidents, and EDSA People Power. History sits with civic issues in this quarter.</p>
+      <svg viewBox="0 0 320 280" role="img" aria-label="Q2 History landmarks" style="width:100%;max-width:340px;display:block;margin:0 auto;">
         <rect width="320" height="280" fill="#faf6ec"/>
-        <circle id="tap-crust" cx="160" cy="150" r="22" fill="#2e5d3a" stroke="#1f2a1c"/>
-        <text x="160" y="154" text-anchor="middle" font-size="11" fill="#fff">you</text>
-        <circle id="tap-mantle" cx="70" cy="80" r="34" fill="#c4a484"/>
-        <text x="70" y="76" text-anchor="middle" font-size="10">Animal</text>
-        <text x="70" y="90" text-anchor="middle" font-size="10">kingdom</text>
-        <circle id="tap-outer" cx="250" cy="80" r="34" fill="#6b8e23"/>
-        <text x="250" y="76" text-anchor="middle" font-size="10">Plant</text>
-        <text x="250" y="90" text-anchor="middle" font-size="10">kingdom</text>
-        <circle id="tap-inner" cx="160" cy="48" r="28" fill="#e8a838"/>
-        <text x="160" y="44" text-anchor="middle" font-size="10">Mineral</text>
-        <text x="160" y="58" text-anchor="middle" font-size="10">kingdom</text>
-        <rect id="tap-culture" x="100" y="210" width="120" height="40" rx="10" fill="#7eb6c4"/>
-        <text x="160" y="234" text-anchor="middle" font-size="11">Cultural diversity</text>
+        <circle id="tap-crust" cx="80" cy="80" r="36" fill="#c4a484"/>
+        <text x="80" y="76" text-anchor="middle" font-size="10">Open City</text>
+        <text x="80" y="90" text-anchor="middle" font-size="9">Dec 26 1941</text>
+        <circle id="tap-mantle" cx="240" cy="80" r="36" fill="#6b8e23"/>
+        <text x="240" y="76" text-anchor="middle" font-size="10">Bataan</text>
+        <text x="240" y="90" text-anchor="middle" font-size="9">Apr 9 1942</text>
+        <circle id="tap-outer" cx="80" cy="180" r="36" fill="#e8a838"/>
+        <text x="80" y="176" text-anchor="middle" font-size="10">EDSA</text>
+        <text x="80" y="190" text-anchor="middle" font-size="9">Feb 22–25</text>
+        <circle id="tap-inner" cx="240" cy="180" r="36" fill="#2e5d3a"/>
+        <text x="240" y="176" text-anchor="middle" font-size="10" fill="#fff">1987</text>
+        <text x="240" y="190" text-anchor="middle" font-size="9" fill="#fff">Constitution</text>
+        <rect id="tap-culture" x="100" y="236" width="120" height="32" rx="10" fill="#7eb6c4"/>
+        <text x="160" y="256" text-anchor="middle" font-size="11">Presidents</text>
       </svg>
-      <p id="earthTapNote" style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink);">Tap a kingdom. History is one of the ways we study how humans live in that balance.</p>
+      <p id="earthTapNote" style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink);">Tap Open City, Bataan, EDSA, the 1987 Constitution, or Presidents.</p>
     </div>
-    <div class="biome-grid" id="biomeGrid"></div>
+<div class="biome-grid" id="biomeGrid"></div>
     <div class="popquiz-trigger" id="trigger-biomes">
       <h3>Ready for the Concepts Pop Quiz?</h3>
       <p>20 questions · ⏱ 6 min · lock in WWII, constitutions, presidents, and EDSA.</p>
@@ -1450,12 +1454,12 @@
   <!-- STEP-BY-STEP SOLVER -->
   <section class="tab-content" id="diagrams">
     <h2 class="section-title">Step-by-Step Solver 🧮 <span class="time-pill">⏱ ~12 min</span></h2>
-    <p class="section-intro">Four walkthroughs: Open City and Bataan, the six constitutions, president programs, and EDSA.</p>
+    <p class="section-intro">Four walkthroughs: Japanese colonial occupation, the six constitutions, president programs, and EDSA.</p>
 
-    <div class="solver-block" id="solverA">
+                    <div class="solver-block" id="solverA">
       <div class="solver-header">
-        <h3>🧭 Solver A - Origin Theory Sorter</h3>
-        <p class="solver-sub">Geological theories explain how the <strong>islands formed</strong>. Human-migration theories explain how <strong>people arrived</strong>. This is the page she marked "this so hard." We go slow.</p>
+        <h3>🇯🇵 Solver A - Japanese Colonial Occupation</h3>
+        <p class="solver-sub">Japan occupied the Philippines from <strong>1942 to 1945</strong>. Lock the occupation tool (KALIBAPI, Laurel's puppet republic, Kempeitai, HUKBALAHAP, Mickey Mouse Money), not how islands formed.</p>
       </div>
       <div class="solver-pad">
         <div class="solver-row">
@@ -1468,10 +1472,10 @@
           <label>This clue is about
             <select class="solver-op wide" id="solA-iv"></select>
           </label>
-          <label>The theory name
+          <label>The fact to lock
             <select class="solver-op wide" id="solA-dv"></select>
           </label>
-          <label>Who is tied to it
+          <label>Who / what it is
             <select class="solver-op wide" id="solA-cv"></select>
           </label>
         </div>
@@ -1486,11 +1490,11 @@
 
     <div class="solver-block" id="solverB">
       <div class="solver-header">
-        <h3>⛵ Solver B - Barangay Matcher</h3>
-        <p class="solver-sub">Datu, umalohokan, babaylan, maginoo, maharlika, two kinds of alipin. Namamahay has a house. Saguiguilid lives in the datu's house.</p>
+        <h3>📜 Solver B - Constitution Matcher</h3>
+        <p class="solver-sub">Six constitutions since 1898: 1899 Malolos, 1935, 1943 Laurel, 1935 restored, 1973, 1987. Aquino also issued a 1986 Freedom Constitution.</p>
       </div>
       <div class="solver-pad">
-        <div class="scenario-box" id="solB-clue">Tap a sample, then pick the role that matches.</div>
+        <div class="scenario-box" id="solB-clue">Tap a sample, then pick the constitution.</div>
         <div class="layer-grid" id="solB-grid"></div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solB-start" type="button">Walk me through it →</button>
@@ -1503,15 +1507,15 @@
 
     <div class="solver-block" id="solverC">
       <div class="solver-header">
-        <h3>📜 Solver C - Nationalism Timeline</h3>
-        <p class="solver-sub">Reform (Propaganda, peaceful) is not the same as revolution (Katipunan, arms). Tap the event that matches the clue.</p>
+        <h3>🏛️ Solver C - President Programs</h3>
+        <p class="solver-sub">Match the program, not the nickname. Magsaysay ≠ Lubao. Green Revolution = Marcos Sr. K-12 = Aquino III. BBB = Duterte. The three cards are the ones students mix most.</p>
       </div>
       <div class="solver-pad">
         <div class="scenario-box" id="solC-clue"></div>
         <div class="boundary-grid">
-          <button type="button" class="boundary-card" data-b="suez" id="solC-div"><div class="b-name">1869 Suez Canal</div><p style="font-size:12px;margin-top:6px;">Ideas arrive in 30 days</p></button>
-          <button type="button" class="boundary-card" data-b="gomburza" id="solC-con"><div class="b-name">1872 GOMBURZA</div><p style="font-size:12px;margin-top:6px;">Garrote, shock, Rizal</p></button>
-          <button type="button" class="boundary-card" data-b="kkk" id="solC-tr"><div class="b-name">1892 Katipunan</div><p style="font-size:12px;margin-top:6px;">Bonifacio, independence</p></button>
+          <button type="button" class="boundary-card" data-b="magsaysay" id="solC-div"><div class="b-name">Magsaysay</div><p style="font-size:12px;margin-top:6px;">Idol of the Masses</p></button>
+          <button type="button" class="boundary-card" data-b="marcos" id="solC-con"><div class="b-name">Marcos Sr.</div><p style="font-size:12px;margin-top:6px;">Green Revolution</p></button>
+          <button type="button" class="boundary-card" data-b="aquino" id="solC-tr"><div class="b-name">Aquino III</div><p style="font-size:12px;margin-top:6px;">K-12 · Project NOAH</p></button>
         </div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solC-start" type="button">Walk me through it →</button>
@@ -1524,20 +1528,20 @@
 
     <div class="solver-block" id="solverD">
       <div class="solver-header">
-        <h3>🗺️ Solver D - Map Vocab</h3>
-        <p class="solver-sub">Benham Rise is <strong>east of Luzon</strong>. West Philippine Sea is the west EEZ. Philippine Trench / Galathea Depth is the deep. Do not stack those three into one blob.</p>
+        <h3>✊ Solver D - EDSA Timeline</h3>
+        <p class="solver-sub">Four days: February 22–25, 1986. Enrile and Ramos at Camp Crame. Cardinal Sin on Radio Veritas. Marcos flees to Hawaii. Peaceful People Power.</p>
       </div>
       <div class="solver-pad">
         <div class="quake-svg-wrap" id="solD-svg"></div>
-        <p style="font-size:13px;color:var(--ink-soft);margin:8px 0;">Tap west, east, or the deep trench. Then pick the name that matches the clue.</p>
+        <p style="font-size:13px;color:var(--ink-soft);margin:8px 0;">Tap the diagram: red camp (defectors) or gold EDSA crowd. Then name the beat.</p>
         <div class="choice-grid">
-          <button type="button" class="choice-chip" data-pick="west" id="solD-focus">West (WPS)</button>
-          <button type="button" class="choice-chip" data-pick="east" id="solD-epi">East (Benham Rise)</button>
+          <button type="button" class="choice-chip" data-pick="snap" id="solD-focus">Snap election</button>
+          <button type="button" class="choice-chip" data-pick="enrile" id="solD-epi">Enrile / Ramos</button>
         </div>
         <div class="scenario-box" id="solD-clue"></div>
         <div class="choice-grid">
-          <button type="button" class="choice-chip" data-pick="benham" id="solD-mag">Benham / Philippine Rise</button>
-          <button type="button" class="choice-chip" data-pick="wps" id="solD-int">West Philippine Sea</button>
+          <button type="button" class="choice-chip" data-pick="sin" id="solD-mag">Cardinal Sin</button>
+          <button type="button" class="choice-chip" data-pick="flee" id="solD-int">Marcos flees</button>
         </div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solD-start" type="button">Walk me through it →</button>
@@ -1550,11 +1554,10 @@
 
     <div class="popquiz-trigger" id="trigger-diagrams">
       <h3>Ready for the Step-by-Step Solver Pop Quiz?</h3>
-      <p>20 questions · ⏱ 6 min · theories, classes, timeline, and map vocab.</p>
+      <p>20 questions · ⏱ 6 min · Japanese occupation, constitutions, presidents, and EDSA.</p>
     </div>
   </section>
-
-  <!-- TUTOR -->
+<!-- TUTOR -->
   <section class="tab-content" id="tutor">
     <h2 class="section-title">Tutor Mode 🦉 <span class="time-pill">⏱ ~14 min</span></h2>
     <p class="section-intro">Friendly walk-through of every topic. Tap ▶ to listen, ⏸ to pause, ⏹ to stop. Read along while it talks.</p>
@@ -1998,7 +2001,7 @@ function setUser(name) {
   document.getElementById('whoTag').style.display = 'inline-flex';
   document.getElementById('whoName').textContent = name;
   document.getElementById('greetTitle').textContent = `Hey ${name} 📚`;
-  document.getElementById('subtitleLine').textContent = `Barangay to nation: geography, ancestors, Spain, America, the Q2 History review for ${name}`;
+  document.getElementById('subtitleLine').textContent = `WWII, constitutions, presidents, and EDSA: the Q2 History review for ${name}`;
   document.getElementById('footerLine').textContent = `Made with care for the 2026 Grade 6 Students @ O.B. Montessori \u2022 Q2 History`;
   updateReportTabLabel();
   refreshAllUI();
@@ -2307,11 +2310,11 @@ window.rdbg = function(cat, ...args) { window.RDBG.log(cat, ...args); };
 
 
 const RANKS = [
-  { min: 0, name: 'Storyteller', icon: '📖' },
-  { min: 100, name: 'Barangay', icon: '⛵' },
-  { min: 300, name: 'Ilustrado', icon: '✒️' },
-  { min: 600, name: 'Katipunero', icon: '☀️' },
-  { min: 1000, name: 'Historian', icon: '🏛️' },
+  { min: 0, name: 'Witness', icon: '👁️' },
+  { min: 100, name: 'Open City', icon: '🏙️' },
+  { min: 300, name: 'Bataan', icon: '🛡️' },
+  { min: 600, name: 'Constitution', icon: '📜' },
+  { min: 1000, name: 'People Power', icon: '✊' },
   { min: 1500, name: 'Memory Keeper', icon: '👑' },
 ];
 function getRank(xp) {
@@ -2349,7 +2352,7 @@ const ACHIEVEMENTS = {
   'streak-10': { name: 'On Fire', icon: '🔥', desc: '10 correct answers in a row' },
   'first-exam': { name: 'Exam Done', icon: '🎓', desc: 'Completed a Practice Exam' },
   'high-scorer': { name: 'High Scorer', icon: '🏆', desc: 'Scored 90%+ on a Practice Exam' },
-  'apex': { name: 'Historian', icon: '🏛️', desc: 'Earned the Historian rank' },
+  'apex': { name: 'People Power', icon: '✊', desc: 'Earned the People Power rank' },
 };
 function unlockAchievement(id) {
   if (!progress.achievements) progress.achievements = [];
@@ -2385,7 +2388,7 @@ function refreshHomeStats() {
   const rank = getRank(progress.totalXP || 0);
   document.getElementById('rankCardWrap').innerHTML =
     `<div class="rank-card"><span class="rank-icon">${rank.icon}</span><span>RANK <span class="rank-name">${rank.name}</span></span></div>`;
-  if (rank.name === 'Historian') unlockAchievement('apex');
+  if (rank.name === 'People Power') unlockAchievement('apex');
 }
 
 function refreshTabs() {
@@ -2717,6 +2720,10 @@ class SpeechController {
 
   play() {
     if (window.rdbg) rdbg('CLICK', this._id, 'play() called, current state=' + this.state + ', enabled=' + (this._enabled !== false) + ', sentences=' + this.sentences.length + ', currentIdx=' + this.currentIdx);
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) {
+      if (window.rdbg) rdbg('VOICE', this._id, 'play() skipped: voice off');
+      return;
+    }
     if (!('speechSynthesis' in window)) {
       if (window.rdbg) rdbg('ERROR', this._id, 'no speechSynthesis');
       return;
@@ -3948,7 +3955,7 @@ const TUTOR_TOPICS = [
 ];
 
 const tutorShell = document.getElementById('tutorShell');
-TUTOR_TOPICS.forEach(t => {
+if (tutorShell) TUTOR_TOPICS.forEach(t => {
   const el = document.createElement('div');
   el.className = 'tutor-card';
   el.style.setProperty('--accent', t.accent);
@@ -4213,17 +4220,17 @@ function fmt(n, maxDec = 4) {
 
 
 // ===========================================================
-// SOLVER A — Variable sorter
+// SOLVER A — Japanese colonial occupation
 // ===========================================================
-
 const SOL_A_SCENARIOS = [
-  { title:"Ice Age land connection", text:"The islands were once joined to mainland Asia. When ice melted, the sea rose and the bridges vanished.", factors:["Geological (how land formed)","Human migration (how people arrived)","Land-Bridge Theory","Waves of Migration","Ice Age / sea-level rise","Henry Otley Beyer"], iv:"Geological (how land formed)", dv:"Land-Bridge Theory", cv:"Ice Age / sea-level rise" },
-  { title:"Pangaea drift", text:"Based on Wegener: the Philippines was part of Pangaea (on the Laurasia side) and drifted to where it is now.", factors:["Geological (how land formed)","Human migration (how people arrived)","Continental Drift Theory","Core Population Theory","Alfred Wegener","F. Landa Jocano"], iv:"Geological (how land formed)", dv:"Continental Drift Theory", cv:"Alfred Wegener" },
-  { title:"Underwater volcanoes", text:"Dr. Bailey Willis said the islands grew from volcanic activity on the ocean floor.", factors:["Geological (how land formed)","Human migration (how people arrived)","Volcanic Eruption (Pacific) Theory","Out-of-Taiwan Theory","Dr. Bailey Willis","Peter Bellwood"], iv:"Geological (how land formed)", dv:"Volcanic Eruption (Pacific) Theory", cv:"Dr. Bailey Willis" },
-  { title:"Faulting and folding", text:"Dr. Leopoldo Faustino: islands rose from Asia's continental shelf by diastrophism (faulting, folding, warping).", factors:["Geological (how land formed)","Human migration (how people arrived)","Diastrophism / Asiatic Theory","Waves of Migration","Dr. Leopoldo Faustino","Henry Otley Beyer"], iv:"Geological (how land formed)", dv:"Diastrophism / Asiatic Theory", cv:"Dr. Leopoldo Faustino" },
-  { title:"Beyer's waves", text:"Dawn Man, Negritoes, Indonesians, Malays arriving by landbridges and boats, in successive waves.", factors:["Geological (how land formed)","Human migration (how people arrived)","Waves of Migration Theory","Core Population Theory","Henry Otley Beyer","F. Landa Jocano"], iv:"Human migration (how people arrived)", dv:"Waves of Migration Theory", cv:"Henry Otley Beyer" },
-  { title:"Jocano's core", text:"Filipinos developed internally. Early Southeast Asians were similar, then slowly became different groups. Jocano challenged the colonial wave labels.", factors:["Geological (how land formed)","Human migration (how people arrived)","Core Population Theory","Waves of Migration Theory","F. Landa Jocano","Henry Otley Beyer"], iv:"Human migration (how people arrived)", dv:"Core Population Theory", cv:"F. Landa Jocano" },
-  { title:"Out of Taiwan", text:"Peter Bellwood: Austronesian speakers from southern China to Taiwan, then south into the Philippines around 4,000 BCE, with farming and boats.", factors:["Geological (how land formed)","Human migration (how people arrived)","Austronesian Expansion (Out-of-Taiwan)","Land-Bridge Theory","Peter Bellwood","Dr. Bailey Willis"], iv:"Human migration (how people arrived)", dv:"Austronesian Expansion (Out-of-Taiwan)", cv:"Peter Bellwood" }
+  { title:"KALIBAPI", text:"During the Japanese occupation, only one political party was legal.", factors:["KALIBAPI","HUKBALAHAP","only legal party under Japan","guerrilla army vs Japan","occupation government","MacArthur"], iv:"KALIBAPI", dv:"only legal party under Japan", cv:"occupation government" },
+  { title:"Laurel's 1943 republic", text:"Japan proclaimed the Second Philippine Republic. The government was a puppet state because Japan held the strings.", factors:["1943 Laurel republic","1987 Constitution","1943 puppet Second Republic","1987 after EDSA","Jose P. Laurel","Corazon Aquino"], iv:"1943 Laurel republic", dv:"1943 puppet Second Republic", cv:"Jose P. Laurel" },
+  { title:"Kempeitai", text:"Japanese military police used fear, torture, and executions to control occupied towns.", factors:["Kempeitai","NAMFREL","Japanese military police","election watchdog","occupation terror","Radio Veritas"], iv:"Kempeitai", dv:"Japanese military police", cv:"occupation terror" },
+  { title:"HUKBALAHAP", text:"The most organized guerrilla resistance named in the notes fought Japanese forces.", factors:["HUKBALAHAP","KALIBAPI","Hukbong Bayan Laban sa Hapon","only legal party","guerrilla resistance","puppet president"], iv:"HUKBALAHAP", dv:"Hukbong Bayan Laban sa Hapon", cv:"guerrilla resistance" },
+  { title:"Mickey Mouse Money", text:"Japan printed occupation cash. After liberation it was worthless.", factors:["Mickey Mouse Money","Bell Trade dollars","occupation currency that became worthless","U.S. aid in 1946","Japanese-issued notes","Roxas RFC"], iv:"Mickey Mouse Money", dv:"occupation currency that became worthless", cv:"Japanese-issued notes" },
+  { title:"Co-Prosperity Sphere", text:"Japan invited Asians into the Greater East Asia Co-Prosperity Sphere. Many Filipinos distrusted it as a new colonizer.", factors:["Co-Prosperity Sphere","Open City","Japan's new-colonizer invitation","undefended Manila","swap of colonizers","MacArthur"], iv:"Co-Prosperity Sphere", dv:"Japan's new-colonizer invitation", cv:"swap of colonizers" },
+  { title:"Open City then occupied", text:"Manila was declared undefended to spare civilians. Japanese troops still occupied the capital soon after.", factors:["Open City / occupation of Manila","Fall of Bataan","December 26, 1941","April 9, 1942","MacArthur declared it; Japan occupied anyway","King"], iv:"Open City / occupation of Manila", dv:"December 26, 1941", cv:"MacArthur declared it; Japan occupied anyway" },
+  { title:"Death March", text:"After Bataan fell, about 76,000 prisoners were forced to march about 102 km from Mariveles to San Fernando.", factors:["Death March","Open City","April 1942 · 102 km · 76,000 prisoners","December 26, 1941","Japanese occupation cruelty","MacArthur"], iv:"Death March", dv:"April 1942 · 102 km · 76,000 prisoners", cv:"Japanese occupation cruelty" }
 ];
 
 function solA_fillSelects(idx) {
@@ -4250,30 +4257,33 @@ function solA_solve() {
   const dv = document.getElementById("solA-dv").value;
   const cv = document.getElementById("solA-cv").value;
   const steps = [
-    { title:"Split the pile into two jobs", body:"Ask: is this about <strong>how the land formed</strong>, or <strong>how people got here</strong>? Geological vs human. Mixing those is why this page feels crowded.", deeper:"Land-Bridge, Continental Drift, Volcanic, Diastrophism = land. Waves, Core Population, Out-of-Taiwan = people." },
-    { title:"This clue is " + sc.iv, body: (iv===sc.iv ? "You tagged it right: <strong>"+iv+"</strong>." : "You tagged <strong>"+iv+"</strong>. The booklet puts this with <strong>"+sc.iv+"</strong>."), math: sc.iv, deeper:"Say the split out loud before you pick a theory name." },
-    { title:"Name the theory", body: (dv===sc.dv ? "Yes: <strong>"+sc.dv+"</strong>." : "The matching name is <strong>"+sc.dv+"</strong> (you picked "+dv+")."), math: sc.dv + " · " + sc.cv, deeper:"Beyer = waves (Negritoes, Indonesians, Malays). Jocano said that labeling was colonial and argued for a core population that changed slowly. Bellwood = Austronesians out of Taiwan. Tabon Man (Fox, Palawan, 1962) and Homo luzonensis (Callao Cave, Cagayan) are fossil evidence, not theory names." },
-    { title:"Who is tied to it", body: (cv===sc.cv ? "Tied to <strong>"+sc.cv+"</strong>." : "Booklet name: <strong>"+sc.cv+"</strong>."), altMethod:"Other Methods to Consider: draw two columns on scratch paper, Land vs People, then drop each theory in a column before the test. Same facts, less panic." }
+    { title:"This is Japanese colonial occupation", body: iv===sc.iv ? "You tagged <strong>"+iv+"</strong>." : "You tagged <strong>"+iv+"</strong>. The booklet name is <strong>"+sc.iv+"</strong>.", math: sc.iv, deeper:"Japan occupied the Philippines 1942–1945. Geological origin theories (how islands formed) are Quarter 1 History, not this solver." },
+    { title:"Lock the occupation fact", body: dv===sc.dv ? "Yes: <strong>"+sc.dv+"</strong>." : "You tagged <strong>"+dv+"</strong>. The booklet fact is <strong>"+sc.dv+"</strong>.", math: sc.dv, deeper:"Toolkit: KALIBAPI = only legal party. Laurel 1943 = puppet Second Republic. Kempeitai = military police. HUKBALAHAP = guerrilla resistance. Mickey Mouse Money = worthless occupation cash." },
+    { title:"Who / what it is", body: cv===sc.cv ? "You tagged <strong>"+cv+"</strong>." : "You tagged <strong>"+cv+"</strong>. Tie it to <strong>"+sc.cv+"</strong>.", math: sc.cv, altMethod:"Trap: Co-Prosperity Sphere is a new colonizer, not a sincere gift. Open City is MacArthur, not Quezon. HUKBALAHAP fought Japan; KALIBAPI was Japan's party." }
   ];
   SolverRenderer.render(outEl, steps);
 }
 
+// ===========================================================
+// SOLVER B — Constitution matcher
+// ===========================================================
 const SOL_B_CLUES = [
-  { clue:"Chieftain of a barangay of about 30 to 100 families. Makes laws with elders, judges trials.", ans:"datu" },
-  { clue:"Town crier. Announces new laws after the datu and elders approve them.", ans:"umalohokan" },
-  { clue:"Spiritual leader, healer, advisor. Visayan name. Often a woman.", ans:"babaylan" },
-  { clue:"Tagalog name for the same spiritual role as babaylan.", ans:"katalonan" },
-  { clue:"Ruling class in Tagalog communities.", ans:"maginoo" },
-  { clue:"Commoners (Tagalog). Not the dependent class.", ans:"maharlika" },
-  { clue:"Dependent who lives in their own house and is called to farm or build.", ans:"aliping namamahay" },
-  { clue:"Dependent who stays in the datu's house because of a large debt.", ans:"aliping saguiguilid" }
+  { clue:"First democratic constitution in Asia. Aguinaldo. Based in Malolos, Bulacan.", ans:"1899 Malolos" },
+  { clue:"Drafted under American supervision for the Commonwealth. Strong executive under Quezon.", ans:"1935" },
+  { clue:"Written during Japanese occupation. Installed Jose P. Laurel. A puppet state.", ans:"1943 Laurel" },
+  { clue:"Revived after Japan’s defeat. Guided Roxas through Marcos Sr.’s first term, until 1972.", ans:"1935 restored" },
+  { clue:"Declared under Martial Law. Parliamentary on paper; authoritarian Marcos in practice.", ans:"1973" },
+  { clue:"After EDSA People Power. Strengthened democracy, human rights, and separation of powers. Still in force.", ans:"1987" },
+  { clue:"Aquino’s transitional Freedom Constitution in 1986, before the current 1987 charter.", ans:"1986 Freedom" },
+  { clue:"Highest law of the land. Without it there can be no legitimate government. Six since 1898.", ans:"1987" }
 ];
-const SOL_B_LAYERS = ["datu","umalohokan","babaylan","katalonan","maginoo","maharlika","aliping namamahay","aliping saguiguilid"];
+const SOL_B_LAYERS = ["1899 Malolos","1935","1943 Laurel","1935 restored","1973","1986 Freedom","1987"];
 let solB_idx = 0;
 let solB_pick = "";
 
 function solB_show(idx) {
-  solB_idx = idx; solB_pick = "";
+  solB_idx = idx;
+  solB_pick = "";
   const c = SOL_B_CLUES[idx];
   document.getElementById("solB-clue").innerHTML = "<strong>Clue:</strong> " + c.clue;
   document.querySelectorAll("#solB-grid .layer-chip").forEach(b => b.classList.remove("selected","correct","wrong"));
@@ -4285,23 +4295,30 @@ function solB_solve() {
   const pick = solB_pick || "(none yet)";
   const ok = pick === c.ans;
   const steps = [
-    { title:"Name the job, then the class", body:"Roles first: datu (leader), umalohokan (crier), babaylan/katalonan (spirit and healing). Classes: maginoo (ruling), maharlika (commoners), alipin (dependent).", deeper:"Barangays also made sanduguan, a blood-compact treaty of friendship." },
-    { title:"This clue is " + c.ans, body: ok ? "You picked <strong>"+pick+"</strong>. That matches." : "You picked <strong>"+pick+"</strong>. The match is <strong>"+c.ans+"</strong>.", math: c.ans, deeper:"Namamahay has a house. Saguiguilid lives in the datu's house. That pair is a favorite trap." },
-    { title:"Trials were public", body:"The datu judged. More witnesses could win a case. Ordeal tests (boiling water, diving) showed who was 'guilty' in criminal cases. We do not copy those tests. We remember they existed.", altMethod:"Sketch three shelves: ruling, commoner, dependent. Park every Tagalog word on a shelf before you answer." }
+    { title:"Six constitutions since 1898", body:"1899 Malolos · 1935 Commonwealth · 1943 Laurel · 1935 restored · 1973 Martial Law · 1987 (current). Aquino also issued a 1986 Freedom Constitution in the transition.", deeper:"A constitution is the highest law. Power in a republic comes from the people." },
+    { title:"This clue is " + c.ans, body: ok ? "You picked <strong>"+pick+"</strong>. That matches." : "You picked <strong>"+pick+"</strong>. The match is <strong>"+c.ans+"</strong>.", math: c.ans, deeper:"Trap: 1943 is Laurel, not the 1987 charter. 1973 is Martial Law, not EDSA." },
+    { title:"1987 structure in one line", body:"Preamble + 18 Articles. III Bill of Rights. VI Congress, VII President (6 years, no reelection), VIII Supreme Court. X local government includes barangays and BARMM.", altMethod:"Data File: write the full Preamble. It begins, “We, the sovereign Filipino people.”" }
   ];
   SolverRenderer.render(outEl, steps);
 }
 
+// ===========================================================
+// SOLVER C — President programs
+// ===========================================================
 const SOL_C_CLUES = [
-  { text:"A waterway in Egypt opens. Europe to Asia drops from 3 months to 30 days. Books and liberal ideas arrive faster.", ans:"suez", extra:"Suez Canal, 1869. Freedom, equality, democracy ideas from the American and French Revolutions reach ilustrados." },
-  { text:"Three Filipino priests are executed by garrote on February 17, 1872, after the Cavite Mutiny is exaggerated.", ans:"gomburza", extra:"GOMBURZA: Gómez, Burgos, Zamora. Rizal, age 11, later dedicated El Filibusterismo to them." },
-  { text:"After Rizal is exiled to Dapitan, Bonifacio founds a secret society on July 7, 1892, aiming at independence.", ans:"kkk", extra:"Katipunan. Revolution path, not the Propaganda's peaceful reforms." }
+  { text:"Idol of the Masses. Honesty, rural development, Barong Tagalog. Died in a 1957 plane crash. Not the Poor Boy from Lubao.", ans:"magsaysay", extra:"Macapagal is the Poor Boy from Lubao. He moved Independence Day to June 12." },
+  { text:"Green Revolution in agriculture, San Juanico Bridge, helped found ASEAN in 1967, Martial Law 1972.", ans:"marcos", extra:"Trap: Green Revolution is Marcos Sr., not Garcia. Garcia = Filipino First." },
+  { text:"K-12 Education Program and Project NOAH (disaster preparedness).", ans:"aquino", extra:"Trap: Build! Build! Build! is Duterte. Roxas is not BBB." },
+  { text:"Filipino First Policy — prioritize Filipino businesses over foreign interests.", ans:"garcia", extra:"Garcia took over after Magsaysay. Trap: not Green Revolution." },
+  { text:"First woman president. 1987 Constitution. Local Government Code of 1991. 11th President, Feb 25, 1986.", ans:"cory", extra:"Corazon Aquino, Fifth Republic. Not Benigno Aquino III (K-12)." },
+  { text:"Build! Build! Build! infrastructure. Universal Access to Quality Tertiary Education Act.", ans:"duterte", extra:"Trap: BBB is Duterte, not Roxas and not Aquino III." }
 ];
 let solC_idx = 0;
 let solC_pick = "";
 
 function solC_show(idx) {
-  solC_idx = idx; solC_pick = "";
+  solC_idx = idx;
+  solC_pick = "";
   document.getElementById("solC-clue").textContent = SOL_C_CLUES[idx].text;
   document.querySelectorAll(".boundary-card").forEach(b => b.classList.remove("selected"));
 }
@@ -4310,19 +4327,24 @@ function solC_solve() {
   const outEl = document.getElementById("solC-output");
   const c = SOL_C_CLUES[solC_idx];
   const pick = solC_pick || "(none yet)";
-  const ok = pick === c.ans;
+  const three = { magsaysay:true, marcos:true, aquino:true };
+  const ok = three[c.ans] ? pick === c.ans : false;
   const steps = [
-    { title:"Reform or revolution?", body:"Propaganda Movement: ilustrados in Europe, newspapers, equality, Cortes, secularization. Peaceful. Spain ignored them. Katipunan: arms, independence, Bonifacio.", deeper:"Both are nationalism. They are not the same organization." },
-    { title:"This clue", body: ok ? "You tapped the right event." : "You tapped <strong>"+pick+"</strong>. The booklet event is the one described in the clue.", math: c.ans, deeper: c.extra },
-    { title:"Keep the ladder", body:"1869 Suez → 1872 Cavite Mutiny (Jan 20) → 1872 GOMBURZA (Feb 17) → 1892 Katipunan → June 12 1898 independence declaration → American laws (Organic 1902, Jones 1916, Tydings-McDuffie 1934) → July 4 1946.", altMethod:"Write the years in the margin of the exam. Dates do half the work." }
+    { title:"Match the program, not the nickname", body:"Magsaysay = Idol of the Masses. Macapagal = Poor Boy from Lubao. Garcia = Filipino First. Marcos Sr. = Green Revolution + Martial Law. Aquino III = K-12. Duterte = BBB.", deeper:"Third Republic 1946–1972. Fourth = Marcos authoritarian years. Fifth starts after EDSA 1986." },
+    { title:"This clue is " + c.ans, body: three[c.ans] ? (ok ? "You tapped <strong>"+pick+"</strong>. That is the one." : "You tapped <strong>"+pick+"</strong>. The booklet answer is <strong>"+c.ans+"</strong>.") : "The three cards are Magsaysay, Marcos Sr., and Aquino III. This clue is <strong>"+c.ans+"</strong> — a common trap pair.", math: c.ans, deeper: c.extra },
+    { title:"Lock the trap list", body:"Roxas ≠ BBB. Estrada ≠ Filipino First. Garcia ≠ Green Revolution. Magsaysay ≠ Lubao.", altMethod:"Write a two-column table: president | one program. That is how the quarter reviewer scores item 10." }
   ];
   SolverRenderer.render(outEl, steps);
 }
 
+// ===========================================================
+// SOLVER D — EDSA timeline
+// ===========================================================
 const SOL_D_CLUES = [
-  { text:"UN-recognized undersea plateau east of northern Luzon (2012, UNCLOS). Also called Philippine Rise.", ans:"benham", side:"east" },
-  { text:"Official name for the eastern South China Sea waters inside the Philippine EEZ, including Scarborough Shoal and Kalayaan.", ans:"wps", side:"west" },
-  { text:"Deep submarine trench, about 1,320 km long. Deepest point is Galathea Depth, about 10,540 m, third deepest on Earth.", ans:"trench", side:"east" }
+  { text:"Feb 7, 1986 snap presidential election. Marcos claims victory over Corazon Aquino despite fraud.", ans:"snap", dot:"crowd", extra:"NAMFREL tallies disagreed with the official count. This was the final catalyst." },
+  { text:"Feb 22: Defense Minister Juan Ponce Enrile and Fidel V. Ramos defect and hole up in Camp Crame and Camp Aguinaldo.", ans:"enrile", dot:"camp", extra:"They broke from the Marcos regime. Civilians later shielded the camps." },
+  { text:"Cardinal Jaime Sin broadcasts on Radio Veritas. Hundreds of thousands form a human shield along EDSA.", ans:"sin", dot:"crowd", extra:"Peaceful civil resistance. Four days: February 22–25, 1986." },
+  { text:"Feb 25: Cory and Marcos take separate oaths. Hours later Marcos and his family flee to Hawaii.", ans:"flee", dot:"crowd", extra:"Aquino is inaugurated 11th President at Sampaguita Hall. Democracy is restored." }
 ];
 let solD_idx = 0;
 let solD_dot = "";
@@ -4331,48 +4353,49 @@ let solD_mi = "";
 function solD_draw() {
   const wrap = document.getElementById("solD-svg");
   if (!wrap) return;
-  wrap.innerHTML = `<svg viewBox="0 0 360 200" role="img" aria-label="Philippine map sketch">
-    <rect width="360" height="200" fill="#e7f0f8"/>
-    <rect id="solD-dotFocus" class="quake-hot" x="20" y="40" width="90" height="120" rx="8" fill="#7eb6c4" stroke="#1f2a1c"/>
-    <text x="65" y="100" text-anchor="middle" font-size="11">WEST</text>
-    <text x="65" y="116" text-anchor="middle" font-size="10">WPS / EEZ</text>
-    <ellipse cx="175" cy="100" rx="40" ry="70" fill="#e8d48b" stroke="#1f2a1c"/>
-    <text x="175" y="104" text-anchor="middle" font-size="12">Luzon</text>
-    <rect id="solD-dotEpi" class="quake-hot" x="240" y="50" width="100" height="70" rx="8" fill="#c4a484" stroke="#1f2a1c"/>
-    <text x="290" y="82" text-anchor="middle" font-size="11">EAST</text>
-    <text x="290" y="98" text-anchor="middle" font-size="10">Benham Rise</text>
-    <rect x="250" y="140" width="90" height="40" rx="6" fill="#1e6f8a"/>
-    <text x="295" y="164" text-anchor="middle" font-size="10" fill="#fff">Trench / Galathea</text>
+  wrap.innerHTML = `<svg viewBox="0 0 360 180" role="img" aria-label="EDSA camps and avenue">
+    <rect width="360" height="180" fill="#eef3f6"/>
+    <rect x="24" y="36" width="120" height="88" rx="10" fill="#c4a484" stroke="#1f2a1c" stroke-width="2"/>
+    <text x="84" y="78" text-anchor="middle" font-size="12" fill="#1f2a1c">Camp Crame</text>
+    <text x="84" y="96" text-anchor="middle" font-size="10" fill="#1f2a1c">Enrile · Ramos</text>
+    <rect x="168" y="48" width="168" height="28" fill="#6b8e23"/>
+    <text x="252" y="67" text-anchor="middle" font-size="12" fill="#fff">EDSA</text>
+    <circle class="quake-hot" id="solD-dotFocus" cx="84" cy="150" r="10" fill="#c1440e" stroke="#1f2a1c" stroke-width="2"/>
+    <circle class="quake-hot" id="solD-dotEpi" cx="252" cy="150" r="10" fill="#e8a838" stroke="#1f2a1c" stroke-width="2"/>
+    <text x="84" y="172" text-anchor="middle" font-size="11" fill="#1f2a1c">camp</text>
+    <text x="252" y="172" text-anchor="middle" font-size="11" fill="#1f2a1c">crowd</text>
+    <text x="12" y="22" font-size="11" fill="#1f2a1c">Tap a dot: red = camp (defectors), gold = EDSA crowd</text>
   </svg>`;
   const f = document.getElementById("solD-dotFocus");
   const e = document.getElementById("solD-dotEpi");
-  if (f) f.addEventListener("click", () => { solD_dot = "west"; highlightDot(); });
-  if (e) e.addEventListener("click", () => { solD_dot = "east"; highlightDot(); });
+  if (f) f.addEventListener("click", () => { solD_dot = "camp"; highlightDot(); });
+  if (e) e.addEventListener("click", () => { solD_dot = "crowd"; highlightDot(); });
 }
 function highlightDot() {
   const f = document.getElementById("solD-dotFocus");
   const e = document.getElementById("solD-dotEpi");
-  if (f) f.setAttribute("stroke-width", solD_dot === "west" ? 4 : 1);
-  if (e) e.setAttribute("stroke-width", solD_dot === "east" ? 4 : 1);
+  if (f) f.setAttribute("r", solD_dot === "camp" ? 14 : 10);
+  if (e) e.setAttribute("r", solD_dot === "crowd" ? 14 : 10);
 }
 function solD_show(idx) {
-  solD_idx = idx; solD_mi = "";
+  solD_idx = idx;
+  solD_mi = "";
   document.getElementById("solD-clue").innerHTML = "<strong>Clue:</strong> " + SOL_D_CLUES[idx].text;
   document.querySelectorAll("#solverD .choice-chip").forEach(b => b.classList.remove("selected"));
 }
+
 function solD_solve() {
   const outEl = document.getElementById("solD-output");
   const c = SOL_D_CLUES[solD_idx];
-  const sideOk = solD_dot === c.side;
-  const nameOk = (c.ans === "trench") ? true : (solD_mi === c.ans);
+  const dotOk = solD_dot === c.dot;
+  const nameOk = solD_mi === c.ans;
   const steps = [
-    { title:"Point to the water", body: sideOk ? "You pointed " + solD_dot + ", which matches this clue's side." : "This clue lives to the <strong>"+c.side+"</strong> of Luzon. Benham = east. WPS = west. Trench is the deep off the east/southeast.", math: c.side, deeper:"Exercise 3 trap: Benham Rise is east of Luzon, not north." },
-    { title:"Name it", body: "The booklet name is <strong>" + (c.ans==="benham"?"Benham Rise / Philippine Rise": c.ans==="wps"?"West Philippine Sea":"Philippine Trench / Galathea Depth") + "</strong>.", math: c.ans, deeper:"UNCLOS (2012) backs the Rise. 2016 PCA ruling is cited for WPS. Galathea Depth ≈ 10,540 m, third deepest." },
-    { title:"Why Filipinos care about the size", body:"Resources, food, energy, and legal territory. Knowing how big Benham Rise is is about stewardship, not trivia.", altMethod:"Draw Luzon as a mango. Write WPS on the left, Rise on the right, Trench as a dark slash. That sketch is enough for fill-ins." }
+    { title:"Place it on EDSA", body: dotOk ? "You tapped the matching dot for this clue." : (solD_dot === "camp" ? "Red camp is Enrile and Ramos at Crame/Aguinaldo. Gold is the EDSA crowd and Radio Veritas." : solD_dot === "crowd" ? "Gold crowd is Cardinal Sin’s human shield. Red is the rebel camps." : "Tap the red camp or the gold EDSA crowd."), math: "camp · crowd", deeper:"Four days: February 22–25, 1986. Peaceful People Power. Marcos flees to Hawaii on February 25." },
+    { title:"Name the beat", body: nameOk ? "You named <strong>"+c.ans+"</strong>." : "You picked <strong>"+(solD_mi || solD_dot || "nothing")+"</strong>. This clue is <strong>"+c.ans+"</strong>.", math: c.ans, deeper: c.extra },
+    { title:"Causes in three lines", body:"1. Ninoy Aquino assassinated 1983. 2. Marcos dictatorship and crony capitalism. 3. 1986 snap election fraud.", altMethod:"Results: peaceful transfer, democracy restored, 1987 Constitution." }
   ];
   SolverRenderer.render(outEl, steps);
 }
-
 
 (function wireGeoSolvers() {
   const aSel = document.getElementById("solA-sample");
@@ -4422,19 +4445,11 @@ function solD_solve() {
 
   solD_draw();
   solD_show(0);
-  ["solD-focus","solD-epi"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener("click", () => {
-      solD_dot = el.getAttribute("data-pick");
-      document.querySelectorAll("#solD-focus, #solD-epi").forEach(x => x.classList.remove("selected"));
-      el.classList.add("selected");
-    });
-  });
-  ["solD-mag","solD-int"].forEach(id => {
+  ["solD-focus","solD-epi","solD-mag","solD-int"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("click", () => {
       solD_mi = el.getAttribute("data-pick");
-      document.querySelectorAll("#solD-mag, #solD-int").forEach(x => x.classList.remove("selected"));
+      document.querySelectorAll("#solverD .choice-chip").forEach(x => x.classList.remove("selected"));
       el.classList.add("selected");
     });
   });
@@ -4445,11 +4460,11 @@ function solD_solve() {
     document.getElementById("solD-clear").addEventListener("click", () => { document.getElementById("solD-output").innerHTML=""; solD_dot=""; solD_mi=""; solD_show(solD_idx); solD_draw(); });
   }
   const earthNotes = {
-    "tap-crust": "The human in the center. Cosmic Organization is about our responsibility in a balance of life.",
-    "tap-mantle": "Animal kingdom. Zoology studies this branch. People depend on animals for food, work, and company.",
-    "tap-outer": "Plant kingdom. Botany. Plants feed animals and people, and hold the land.",
-    "tap-inner": "Mineral kingdom. Physics, chemistry, biology, geography, and history all study the Earth side of the chart.",
-    "tap-culture": "Cultural diversity. Economic and political geography sit here too: how groups live, trade, and govern."
+    "tap-crust": "Open City, Dec 26, 1941: MacArthur declared Manila undefended to spare civilians. Japan still occupied it.",
+    "tap-mantle": "Bataan fell April 9, 1942 (King). Death March ~102 km, about 76,000 prisoners, Mariveles to San Fernando.",
+    "tap-outer": "EDSA People Power, Feb 22–25, 1986. Enrile and Ramos defect. Cardinal Sin on Radio Veritas. Marcos flees.",
+    "tap-inner": "1987 Constitution: current charter after EDSA. Preamble + 18 Articles. President: 6 years, no reelection.",
+    "tap-culture": "Presidents: Magsaysay = Idol of the Masses (not Lubao). Green Revolution = Marcos Sr. K-12 = Aquino III. BBB = Duterte."
   };
   Object.keys(earthNotes).forEach(id => {
     const el = document.getElementById(id);
@@ -4462,9 +4477,6 @@ function solD_solve() {
   });
 })();
 
-// ============================================================
-// PRACTICE SETS
-// ============================================================
 const PRACTICE_SETS = [
   { id: 'ex1', icon: '🏙️', title: 'Exercise 1 style: Battle of Manila', desc: 'Dates, commander, urban-war lessons, True/False traps from the war.gov article.' },
   { id: 'ex2', icon: '🥾', title: 'Exercise 2 style: Bataan and the Death March', desc: 'King vs Wainwright, 102 km, 76,000 soldiers, War Plan Orange, shrine at Mount Samat.' },
@@ -5456,7 +5468,7 @@ const BREAK_MSGS = [
   '💧 Quick water break! Then crush the next 25 min',
   '🌱 Tiny break = bigger memory. Take 2 min',
 ];
-let breakTimer = null;
+var breakTimer = null;
 function scheduleBreakReminder() {
   if (breakTimer) clearInterval(breakTimer);
   breakTimer = setInterval(() => {
@@ -5640,8 +5652,19 @@ function rankVoiceQuality(v) {
   return score;
 }
 
+function isVoiceOff() {
+  return selectedVoiceURI === 'off';
+}
+
 function loadVoices() {
-  if (!window.speechSynthesis) return;
+  if (!window.speechSynthesis) {
+    const sel = document.getElementById('voiceSelect');
+    if (sel) {
+      sel.innerHTML = '<option value="off" selected>Off — no talking or highlights</option>';
+      selectedVoiceURI = 'off';
+    }
+    return;
+  }
   availableVoices = window.speechSynthesis.getVoices() || [];
   // Strict filter first
   let filtered = availableVoices.filter(isVoiceAllowed);
@@ -5653,27 +5676,35 @@ function loadVoices() {
 
   const sel = document.getElementById('voiceSelect');
   if (!sel) return;
-  if (filtered.length === 0) {
-    sel.innerHTML = '<option value="">No voices available on this device</option>';
-    return;
-  }
   let saved = null;
   try { saved = localStorage.getItem(VOICE_KEY); } catch {}
-  // If saved choice is no longer allowed, reset to top-ranked
-  if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
-  if (!saved) saved = filtered[0].voiceURI;
-  selectedVoiceURI = saved;
+  if (saved === 'off') {
+    selectedVoiceURI = 'off';
+  } else {
+    // If saved choice is no longer allowed, reset to top-ranked
+    if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
+    if (!saved && filtered[0]) saved = filtered[0].voiceURI;
+    selectedVoiceURI = saved || 'off';
+  }
 
-  sel.innerHTML = filtered.map((v, i) => {
-    const stars = i === 0 ? ' ⭐' : '';
-    const label = `${v.name} (${v.lang})${stars}`;
-    const selAttr = v.voiceURI === saved ? ' selected' : '';
-    return `<option value="${v.voiceURI}"${selAttr}>${label}</option>`;
-  }).join('');
+  const offSelected = selectedVoiceURI === 'off' ? ' selected' : '';
+  const offOpt = '<option value="off"' + offSelected + '>Off — no talking or highlights</option>';
+  if (filtered.length === 0) {
+    sel.innerHTML = offOpt + '<option value="">No voices available on this device</option>';
+  } else {
+    sel.innerHTML = offOpt + filtered.map((v, i) => {
+      const stars = i === 0 ? ' ⭐' : '';
+      const label = v.name + ' (' + v.lang + ')' + stars;
+      const selAttr = v.voiceURI === selectedVoiceURI ? ' selected' : '';
+      return '<option value="' + v.voiceURI + '"' + selAttr + '>' + label + '</option>';
+    }).join('');
+  }
+  if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
   sel.onchange = () => {
     if (window.rdbg) rdbg('VOICE', 'change requested: ' + sel.value + ' (was: ' + selectedVoiceURI + ')');
     selectedVoiceURI = sel.value;
     try { localStorage.setItem(VOICE_KEY, selectedVoiceURI); } catch {}
+    if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
     // Pause every active controller before resetting voice and playing sample.
     // This prevents the case where mid-utterance cancel + voice swap leaves
     // a controller in a bad state.
@@ -5682,6 +5713,9 @@ function loadVoices() {
     }
     if (window.speechSynthesis) {
       try { window.speechSynthesis.cancel(); } catch {}
+    }
+    if (isVoiceOff()) return;
+    if (window.speechSynthesis) {
       const u = new SpeechSynthesisUtterance("Hi! This is your new voice for reading the study material.");
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) u.voice = v;
@@ -5714,7 +5748,8 @@ if (window.speechSynthesis) {
   if (!window.speechSynthesis) return;
   const origSpeak = window.speechSynthesis.speak.bind(window.speechSynthesis);
   window.speechSynthesis.speak = function(utt) {
-    if (utt && selectedVoiceURI) {
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) return;
+    if (utt && selectedVoiceURI && selectedVoiceURI !== 'off') {
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) utt.voice = v; // always overwrite
     }
@@ -5737,7 +5772,12 @@ function applyHighlightPrefs() {
     if (VALID_HL_COLORS.includes(storedColor)) color = storedColor;
   } catch {}
   // Apply on/off via class on <html>
-  document.documentElement.classList.toggle('highlight-off', on === 'off');
+  const voiceOff = typeof isVoiceOff === 'function' && isVoiceOff();
+  document.documentElement.classList.toggle('highlight-off', on === 'off' || voiceOff);
+  const hlSel = document.getElementById('highlightToggle');
+  if (hlSel) hlSel.disabled = voiceOff;
+  const hlRow = document.getElementById('hlColorRow');
+  if (hlRow) hlRow.style.display = (on === 'off' || voiceOff) ? 'none' : '';
   // Apply color via data attribute
   document.documentElement.setAttribute('data-hl-color', color);
   // Reflect in UI

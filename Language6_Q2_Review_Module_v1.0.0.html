@@ -1310,7 +1310,10 @@
     </div>
     <div class="voice-picker">
       <label for="voiceSelect">🔊 Voice:</label>
-      <select id="voiceSelect"><option value="">Loading voices...</option></select>
+      <select id="voiceSelect" aria-label="Voice: off for no talking or highlights">
+        <option value="off">Off — no talking or highlights</option>
+        <option value="">Loading voices...</option>
+      </select>
     </div>
     <div class="highlight-picker" title="Highlight the word being spoken">
       <label for="highlightToggle">🖍️ Highlight:</label>
@@ -1419,22 +1422,22 @@
   <section class="tab-content" id="biomes">
     <h2 class="section-title">Concepts <span class="time-pill">⏱ ~10 min</span></h2>
     <p class="section-intro">The full Q2 toolkit: noun functions, pronouns, verbals, expressions, media, and cause and effect. Tap any card.</p>
-    <div class="earth-cutaway">
-      <h3>Tap an Earliest Hero</h3>
-      <p class="hint">Classic Reader: Prometheus and Io, Europa, Odysseus and Polyphemus, Narcissus and Echo, Hyacinthus, Adonis. These stories feed your hero essay.</p>
-      <svg viewBox="0 0 360 210" role="img" aria-label="Earliest Heroes" style="width:100%;max-width:420px;display:block;margin:0 auto;">
+                    <div class="earth-cutaway">
+      <h3>Tap a Q2 language skill</h3>
+      <p class="hint">Objective nouns (DO, IO, OP), verbals, propaganda, and cause and effect. These feed the booklet drills and the Titanic listening notes.</p>
+      <svg viewBox="0 0 360 210" role="img" aria-label="Q2 language skills" style="width:100%;max-width:420px;display:block;margin:0 auto;">
         <rect width="360" height="210" fill="#f4efe6"/>
-        <g id="tap-prom" style="cursor:pointer"><circle cx="180" cy="36" r="26" fill="#7c2d12"/><text x="180" y="32" text-anchor="middle" font-size="8" fill="#fff">Prometheus</text><text x="180" y="44" text-anchor="middle" font-size="7" fill="#fde68a">fire / Caucasus</text></g>
-        <g id="tap-crust" style="cursor:pointer"><circle cx="70" cy="100" r="28" fill="#c1440e"/><text x="70" y="104" text-anchor="middle" font-size="9" fill="#fff">Io</text></g>
-        <g id="tap-mantle" style="cursor:pointer"><circle cx="180" cy="100" r="28" fill="#e8a838"/><text x="180" y="104" text-anchor="middle" font-size="9">Europa</text></g>
-        <g id="tap-outer" style="cursor:pointer"><circle cx="290" cy="100" r="28" fill="#1e6f8a"/><text x="290" y="104" text-anchor="middle" font-size="8" fill="#fff">Odysseus</text></g>
-        <g id="tap-inner" style="cursor:pointer"><circle cx="70" cy="168" r="28" fill="#6b8e23"/><text x="70" y="172" text-anchor="middle" font-size="8" fill="#fff">Narcissus</text></g>
-        <g id="tap-hya" style="cursor:pointer"><circle cx="180" cy="168" r="28" fill="#4338ca"/><text x="180" y="172" text-anchor="middle" font-size="8" fill="#fff">Hyacinthus</text></g>
-        <g id="tap-culture" style="cursor:pointer"><circle cx="290" cy="168" r="28" fill="#9333ea"/><text x="290" y="172" text-anchor="middle" font-size="9" fill="#fff">Adonis</text></g>
+        <g id="tap-prom" style="cursor:pointer"><circle cx="180" cy="36" r="26" fill="#7c2d12"/><text x="180" y="32" text-anchor="middle" font-size="9" fill="#fff">Infinitive</text><text x="180" y="44" text-anchor="middle" font-size="7" fill="#fde68a">to + base</text></g>
+        <g id="tap-crust" style="cursor:pointer"><circle cx="70" cy="100" r="28" fill="#c1440e"/><text x="70" y="104" text-anchor="middle" font-size="9" fill="#fff">DO</text></g>
+        <g id="tap-mantle" style="cursor:pointer"><circle cx="180" cy="100" r="28" fill="#e8a838"/><text x="180" y="104" text-anchor="middle" font-size="9">IO</text></g>
+        <g id="tap-outer" style="cursor:pointer"><circle cx="290" cy="100" r="28" fill="#1e6f8a"/><text x="290" y="104" text-anchor="middle" font-size="8" fill="#fff">OP</text></g>
+        <g id="tap-inner" style="cursor:pointer"><circle cx="70" cy="168" r="28" fill="#6b8e23"/><text x="70" y="172" text-anchor="middle" font-size="8" fill="#fff">Gerund</text></g>
+        <g id="tap-hya" style="cursor:pointer"><circle cx="180" cy="168" r="28" fill="#4338ca"/><text x="180" y="168" text-anchor="middle" font-size="8" fill="#fff">Propaganda</text><text x="180" y="180" text-anchor="middle" font-size="7" fill="#e0e7ff">7 techniques</text></g>
+        <g id="tap-culture" style="cursor:pointer"><circle cx="290" cy="168" r="28" fill="#9333ea"/><text x="290" y="164" text-anchor="middle" font-size="8" fill="#fff">Cause</text><text x="290" y="176" text-anchor="middle" font-size="8" fill="#fff">&amp; effect</text></g>
       </svg>
-      <p id="earthTapNote" style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink);">Tap a name. Top row is your essay evidence (Io, Europa, Odysseus). Bottom row is the flower myths. Prometheus gave mortals fire.</p>
+      <p id="earthTapNote" style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink);">Tap DO, IO, OP, a verbal, propaganda, or cause and effect.</p>
     </div>
-    <div class="biome-grid" id="biomeGrid"></div>
+<div class="biome-grid" id="biomeGrid"></div>
     <div class="popquiz-trigger" id="trigger-biomes">
       <h3>Ready for the Concepts Pop Quiz?</h3>
       <p>20 questions · ⏱ 6 min · lock in nouns, verbals, media, and essays.</p>
@@ -1446,10 +1449,10 @@
     <h2 class="section-title">Step-by-Step Solver 🧩 <span class="time-pill">⏱ ~12 min</span></h2>
     <p class="section-intro">Four walkthroughs: direct vs indirect objects, pronoun cases, verbals, and propaganda techniques.</p>
 
-    <div class="solver-block" id="solverA">
+                    <div class="solver-block" id="solverA">
       <div class="solver-header">
-        <h3>📝 Solver A - Nominative Functions</h3>
-        <p class="solver-sub"><strong>S</strong> subject (does the action). <strong>PN</strong> predicate nominative (renames the subject after is/are). <strong>AP</strong> appositive (extra name, commas, can lift out). <strong>DA</strong> direct address (talking TO someone, commas). Do not mix AP and DA.</p>
+        <h3>📝 Solver A - Direct, Indirect, Object of the Preposition</h3>
+        <p class="solver-sub"><strong>DO</strong> answers What? or Whom? and receives the action. <strong>IO</strong> answers To/For whom? and sits between the verb and the DO. <strong>OP</strong> follows a preposition.</p>
       </div>
       <div class="solver-pad">
         <div class="solver-row"><label>Sentence: <select class="solver-op wide" id="solA-sample"></select></label></div>
@@ -1457,10 +1460,9 @@
         <div class="var-grid">
           <label>Function of the bold noun
             <select class="solver-op wide" id="solA-iv">
-              <option>subject (S)</option>
-              <option>predicate nominative (PN)</option>
-              <option>appositive (AP)</option>
-              <option>direct address (DA)</option>
+              <option>direct object (DO)</option>
+              <option>indirect object (IO)</option>
+              <option>object of the preposition (OP)</option>
             </select>
           </label>
         </div>
@@ -1475,11 +1477,11 @@
 
     <div class="solver-block" id="solverB">
       <div class="solver-header">
-        <h3>👤 Solver B - Pronoun Kinds</h3>
-        <p class="solver-sub">Reflexive is essential (sentence breaks without it). Intensive just emphasizes (you can lift it out). Possessive shows ownership. Relative starts a clause (who/whom/which/that). Compound relative adds -ever / -soever.</p>
+        <h3>👤 Solver B - Pronoun Cases</h3>
+        <p class="solver-sub"><strong>Nominative</strong> = subject or predicate nominative (I, we, he, she, they, who). <strong>Objective</strong> = DO, IO, OP (me, us, him, her, them, whom). <strong>Possessive</strong> = ownership (mine, ours, hers, theirs).</p>
       </div>
       <div class="solver-pad">
-        <div class="scenario-box" id="solB-clue">Tap a sample, then pick the kind.</div>
+        <div class="scenario-box" id="solB-clue">Tap a sample, then pick the case.</div>
         <div class="layer-grid" id="solB-grid"></div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solB-start" type="button">Walk me through it →</button>
@@ -1492,16 +1494,15 @@
 
     <div class="solver-block" id="solverC">
       <div class="solver-header">
-        <h3>⚡ Solver C - Earliest Heroes</h3>
-        <p class="solver-sub">Io suffered; Europa mostly did not. Odysseus said his name was Nobody and escaped under sheep, not cows. Zeus approached Europa as a bull, not a horse. Hyacinthus died by a discus, not a javelin.</p>
+        <h3>⚡ Solver C - Verbal Classifier</h3>
+        <p class="solver-sub"><strong>Gerund</strong> = -ing used as a noun. <strong>Participle</strong> = adjective (present -ing or past). <strong>Infinitive</strong> = to + base. Falling leaves is a participle trap, not a gerund.</p>
       </div>
       <div class="solver-pad">
         <div class="scenario-box" id="solC-clue"></div>
         <div class="boundary-grid">
-          <button type="button" class="boundary-card" data-b="io" id="solC-div"><div class="b-name">Io &amp; Prometheus</div><p style="font-size:12px;margin-top:6px;">heifer, Argus, gadfly, Nile</p></button>
-          <button type="button" class="boundary-card" data-b="europa" id="solC-con"><div class="b-name">Europa</div><p style="font-size:12px;margin-top:6px;">bull, Crete, Minos</p></button>
-          <button type="button" class="boundary-card" data-b="ody" id="solC-tr"><div class="b-name">Odysseus</div><p style="font-size:12px;margin-top:6px;">Nobody, sheep, one eye</p></button>
-          <button type="button" class="boundary-card" data-b="flowers" id="solC-fl"><div class="b-name">Flower myths</div><p style="font-size:12px;margin-top:6px;">Narcissus, discus, boar</p></button>
+          <button type="button" class="boundary-card" data-b="gerund" id="solC-div"><div class="b-name">Gerund</div><p style="font-size:12px;margin-top:6px;">-ing as a noun</p></button>
+          <button type="button" class="boundary-card" data-b="participle" id="solC-con"><div class="b-name">Participle</div><p style="font-size:12px;margin-top:6px;">adjective · mixing bowl</p></button>
+          <button type="button" class="boundary-card" data-b="infinitive" id="solC-tr"><div class="b-name">Infinitive</div><p style="font-size:12px;margin-top:6px;">to + base</p></button>
         </div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solC-start" type="button">Walk me through it →</button>
@@ -1514,18 +1515,18 @@
 
     <div class="solver-block" id="solverD">
       <div class="solver-header">
-        <h3>💬 Solver D - Idioms, Analogies, Citations</h3>
-        <p class="solver-sub">Idioms keep their whole meaning. Analogies keep a relationship. In-text citations need last name + year, not the full title. Formal predicate nominative uses I, not me.</p>
+        <h3>📢 Solver D - Propaganda Matcher</h3>
+        <p class="solver-sub">Seven techniques. These four mix people up most: bandwagon, testimonial, card stacking, transfer. “Quote a barangay captain” is a distractor, not card stacking.</p>
       </div>
       <div class="solver-pad">
         <div class="scenario-box" id="solD-clue"></div>
         <div class="choice-grid">
-          <button type="button" class="choice-chip" data-pick="idiom" id="solD-focus">Idiom</button>
-          <button type="button" class="choice-chip" data-pick="analogy" id="solD-epi">Analogy</button>
+          <button type="button" class="choice-chip" data-pick="bandwagon" id="solD-focus">Bandwagon</button>
+          <button type="button" class="choice-chip" data-pick="testimonial" id="solD-epi">Testimonial</button>
         </div>
         <div class="choice-grid">
-          <button type="button" class="choice-chip" data-pick="cite" id="solD-mag">Citation</button>
-          <button type="button" class="choice-chip" data-pick="pronoun" id="solD-int">Pronoun case</button>
+          <button type="button" class="choice-chip" data-pick="card" id="solD-mag">Card stacking</button>
+          <button type="button" class="choice-chip" data-pick="transfer" id="solD-int">Transfer</button>
         </div>
         <div class="solver-controls">
           <button class="solver-btn primary" id="solD-start" type="button">Walk me through it →</button>
@@ -1538,11 +1539,10 @@
 
     <div class="popquiz-trigger" id="trigger-diagrams">
       <h3>Ready for the Step-by-Step Solver Pop Quiz?</h3>
-      <p>20 questions · ⏱ 6 min · nouns, pronouns, Io, Europa, Odysseus.</p>
+      <p>20 questions · ⏱ 6 min · objects, pronoun cases, verbals, and propaganda.</p>
     </div>
   </section>
-
-  <!-- TUTOR -->
+<!-- TUTOR -->
   <section class="tab-content" id="tutor">
     <h2 class="section-title">Tutor Mode 🦉 <span class="time-pill">⏱ ~14 min</span></h2>
     <p class="section-intro">Friendly walk-through of every topic. Tap ▶ to listen, ⏸ to pause, ⏹ to stop. Read along while it talks.</p>
@@ -2296,10 +2296,10 @@ window.rdbg = function(cat, ...args) { window.RDBG.log(cat, ...args); };
 
 const RANKS = [
   { min: 0, name: 'Speaker', icon: '🗣️' },
-  { min: 100, name: 'Reader', icon: '📖' },
-  { min: 300, name: 'Bard', icon: '🎭' },
-  { min: 600, name: 'Myth-Keeper', icon: '⚡' },
-  { min: 1000, name: 'Olympian', icon: '🏛️' },
+  { min: 100, name: 'Noun Scout', icon: '📝' },
+  { min: 300, name: 'Pronoun', icon: '👤' },
+  { min: 600, name: 'Verbal', icon: '⚡' },
+  { min: 1000, name: 'Essayist', icon: '🖊️' },
   { min: 1500, name: 'Word Master', icon: '👑' },
 ];
 function getRank(xp) {
@@ -2337,7 +2337,7 @@ const ACHIEVEMENTS = {
   'streak-10': { name: 'On Fire', icon: '🔥', desc: '10 correct answers in a row' },
   'first-exam': { name: 'Exam Done', icon: '🎓', desc: 'Completed a Practice Exam' },
   'high-scorer': { name: 'High Scorer', icon: '🏆', desc: 'Scored 90%+ on a Practice Exam' },
-  'apex': { name: 'Olympian', icon: '🏛️', desc: 'Earned the Olympian rank' },
+  'apex': { name: 'Essayist', icon: '🖊️', desc: 'Earned the Essayist rank' },
 };
 function unlockAchievement(id) {
   if (!progress.achievements) progress.achievements = [];
@@ -2373,7 +2373,7 @@ function refreshHomeStats() {
   const rank = getRank(progress.totalXP || 0);
   document.getElementById('rankCardWrap').innerHTML =
     `<div class="rank-card"><span class="rank-icon">${rank.icon}</span><span>RANK <span class="rank-name">${rank.name}</span></span></div>`;
-  if (rank.name === 'Olympian') unlockAchievement('apex');
+  if (rank.name === 'Essayist') unlockAchievement('apex');
 }
 
 function refreshTabs() {
@@ -2705,6 +2705,10 @@ class SpeechController {
 
   play() {
     if (window.rdbg) rdbg('CLICK', this._id, 'play() called, current state=' + this.state + ', enabled=' + (this._enabled !== false) + ', sentences=' + this.sentences.length + ', currentIdx=' + this.currentIdx);
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) {
+      if (window.rdbg) rdbg('VOICE', this._id, 'play() skipped: voice off');
+      return;
+    }
     if (!('speechSynthesis' in window)) {
       if (window.rdbg) rdbg('ERROR', this._id, 'no speechSynthesis');
       return;
@@ -3540,7 +3544,7 @@ const FLASHCARD_DECKS = {
       { tag: 'ESSAY', term: 'AI sample essay', def: 'The Positive Effects of Artificial Intelligence on Students. Thesis = three effects: easier to understand, independent learning, future skills.', ex: 'Q1 answer <strong>A</strong>. Hook = question about AI homework. Kicker = use AI wisely (think critically, check information).' },
       { tag: 'TITANIC', term: 'Cause vs effect traps', def: 'Water entered because the iceberg tore a hole (1d). Lack of anticipation is a <strong>CAUSE</strong>, not an effect (3d). Panic is not the listed extra-death cause (2a).', ex: 'Extra deaths named: boats launched late, not filled (28 of 64), not enough boats.' },
       { tag: 'ELEPHANT', term: 'Ban and vortex', def: 'Hunting ban made poaching easier (rangers alone, WWII rifles vs AK-17\'s). Extinction vortex if a local group drops below 100. Main cause: humans.', ex: 'Ivory + habitat loss to farms and cities. Clearing brush makes open savannah and scatters seeds.' },
-      { tag: 'TALK', term: 'Working with others', def: 'Collaborate: Let\'s put our heads together. Agree: I second that. Disagree: I see it differently. Opinion: In my opinion / As I see it.', ex: 'Also: I\'m on the same page. I\'m not on board with that. From my point of view…' },
+      { tag: 'TALK', term: 'Working with others', def: 'Collaborate: Let\'s collaborate / Let\'s put our heads together / Let\'s join forces / Let\'s combine our efforts / How about we team up? Agree: I second that. Disagree: I see it differently. Opinion: In my opinion / As I see it.', ex: 'Also: I\'m on the same page. I\'m not on board with that. From my point of view…' },
       { tag: 'POEM', term: 'Two-stanza quatrain', def: 'Four lines per stanza. Two stanzas only. Persona = speaker. Line = a row of words. Stanza = a group of lines. Rhyme ABAB AABB ABBA AAAA.', ex: 'God Bless Them All by Clay Harrison uses AABB (street/feet, night/light).' }
     ]
   }
@@ -3765,7 +3769,7 @@ const BIOMES = [
     location: 'Cause-effect notes and Writing Activities 1–3. AI sample essay p.44. Poetry p.61–63. Everyday Expressions p.3. Titanic and Save the Elephants readings.',
     climate: 'Essay: hook (question/quote/story) + background + thesis; body 5+ with Because of / As a result / Therefore; conclusion 3+ with kicker. Poem: quatrain, two stanzas only. Talk: collaborate, I second that, I see it differently, As I see it.',
     feature: 'AI essay thesis = easier to understand, independent learning, future skills. Q1 = A. Screen-time hook = tired eyes after videos (not a lecture). God Bless Them All = AABB. Titanic 1d / 2a / 3d.',
-    flora: 'Let\'s put our heads together. I second that. I see it differently. In my opinion / As I see it. APA list. Capitalize I and proper nouns.',
+    flora: 'Let\'s collaborate. Let\'s put our heads together. Let\'s join forces. Let\'s combine our efforts. How about we team up? I second that. I see it differently. In my opinion / As I see it. APA list. Capitalize I and proper nouns.',
     fauna: 'A hook that is really a kicker. Body under five sentences. One-stanza poem. Inventing deforestation listening keys. Calling lack of anticipation an effect of the Titanic ending.',
     mnem: 'Hook it, prove cause or effect, kick. Two quatrains if it is a poem. Be polite when you disagree.'
   }
@@ -3926,7 +3930,7 @@ const TUTOR_TOPICS = [
 ];
 
 const tutorShell = document.getElementById('tutorShell');
-TUTOR_TOPICS.forEach(t => {
+if (tutorShell) TUTOR_TOPICS.forEach(t => {
   const el = document.createElement('div');
   el.className = 'tutor-card';
   el.style.setProperty('--accent', t.accent);
@@ -4033,7 +4037,7 @@ const CHEAT_BLOCKS = [
       'Hook + background + thesis. Body 5+. Conclusion 3+ summary + kicker. APA if you research.',
       'AI sample: easier to understand, independent learning, future skills. Q1 = A.',
       'Quatrain, two stanzas only. ABAB AABB ABBA AAAA. Clay Harrison, God Bless Them All = AABB.',
-      'Let\'s put our heads together. I second that. I see it differently. In my opinion / As I see it.'
+      'Let\'s collaborate. Let\'s put our heads together. Let\'s join forces. Let\'s combine our efforts. How about we team up? I second that. I see it differently. In my opinion / As I see it.'
     ]
   },
   {
@@ -4191,109 +4195,152 @@ function fmt(n, maxDec = 4) {
 
 
 // ===========================================================
-// SOLVER A — Variable sorter
+// SOLVER A — Direct / indirect / object of the preposition
 // ===========================================================
-
-
-
 const SOL_A_SCENARIOS = [
-  { title:"Please present your side, Mr. Santiago!", text:"The speaker is talking TO Mr. Santiago.", ans:"direct address (DA)", why:"A name you speak to, set off by a comma. Not an appositive." },
-  { title:"Zeus is the supreme ruler of the Olympians.", text:"Ruler renames Zeus after is.", ans:"predicate nominative (PN)", why:"Linking verb + noun that is the same person/thing as the subject." },
-  { title:"In Philippine Mythology, Bathala is Zeus' counterpart.", text:"Bathala is who the sentence is about.", ans:"subject (S)", why:"Bathala does the 'being.' The booklet also notes Bathala as Zeus's PH counterpart." },
-  { title:"Our class mayor, Celine, gave a speech.", text:"Celine is extra naming for class mayor.", ans:"appositive (AP)", why:"Extra name, commas, you can lift Celine out and the sentence still works. DA talks TO someone; AP adds a name ABOUT someone." },
-  { title:"Collect your classmates' data files, Maureen.", text:"Talking to Maureen.", ans:"direct address (DA)", why:"Comma + name of the listener." },
-  { title:"Narra is a tree and not a flower.", text:"Tree renames Narra.", ans:"predicate nominative (PN)", why:"is + noun = PN." },
-  { title:"The rainforest contains the most biodiverse plants.", text:"Rainforest does the containing.", ans:"subject (S)", why:"Who/what + verb." },
-  { title:"The Philippine Red Cross, a humanitarian organization, commits...", text:"Organization explains Red Cross.", ans:"appositive (AP)", why:"Commas around extra identification." }
+  { title:"Gives advisories", text:"The government gives <strong>advisories</strong> about the weather.", ans:"direct object (DO)", why:"Advisories answers What? and receives the action." },
+  { title:"Sent his class resources", text:"The professor sent his <strong>class</strong> some useful online resources.", ans:"indirect object (IO)", why:"Class answers To whom? It sits between the verb and the direct object (resources)." },
+  { title:"Gave the shopper directions", text:"The attendant gave the <strong>shopper</strong> clear directions.", ans:"indirect object (IO)", why:"Shopper = for/to whom. Directions is the direct object." },
+  { title:"Migrate into our area", text:"Every summer, whales migrate into our <strong>area</strong>.", ans:"object of the preposition (OP)", why:"Area follows the preposition into." },
+  { title:"Receptionist in the lobby", text:"The receptionist in the <strong>lobby</strong> always smiles at the visitors.", ans:"object of the preposition (OP)", why:"Lobby follows in. Visitors is also an OP after at." },
+  { title:"Conducted an experiment", text:"They conducted an <strong>experiment</strong> in class today.", ans:"direct object (DO)", why:"Experiment answers What? after conducted." },
+  { title:"Smiles at the visitors", text:"The receptionist in the lobby always smiles at the <strong>visitors</strong>.", ans:"object of the preposition (OP)", why:"Visitors follows at. Not a direct object of smiles." },
+  { title:"Gave donations", text:"Parents gave the <strong>school</strong> donations.", ans:"indirect object (IO)", why:"School is between gave and donations. Donations = DO." }
 ];
+
 function solA_fillSelects(idx) {
+  const sc = SOL_A_SCENARIOS[idx];
   const sel = document.getElementById("solA-sample");
   if (sel && sel.options.length !== SOL_A_SCENARIOS.length) {
-    sel.innerHTML = SOL_A_SCENARIOS.map((x,i)=>"<option value=\""+i+"\">"+x.title+"</option>").join("");
+    sel.innerHTML = SOL_A_SCENARIOS.map((x,i) => "<option value=\""+i+"\">"+x.title+"</option>").join("");
   }
-  const sc = SOL_A_SCENARIOS[idx];
-  const box = document.getElementById("solA-scenario");
-  if (box) box.innerHTML = "<strong>"+sc.title+"</strong><br>"+sc.text;
+  document.getElementById("solA-scenario").innerHTML = "<strong>" + sc.title + "</strong><br>" + sc.text;
 }
+
 function solA_solve() {
-  const idx = Number(document.getElementById("solA-sample").value)||0;
+  const outEl = document.getElementById("solA-output");
+  const idx = Number(document.getElementById("solA-sample").value) || 0;
   const sc = SOL_A_SCENARIOS[idx];
-  const guess = document.getElementById("solA-iv").value;
-  const ok = guess === sc.ans;
-  SolverRenderer.render(document.getElementById("solA-output"), [
-    { title:"Four nominative jobs", body:"<strong>S</strong> who/what + verb. <strong>PN</strong> after is/are, same as the subject. <strong>AP</strong> extra name, commas, removable. <strong>DA</strong> talking TO a person, commas.", deeper:"The booklet warns: DA in the middle of a sentence can look like AP. Ask: am I naming the listener, or renaming the noun?" },
-    { title:"This bold noun is "+sc.ans, body: ok ? "You picked <strong>"+guess+"</strong>. That matches." : "You picked <strong>"+guess+"</strong>. The booklet function is <strong>"+sc.ans+"</strong>. "+sc.why, math: sc.ans, deeper: sc.why },
-    { title:"Mythology sentence in the exercise", body:"Zeus is the supreme ruler (PN). Bathala is Zeus' counterpart (Bathala = S). Those two lines are grammar AND Classic Reader at once.", altMethod:"Other Methods to Consider: cover the extra words. If the sentence still points at the same person doing the verb, you probably had AP, not S." }
-  ]);
+  const pick = document.getElementById("solA-iv").value;
+  const ok = pick === sc.ans;
+  const steps = [
+    { title:"Ask the object questions", body:"<strong>DO</strong> answers What? or Whom? and receives the action. <strong>IO</strong> answers To/For whom? and sits between the verb and the DO. <strong>OP</strong> follows a preposition.", deeper:"Objective functions this quarter: DO, IO, and OP. Do not mix them with subject or predicate nominative." },
+    { title:"This bold noun is " + sc.ans, body: ok ? "You tagged <strong>"+pick+"</strong>. That matches." : "You tagged <strong>"+pick+"</strong>. The booklet function is <strong>"+sc.ans+"</strong>.", math: sc.ans, deeper: sc.why },
+    { title:"Lock the test", body:"If you can lift the noun and the verb still has a What?, you probably had an IO in the middle. If a little word like in, at, into, of sits in front, it is OP.", altMethod:"Underline the verb, box the prepositions, then label DO / IO / OP only." }
+  ];
+  SolverRenderer.render(outEl, steps);
 }
 
+// ===========================================================
+// SOLVER B — Pronoun cases
+// ===========================================================
 const SOL_B_CLUES = [
-  { clue:"She congratulated herself for being patient. Without herself the sentence breaks.", ans:"reflexive" },
-  { clue:"Professor Salvador himself left a message. You can remove himself and it still works.", ans:"intensive" },
-  { clue:"The heavy luggage was hers.", ans:"possessive" },
-  { clue:"Isabelle passed by the house that she grew up in.", ans:"relative" },
-  { clue:"Clark, who likes cycling, owns three bikes. Who is the subject of likes.", ans:"relative" },
-  { clue:"Clark, whom I know, owns three bikes. Whom is the object; I is the subject of know.", ans:"relative" },
-  { clue:"Whoever spilled dirty water will have to clean it up.", ans:"compound relative" },
-  { clue:"The bystanders did nothing whatsoever to stop the thief.", ans:"compound relative" }
+  { clue:"She finished the drill. The pronoun does the action.", ans:"nominative" },
+  { clue:"The teacher praised her. The pronoun receives the action.", ans:"objective" },
+  { clue:"This notebook is hers. The pronoun shows ownership and stands alone.", ans:"possessive" },
+  { clue:"Give the file to them. Object of the preposition to.", ans:"objective" },
+  { clue:"They and I will present. Compound subject uses nominative, not me.", ans:"nominative" },
+  { clue:"The idea was ours. Possessive pronoun, not our’s.", ans:"possessive" },
+  { clue:"Between you and me, the poster is card stacking. Object of between.", ans:"objective" },
+  { clue:"It is I who wrote the preamble copy. Formal predicate nominative uses I, not me.", ans:"nominative" }
 ];
-const SOL_B_LAYERS = ["reflexive","intensive","possessive","relative","compound relative"];
-let solB_idx = 0, solB_pick = "";
+const SOL_B_LAYERS = ["nominative","objective","possessive"];
+let solB_idx = 0;
+let solB_pick = "";
+
 function solB_show(idx) {
-  solB_idx = idx; solB_pick = "";
-  document.getElementById("solB-clue").innerHTML = "<strong>Clue:</strong> "+SOL_B_CLUES[idx].clue;
-  document.querySelectorAll("#solB-grid .layer-chip").forEach(b => b.classList.remove("selected"));
-}
-function solB_solve() {
-  const c = SOL_B_CLUES[solB_idx];
-  const pick = solB_pick || "(none)";
-  SolverRenderer.render(document.getElementById("solB-output"), [
-    { title:"Ask: can I lift it out?", body:"If the sentence dies without the -self word, it is <strong>reflexive</strong> (object). If it is just extra punch, it is <strong>intensive</strong>.", deeper:"myself, yourself, himself, herself, itself, ourselves, yourselves, themselves." },
-    { title:"This one is "+c.ans, body: pick===c.ans ? "Yes: <strong>"+pick+"</strong>." : "You said <strong>"+pick+"</strong>. It is <strong>"+c.ans+"</strong>.", math: c.ans, deeper:"Relative: who (subject), whom (object), which (things), that (both). Compound relative: whoever, whichever, whatsoever (emphasis after a negative: not/never/nothing)." },
-    { title:"Formal PN uses I, not me", body:"The only Bergamo I this quarter is I. In formal writing the predicate nominative stays subjective: I, he, she, we, they. Casual talk may use me; tests want I.", altMethod:"Other Methods to Consider: try who/whom by swapping he/him. If he fits, who. If him fits, whom." }
-  ]);
+  solB_idx = idx;
+  solB_pick = "";
+  const c = SOL_B_CLUES[idx];
+  document.getElementById("solB-clue").innerHTML = "<strong>Clue:</strong> " + c.clue;
+  document.querySelectorAll("#solB-grid .layer-chip").forEach(b => b.classList.remove("selected","correct","wrong"));
 }
 
+function solB_solve() {
+  const outEl = document.getElementById("solB-output");
+  const c = SOL_B_CLUES[solB_idx];
+  const pick = solB_pick || "(none yet)";
+  const ok = pick === c.ans;
+  const steps = [
+    { title:"Three cases", body:"<strong>Nominative</strong> = subject or predicate nominative (I, we, he, she, they, who). <strong>Objective</strong> = DO, IO, OP (me, us, him, her, them, whom). <strong>Possessive</strong> = ownership (my/mine, our/ours, his, her/hers, their/theirs, whose).", deeper:"This quarter drills case: nominative, objective, and possessive. Reflexive and intensive are a different pronoun job." },
+    { title:"This clue is " + c.ans, body: ok ? "You picked <strong>"+pick+"</strong>." : "You picked <strong>"+pick+"</strong>. The case is <strong>"+c.ans+"</strong>.", math: c.ans, deeper:"Drop the extra name in a compound: ‘The teacher praised her’ not ‘she’. ‘They and I’ not ‘them and me’ as subject." },
+    { title:"Lock the pair", body:"Who/whoever as subject. Whom/whomever as object. Never write our’s or her’s.", altMethod:"Replace the pronoun with I or me. If I fits, nominative. If me fits, objective." }
+  ];
+  SolverRenderer.render(outEl, steps);
+}
+
+// ===========================================================
+// SOLVER C — Verbal classifier
+// ===========================================================
 const SOL_C_CLUES = [
-  { text:"A princess turned into a heifer, watched by a hundred-eyed guard, stung by a gadfly, later restored at the Nile. Prometheus comforts her.", ans:"io", extra:"Hera's jealousy, Argus, Hermes's sleepy song, peacock tail, gadfly. Io's descendant Hercules will free Prometheus. She suffered. Europa mostly did not." },
-  { text:"A girl gathers flowers. Zeus comes as a gentle chestnut bull with crescent horns, races over the sea to Crete. Her sons include Minos and Rhadamanthus.", ans:"europa", extra:"Not a horse. Hera was off guard. The continent keeps her name. Fortunate, unlike Io." },
-  { text:"A clever guest says his name is Nobody, heats a stake, blinds one eye, and leaves under the bellies of sheep.", ans:"ody", extra:"Polyphemus, not a stab in the back. Escape is sheep, not cows. Later he shouts Odysseus, wrecker of cities. Galatea is a different, lovesick Cyclops story: he never won her." },
-  { text:"A beautiful youth dies in a game with Apollo. The Classic Reader says discus, not javelin. Another youth dies hunting a boar and becomes a red anemone. A third loves his reflection.", ans:"flowers", extra:"Hyacinthus: discus (reader), Zephyr may have blown it. Adonis: Aphrodite vs Persephone, Zeus splits the year, boar, anemone. Narcissus: Echo can only repeat; Nemesis answers a prayer; he pines at a pool." }
+  { text:"Swimming is a great body workout. The -ing word is the subject.", ans:"gerund", extra:"Gerunds are verb forms used as nouns. They always end in -ing." },
+  { text:"The chef put his ingredients in a mixing bowl. Mixing describes bowl.", ans:"participle", extra:"Present participle = -ing adjective. Falling leaves = participle, not gerund." },
+  { text:"To reuse materials is another way to lessen waste.", ans:"infinitive", extra:"Infinitive = to + base form. Here it is the subject." },
+  { text:"Recycled materials can be as good as brand-new ones.", ans:"participle", extra:"Past participle as adjective: recycled, forgotten, chosen." },
+  { text:"Glinda loves kickboxing. The -ing word is a direct object.", ans:"gerund", extra:"Gerund as DO. If it describes a noun, it would be a participle." },
+  { text:"Her goal is to finish a 10-mile race.", ans:"infinitive", extra:"Infinitive as predicate nominative after is." },
+  { text:"The falling leaves covered the ground.", ans:"participle", extra:"Exercise 4 trap: falling describes leaves, so X (not a gerund)." },
+  { text:"I have some clothes to wash.", ans:"infinitive", extra:"Infinitive as adjective: tells which clothes." }
 ];
-let solC_idx = 0, solC_pick = "";
+let solC_idx = 0;
+let solC_pick = "";
+
 function solC_show(idx) {
-  solC_idx = idx; solC_pick = "";
+  solC_idx = idx;
+  solC_pick = "";
   document.getElementById("solC-clue").textContent = SOL_C_CLUES[idx].text;
   document.querySelectorAll(".boundary-card").forEach(b => b.classList.remove("selected"));
 }
+
 function solC_solve() {
+  const outEl = document.getElementById("solC-output");
   const c = SOL_C_CLUES[solC_idx];
-  SolverRenderer.render(document.getElementById("solC-output"), [
-    { title:"Which earliest hero?", body: solC_pick===c.ans ? "You tapped the right story." : "This clue belongs to <strong>"+c.ans+"</strong>.", math: c.ans, deeper: c.extra },
-    { title:"Comprehension traps from the reader", body:"Europa: bull, not horse. Odysseus: eye, not back; sheep, not cows. Hyacinthus: discus (the reader), even if a worksheet says javelin. Narcissus loved his reflection. Adonis splits the year between Aphrodite and Persephone.", deeper:"Your data file essay asks: what is a hero in Greek mythology? Use Io (patience/endurance), Europa (the journey she did not choose, yet her name remains), Odysseus (cleverness). The sample essay used Io, Europa, and Odysseus as resilient." },
-    { title:"Prometheus in one line", body:"He gave mortals fire, was bound on Caucasus, and will be freed by Hercules, Io's descendant. He and Io share suffering caused (behind Hera) by Zeus.", altMethod:"Other Methods to Consider: three sticky notes: Suffered (Io, Prometheus, Echo), Clever (Odysseus, Hermes), Named on a map (Io, Europa)." }
-  ]);
+  const pick = solC_pick || "(none yet)";
+  const ok = pick === c.ans;
+  const steps = [
+    { title:"Name the verbal", body:"<strong>Gerund</strong> = -ing noun (S, PN, AP, DO, OP). <strong>Participle</strong> = adjective (present -ing or past -ed/-en/-n/-t). <strong>Infinitive</strong> = to + base, as noun, adjective, or adverb.", deeper:"Reducing waste / To reuse / Recycled materials is the booklet poster set." },
+    { title:"This clue is " + c.ans, body: ok ? "You tapped <strong>"+pick+"</strong>." : "You tapped <strong>"+pick+"</strong>. The verbal is <strong>"+c.ans+"</strong>.", math: c.ans, deeper: c.extra },
+    { title:"The -ing test", body:"If the -ing word names an activity you could replace with a thing, gerund. If it describes a noun beside it, participle. If you see to + verb, infinitive.", altMethod:"Gerund = the activity as a noun. Participle = the describing word beside a noun. Infinitive = to + base verb." }
+  ];
+  SolverRenderer.render(outEl, steps);
 }
 
+// ===========================================================
+// SOLVER D — Propaganda techniques
+// ===========================================================
 const SOL_D_CLUES = [
-  { text:"Odysseus made sure to get home come hell or high water.", ans:"idiom", why:"Idiom = whole phrase meaning. Here: determined despite trouble. Filipino pair: harangan man ng sibat." },
-  { text:"Sandpaper is to rough as silk is to smooth.", ans:"analogy", why:"Description/characteristic analogy. Keep the relationship, not the first word." },
-  { text:"Tigers are strong swimmers (Lopez, 2022).", ans:"cite", why:"In-text citation: last name + year. Not (Lisa Torres, 2019). Not the book title." },
-  { text:"The newly appointed chairman is she.", ans:"pronoun", why:"Predicate nominative after is: she, not her. Formal writing." }
+  { text:"Nine out of ten children love Crunchy Bites. Do not be the only one missing out!", ans:"bandwagon", extra:"Claims everyone is buying it so you will too." },
+  { text:"A famous basketball player: I only wear SpeedMax shoes because they help me perform my best.", ans:"testimonial", extra:"Celebrity, athlete, or well-known person recommends the product. Colgate × Hidilyn Diaz is the booklet ad." },
+  { text:"Skin cream: made with natural ingredients, leaves your skin glowing. Omits that results vary and some users get irritation.", ans:"card", extra:"Shows only positives and hides limits. BrightWash and SmartBot accessories are the same trap." },
+  { text:"A poster uses the flag and a family photo so you transfer those feelings onto the product.", ans:"transfer", extra:"Borrows respect or emotion from a symbol, person, or scene." },
+  { text:"Students from every school are carrying PackPro. Join the trend today!", ans:"bandwagon", extra:"iPhone 5 “Loving it is easy. That’s why so many people do.” is also bandwagon." },
+  { text:"Snack lists vitamins on the front and hides high sugar on the back.", ans:"card", extra:"Card stacking is not ‘quote a barangay captain.’ That option is a distractor." },
+  { text:"Famous actor: I always wear SunShield because it protects my skin.", ans:"testimonial", extra:"Name the person + the product. That is testimonial, not transfer." },
+  { text:"SmartJuice: every student drinks it, don’t be left behind, plus glowing health icons with no limits listed.", ans:"bandwagon", extra:"The booklet poster stacks bandwagon with glittering generalities." }
 ];
-let solD_idx = 0, solD_mi = "";
+let solD_idx = 0;
+let solD_dot = "";
+let solD_mi = "";
+
 function solD_show(idx) {
-  solD_idx = idx; solD_mi = "";
-  document.getElementById("solD-clue").innerHTML = "<strong>Clue:</strong> "+SOL_D_CLUES[idx].text;
+  solD_idx = idx;
+  solD_dot = "";
+  solD_mi = "";
+  document.getElementById("solD-clue").innerHTML = "<strong>Clue:</strong> " + SOL_D_CLUES[idx].text;
   document.querySelectorAll("#solverD .choice-chip").forEach(b => b.classList.remove("selected"));
 }
+
 function solD_solve() {
+  const outEl = document.getElementById("solD-output");
   const c = SOL_D_CLUES[solD_idx];
-  const pick = solD_mi || "(none)";
-  SolverRenderer.render(document.getElementById("solD-output"), [
-    { title:"Name the skill", body: pick===c.ans ? "Yes, this is a <strong>"+c.ans+"</strong> item." : "This is a <strong>"+c.ans+"</strong> item. "+c.why, math: c.ans, deeper: c.why },
-    { title:"Courtesy still counts", body:"Thank you / you're welcome / may I / could you repeat that. Polite requests: Would you mind...? Could I kindly...?", altMethod:"Essay bones: hook, background, thesis, body (main point + details + transitions), conclusion (summary + kicker). Body at least 6 sentences. Conclusion at least 3." }
-  ]);
+  const pick = solD_dot || solD_mi || "(none yet)";
+  const ok = pick === c.ans;
+  const steps = [
+    { title:"Seven techniques", body:"Bandwagon, Testimonial, Card Stacking, Transfer, Plain Folks, Glittering Generalities, Name Calling. These four chips are the ones students mix most.", deeper:"Plain folks = ordinary person. Glittering generalities = shiny empty praise. Name calling = insult the rival." },
+    { title:"This clue is " + c.ans, body: ok ? "You picked <strong>"+pick+"</strong>." : "You picked <strong>"+pick+"</strong>. The technique is <strong>"+c.ans+"</strong>.", math: c.ans, deeper: c.extra },
+    { title:"Lock the ads", body:"SmartJuice / BrightWash / Dream Home posters in the booklet. Read what is missing as carefully as what is printed.", altMethod:"Ask: is it everyone, a celebrity, hidden limits, or a borrowed symbol?" }
+  ];
+  SolverRenderer.render(outEl, steps);
 }
 
 (function wireGeoSolvers() {
@@ -4302,9 +4349,17 @@ function solD_solve() {
     solA_fillSelects(0);
     aSel.addEventListener("change", () => solA_fillSelects(Number(aSel.value)));
     document.getElementById("solA-start").addEventListener("click", solA_solve);
-    document.getElementById("solA-example").addEventListener("click", () => { const i=Math.floor(Math.random()*SOL_A_SCENARIOS.length); aSel.value=String(i); solA_fillSelects(i); });
-    document.getElementById("solA-clear").addEventListener("click", () => { document.getElementById("solA-output").innerHTML=""; });
+    document.getElementById("solA-example").addEventListener("click", () => {
+      const i = Math.floor(Math.random() * SOL_A_SCENARIOS.length);
+      aSel.value = String(i);
+      solA_fillSelects(i);
+    });
+    document.getElementById("solA-clear").addEventListener("click", () => {
+      document.getElementById("solA-output").innerHTML = "";
+      solA_fillSelects(Number(aSel.value) || 0);
+    });
   }
+
   const grid = document.getElementById("solB-grid");
   if (grid) {
     grid.innerHTML = SOL_B_LAYERS.map(L => '<button type="button" class="layer-chip" data-layer="'+L+'">'+L+'</button>').join("");
@@ -4318,6 +4373,7 @@ function solD_solve() {
     document.getElementById("solB-example").addEventListener("click", () => solB_show(Math.floor(Math.random()*SOL_B_CLUES.length)));
     document.getElementById("solB-clear").addEventListener("click", () => { document.getElementById("solB-output").innerHTML=""; solB_show(solB_idx); });
   }
+
   document.querySelectorAll(".boundary-card").forEach(card => {
     card.addEventListener("click", () => {
       solC_pick = card.getAttribute("data-b");
@@ -4332,12 +4388,21 @@ function solD_solve() {
     document.getElementById("solC-example").addEventListener("click", () => solC_show(Math.floor(Math.random()*SOL_C_CLUES.length)));
     document.getElementById("solC-clear").addEventListener("click", () => { document.getElementById("solC-output").innerHTML=""; solC_show(solC_idx); });
   }
+
   solD_show(0);
-  ["solD-focus","solD-epi","solD-mag","solD-int"].forEach(id => {
+  ["solD-focus","solD-epi"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("click", () => {
+      solD_dot = el.getAttribute("data-pick");
+      document.querySelectorAll("#solD-focus, #solD-epi").forEach(x => x.classList.remove("selected"));
+      el.classList.add("selected");
+    });
+  });
+  ["solD-mag","solD-int"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("click", () => {
       solD_mi = el.getAttribute("data-pick");
-      document.querySelectorAll("#solverD .choice-chip").forEach(x => x.classList.remove("selected"));
+      document.querySelectorAll("#solD-mag, #solD-int").forEach(x => x.classList.remove("selected"));
       el.classList.add("selected");
     });
   });
@@ -4345,27 +4410,27 @@ function solD_solve() {
   if (dStart) {
     dStart.addEventListener("click", solD_solve);
     document.getElementById("solD-example").addEventListener("click", () => solD_show(Math.floor(Math.random()*SOL_D_CLUES.length)));
-    document.getElementById("solD-clear").addEventListener("click", () => { document.getElementById("solD-output").innerHTML=""; solD_show(solD_idx); });
+    document.getElementById("solD-clear").addEventListener("click", () => { document.getElementById("solD-output").innerHTML=""; solD_dot=""; solD_mi=""; solD_show(solD_idx); });
   }
-  const notes = {
-    "tap-crust": "Io: princess, heifer, Argus's hundred eyes, gadfly, Nile, ancestor of Hercules. She suffered. Prometheus is bound beside her.",
-    "tap-mantle": "Europa: Zeus as a gentle bull, ride to Crete, sons Minos and Rhadamanthus. She was fortunate. A continent keeps her name.",
-    "tap-outer": "Odysseus: Nobody, red-hot spike in Polyphemus's eye, escape under sheep. Cleverness is a hero trait in your essay sample.",
-    "tap-inner": "Narcissus loved his reflection. Echo could only repeat. He became the flower. Nemesis answered a wounded prayer.",
-    "tap-culture": "Adonis: Aphrodite and Persephone both claimed him. Zeus split the year. He died hunting a boar. The anemone sprang from his blood.",
-    "tap-prom": "Prometheus gave mortals fire and was bound on Caucasus. He comforts Io. Hercules, Io's descendant, will free him. They share suffering tied to Zeus.",
-    "tap-hya": "Hyacinthus died in a discus game with Apollo. A worksheet that says javelin is the trap; trust the Classic Reader. Zephyr may have blown the throw. A flower keeps his name."
+  const earthNotes = {
+    "tap-crust": "Direct object: answers What? or Whom? and receives the action. The government gives advisories.",
+    "tap-mantle": "Indirect object: To/For whom? It sits between the verb and the direct object. Sent his class resources.",
+    "tap-outer": "Object of the preposition: the noun after in, at, into, of, with… Whales migrate into our area.",
+    "tap-inner": "Gerund: -ing used as a noun. Swimming is a workout. Participle: -ing or -ed as an adjective. Mixing bowl.",
+    "tap-prom": "Infinitive: to + base. To reuse materials is another way to lessen waste. Can be noun, adjective, or adverb.",
+    "tap-hya": "Propaganda: Bandwagon (everyone), Testimonial (celebrity), Card Stacking (only positives), Transfer (borrowed symbol).",
+    "tap-culture": "Cause and effect essay: name the cause, show the effect, use signal words. Titanic and Save the Elephants sit with this writing unit."
   };
-  Object.keys(notes).forEach(id => {
+  Object.keys(earthNotes).forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
+    el.style.cursor = "pointer";
     el.addEventListener("click", () => {
       const n = document.getElementById("earthTapNote");
-      if (n) n.textContent = notes[id];
+      if (n) n.textContent = earthNotes[id];
     });
   });
 })();
-
 
 const PRACTICE_SETS = [
   { id: 'ex1', icon: '📝', title: 'Exercise 1–2 style: Noun functions', desc: 'Love vs rice, rainforest MC, pizza reviewer DO/IO/OP.' },
@@ -5366,7 +5431,7 @@ const BREAK_MSGS = [
   '💧 Quick water break! Then crush the next 25 min',
   '🌱 Tiny break = bigger memory. Take 2 min',
 ];
-let breakTimer = null;
+var breakTimer = null;
 function scheduleBreakReminder() {
   if (breakTimer) clearInterval(breakTimer);
   breakTimer = setInterval(() => {
@@ -5550,8 +5615,19 @@ function rankVoiceQuality(v) {
   return score;
 }
 
+function isVoiceOff() {
+  return selectedVoiceURI === 'off';
+}
+
 function loadVoices() {
-  if (!window.speechSynthesis) return;
+  if (!window.speechSynthesis) {
+    const sel = document.getElementById('voiceSelect');
+    if (sel) {
+      sel.innerHTML = '<option value="off" selected>Off — no talking or highlights</option>';
+      selectedVoiceURI = 'off';
+    }
+    return;
+  }
   availableVoices = window.speechSynthesis.getVoices() || [];
   // Strict filter first
   let filtered = availableVoices.filter(isVoiceAllowed);
@@ -5563,27 +5639,35 @@ function loadVoices() {
 
   const sel = document.getElementById('voiceSelect');
   if (!sel) return;
-  if (filtered.length === 0) {
-    sel.innerHTML = '<option value="">No voices available on this device</option>';
-    return;
-  }
   let saved = null;
   try { saved = localStorage.getItem(VOICE_KEY); } catch {}
-  // If saved choice is no longer allowed, reset to top-ranked
-  if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
-  if (!saved) saved = filtered[0].voiceURI;
-  selectedVoiceURI = saved;
+  if (saved === 'off') {
+    selectedVoiceURI = 'off';
+  } else {
+    // If saved choice is no longer allowed, reset to top-ranked
+    if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
+    if (!saved && filtered[0]) saved = filtered[0].voiceURI;
+    selectedVoiceURI = saved || 'off';
+  }
 
-  sel.innerHTML = filtered.map((v, i) => {
-    const stars = i === 0 ? ' ⭐' : '';
-    const label = `${v.name} (${v.lang})${stars}`;
-    const selAttr = v.voiceURI === saved ? ' selected' : '';
-    return `<option value="${v.voiceURI}"${selAttr}>${label}</option>`;
-  }).join('');
+  const offSelected = selectedVoiceURI === 'off' ? ' selected' : '';
+  const offOpt = '<option value="off"' + offSelected + '>Off — no talking or highlights</option>';
+  if (filtered.length === 0) {
+    sel.innerHTML = offOpt + '<option value="">No voices available on this device</option>';
+  } else {
+    sel.innerHTML = offOpt + filtered.map((v, i) => {
+      const stars = i === 0 ? ' ⭐' : '';
+      const label = v.name + ' (' + v.lang + ')' + stars;
+      const selAttr = v.voiceURI === selectedVoiceURI ? ' selected' : '';
+      return '<option value="' + v.voiceURI + '"' + selAttr + '>' + label + '</option>';
+    }).join('');
+  }
+  if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
   sel.onchange = () => {
     if (window.rdbg) rdbg('VOICE', 'change requested: ' + sel.value + ' (was: ' + selectedVoiceURI + ')');
     selectedVoiceURI = sel.value;
     try { localStorage.setItem(VOICE_KEY, selectedVoiceURI); } catch {}
+    if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
     // Pause every active controller before resetting voice and playing sample.
     // This prevents the case where mid-utterance cancel + voice swap leaves
     // a controller in a bad state.
@@ -5592,6 +5676,9 @@ function loadVoices() {
     }
     if (window.speechSynthesis) {
       try { window.speechSynthesis.cancel(); } catch {}
+    }
+    if (isVoiceOff()) return;
+    if (window.speechSynthesis) {
       const u = new SpeechSynthesisUtterance("Hi! This is your new voice for reading the study material.");
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) u.voice = v;
@@ -5624,7 +5711,8 @@ if (window.speechSynthesis) {
   if (!window.speechSynthesis) return;
   const origSpeak = window.speechSynthesis.speak.bind(window.speechSynthesis);
   window.speechSynthesis.speak = function(utt) {
-    if (utt && selectedVoiceURI) {
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) return;
+    if (utt && selectedVoiceURI && selectedVoiceURI !== 'off') {
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) utt.voice = v; // always overwrite
     }
@@ -5647,7 +5735,12 @@ function applyHighlightPrefs() {
     if (VALID_HL_COLORS.includes(storedColor)) color = storedColor;
   } catch {}
   // Apply on/off via class on <html>
-  document.documentElement.classList.toggle('highlight-off', on === 'off');
+  const voiceOff = typeof isVoiceOff === 'function' && isVoiceOff();
+  document.documentElement.classList.toggle('highlight-off', on === 'off' || voiceOff);
+  const hlSel = document.getElementById('highlightToggle');
+  if (hlSel) hlSel.disabled = voiceOff;
+  const hlRow = document.getElementById('hlColorRow');
+  if (hlRow) hlRow.style.display = (on === 'off' || voiceOff) ? 'none' : '';
   // Apply color via data attribute
   document.documentElement.setAttribute('data-hl-color', color);
   // Reflect in UI
