@@ -5866,7 +5866,7 @@ function applyHighlightPrefs() {
   document.documentElement.setAttribute('data-hl-color', color);
   // Reflect in UI
   const sel = document.getElementById('highlightToggle');
-  if (sel) sel.value = on;
+  if (sel) sel.value = voiceOff ? 'off' : on;
   const row = document.getElementById('hlColorRow');
   if (row) {
     row.querySelectorAll('.hl-color').forEach(b => {

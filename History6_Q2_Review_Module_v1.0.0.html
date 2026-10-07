@@ -1459,7 +1459,7 @@
                     <div class="solver-block" id="solverA">
       <div class="solver-header">
         <h3>🇯🇵 Solver A - Japanese Colonial Occupation</h3>
-        <p class="solver-sub">Japan occupied the Philippines from <strong>1942 to 1945</strong>. Lock the occupation tool (KALIBAPI, Laurel's puppet republic, Kempeitai, HUKBALAHAP, Mickey Mouse Money), not how islands formed.</p>
+        <p class="solver-sub">Japan occupied the Philippines from <strong>1942 to 1945</strong>. Lock the occupation tool: KALIBAPI, Laurel's puppet republic, Kempeitai, HUKBALAHAP, and Mickey Mouse Money.</p>
       </div>
       <div class="solver-pad">
         <div class="solver-row">
@@ -4257,7 +4257,7 @@ function solA_solve() {
   const dv = document.getElementById("solA-dv").value;
   const cv = document.getElementById("solA-cv").value;
   const steps = [
-    { title:"This is Japanese colonial occupation", body: iv===sc.iv ? "You tagged <strong>"+iv+"</strong>." : "You tagged <strong>"+iv+"</strong>. The booklet name is <strong>"+sc.iv+"</strong>.", math: sc.iv, deeper:"Japan occupied the Philippines 1942–1945. Geological origin theories (how islands formed) are Quarter 1 History, not this solver." },
+    { title:"This is Japanese colonial occupation", body: iv===sc.iv ? "You tagged <strong>"+iv+"</strong>." : "You tagged <strong>"+iv+"</strong>. The booklet name is <strong>"+sc.iv+"</strong>.", math: sc.iv, deeper:"Japan occupied the Philippines 1942–1945." },
     { title:"Lock the occupation fact", body: dv===sc.dv ? "Yes: <strong>"+sc.dv+"</strong>." : "You tagged <strong>"+dv+"</strong>. The booklet fact is <strong>"+sc.dv+"</strong>.", math: sc.dv, deeper:"Toolkit: KALIBAPI = only legal party. Laurel 1943 = puppet Second Republic. Kempeitai = military police. HUKBALAHAP = guerrilla resistance. Mickey Mouse Money = worthless occupation cash." },
     { title:"Who / what it is", body: cv===sc.cv ? "You tagged <strong>"+cv+"</strong>." : "You tagged <strong>"+cv+"</strong>. Tie it to <strong>"+sc.cv+"</strong>.", math: sc.cv, altMethod:"Trap: Co-Prosperity Sphere is a new colonizer, not a sincere gift. Open City is MacArthur, not Quezon. HUKBALAHAP fought Japan; KALIBAPI was Japan's party." }
   ];
@@ -5782,7 +5782,7 @@ function applyHighlightPrefs() {
   document.documentElement.setAttribute('data-hl-color', color);
   // Reflect in UI
   const sel = document.getElementById('highlightToggle');
-  if (sel) sel.value = on;
+  if (sel) sel.value = voiceOff ? 'off' : on;
   const row = document.getElementById('hlColorRow');
   if (row) {
     row.querySelectorAll('.hl-color').forEach(b => {

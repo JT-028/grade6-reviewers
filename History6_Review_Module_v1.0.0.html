@@ -1310,7 +1310,10 @@
     </div>
     <div class="voice-picker">
       <label for="voiceSelect">🔊 Voice:</label>
-      <select id="voiceSelect"><option value="">Loading voices...</option></select>
+      <select id="voiceSelect" aria-label="Voice: off for no talking or highlights">
+        <option value="off">Off — no talking or highlights</option>
+        <option value="">Loading voices...</option>
+      </select>
     </div>
     <div class="highlight-picker" title="Highlight the word being spoken">
       <label for="highlightToggle">🖍️ Highlight:</label>
@@ -2717,6 +2720,10 @@ class SpeechController {
 
   play() {
     if (window.rdbg) rdbg('CLICK', this._id, 'play() called, current state=' + this.state + ', enabled=' + (this._enabled !== false) + ', sentences=' + this.sentences.length + ', currentIdx=' + this.currentIdx);
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) {
+      if (window.rdbg) rdbg('VOICE', this._id, 'play() skipped: voice off');
+      return;
+    }
     if (!('speechSynthesis' in window)) {
       if (window.rdbg) rdbg('ERROR', this._id, 'no speechSynthesis');
       return;
@@ -5489,8 +5496,19 @@ function rankVoiceQuality(v) {
   return score;
 }
 
+function isVoiceOff() {
+  return selectedVoiceURI === 'off';
+}
+
 function loadVoices() {
-  if (!window.speechSynthesis) return;
+  if (!window.speechSynthesis) {
+    const sel = document.getElementById('voiceSelect');
+    if (sel) {
+      sel.innerHTML = '<option value="off" selected>Off — no talking or highlights</option>';
+      selectedVoiceURI = 'off';
+    }
+    return;
+  }
   availableVoices = window.speechSynthesis.getVoices() || [];
   // Strict filter first
   let filtered = availableVoices.filter(isVoiceAllowed);
@@ -5502,27 +5520,35 @@ function loadVoices() {
 
   const sel = document.getElementById('voiceSelect');
   if (!sel) return;
-  if (filtered.length === 0) {
-    sel.innerHTML = '<option value="">No voices available on this device</option>';
-    return;
-  }
   let saved = null;
   try { saved = localStorage.getItem(VOICE_KEY); } catch {}
-  // If saved choice is no longer allowed, reset to top-ranked
-  if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
-  if (!saved) saved = filtered[0].voiceURI;
-  selectedVoiceURI = saved;
+  if (saved === 'off') {
+    selectedVoiceURI = 'off';
+  } else {
+    // If saved choice is no longer allowed, reset to top-ranked
+    if (saved && !filtered.find(v => v.voiceURI === saved)) saved = null;
+    if (!saved && filtered[0]) saved = filtered[0].voiceURI;
+    selectedVoiceURI = saved || 'off';
+  }
 
-  sel.innerHTML = filtered.map((v, i) => {
-    const stars = i === 0 ? ' ⭐' : '';
-    const label = `${v.name} (${v.lang})${stars}`;
-    const selAttr = v.voiceURI === saved ? ' selected' : '';
-    return `<option value="${v.voiceURI}"${selAttr}>${label}</option>`;
-  }).join('');
+  const offSelected = selectedVoiceURI === 'off' ? ' selected' : '';
+  const offOpt = '<option value="off"' + offSelected + '>Off — no talking or highlights</option>';
+  if (filtered.length === 0) {
+    sel.innerHTML = offOpt + '<option value="">No voices available on this device</option>';
+  } else {
+    sel.innerHTML = offOpt + filtered.map((v, i) => {
+      const stars = i === 0 ? ' ⭐' : '';
+      const label = v.name + ' (' + v.lang + ')' + stars;
+      const selAttr = v.voiceURI === selectedVoiceURI ? ' selected' : '';
+      return '<option value="' + v.voiceURI + '"' + selAttr + '>' + label + '</option>';
+    }).join('');
+  }
+  if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
   sel.onchange = () => {
     if (window.rdbg) rdbg('VOICE', 'change requested: ' + sel.value + ' (was: ' + selectedVoiceURI + ')');
     selectedVoiceURI = sel.value;
     try { localStorage.setItem(VOICE_KEY, selectedVoiceURI); } catch {}
+    if (typeof applyHighlightPrefs === 'function') applyHighlightPrefs();
     // Pause every active controller before resetting voice and playing sample.
     // This prevents the case where mid-utterance cancel + voice swap leaves
     // a controller in a bad state.
@@ -5531,6 +5557,9 @@ function loadVoices() {
     }
     if (window.speechSynthesis) {
       try { window.speechSynthesis.cancel(); } catch {}
+    }
+    if (isVoiceOff()) return;
+    if (window.speechSynthesis) {
       const u = new SpeechSynthesisUtterance("Hi! This is your new voice for reading the study material.");
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) u.voice = v;
@@ -5563,7 +5592,8 @@ if (window.speechSynthesis) {
   if (!window.speechSynthesis) return;
   const origSpeak = window.speechSynthesis.speak.bind(window.speechSynthesis);
   window.speechSynthesis.speak = function(utt) {
-    if (utt && selectedVoiceURI) {
+    if (typeof isVoiceOff === 'function' && isVoiceOff()) return;
+    if (utt && selectedVoiceURI && selectedVoiceURI !== 'off') {
       const v = availableVoices.find(x => x.voiceURI === selectedVoiceURI);
       if (v) utt.voice = v; // always overwrite
     }
@@ -5586,12 +5616,17 @@ function applyHighlightPrefs() {
     if (VALID_HL_COLORS.includes(storedColor)) color = storedColor;
   } catch {}
   // Apply on/off via class on <html>
-  document.documentElement.classList.toggle('highlight-off', on === 'off');
+  const voiceOff = typeof isVoiceOff === 'function' && isVoiceOff();
+  document.documentElement.classList.toggle('highlight-off', on === 'off' || voiceOff);
+  const hlSel = document.getElementById('highlightToggle');
+  if (hlSel) hlSel.disabled = voiceOff;
+  const hlRow = document.getElementById('hlColorRow');
+  if (hlRow) hlRow.style.display = (on === 'off' || voiceOff) ? 'none' : '';
   // Apply color via data attribute
   document.documentElement.setAttribute('data-hl-color', color);
   // Reflect in UI
   const sel = document.getElementById('highlightToggle');
-  if (sel) sel.value = on;
+  if (sel) sel.value = voiceOff ? 'off' : on;
   const row = document.getElementById('hlColorRow');
   if (row) {
     row.querySelectorAll('.hl-color').forEach(b => {
