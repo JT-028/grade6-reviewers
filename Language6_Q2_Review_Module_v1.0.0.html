@@ -174,8 +174,6 @@
   .hl-color-pink { background: #ff8fc8; }
   .hl-color-blue { background: #6cb6e8; }
   .hl-color-orange { background: #ff9c4a; }
-  .highlight-off .speaking-word { background: transparent !important; box-shadow: none !important; color: inherit !important; font-weight: inherit !important; padding: 0 !important; margin: 0 !important; }
-  .highlight-off .speaking-sentence { background: transparent !important; }
   .kbd-help-btn { background: var(--cream); border: 1px solid var(--bg-deep); border-radius: 10px; padding: 6px 12px; font-size: 13px; color: var(--ink-soft); cursor: pointer; box-shadow: 0 2px 8px var(--shadow); margin-left: 10px; font-family: inherit; }
   .kbd-help-btn:hover { color: var(--ink); }
 
@@ -326,6 +324,29 @@
   html[data-theme="nirvana"] .tutor-card .speaking-sentence,
   html[data-theme="nirvana"] .biome-detail .speaking-sentence {
     background: rgba(255,255,255,0.18) !important;
+  }
+
+  /* Highlight Off. Must follow the color and dark-surface rules: those use
+     !important and a higher selector weight, so an earlier .highlight-off
+     rule never hid the pill. */
+  html.highlight-off .speaking-word,
+  html.highlight-off .card-back .speaking-word,
+  html.highlight-off .on-dark-surface .speaking-word,
+  html.highlight-off .tutor-card .speaking-word,
+  html.highlight-off .biome-detail .speaking-word,
+  html.highlight-off .speaking-sentence,
+  html.highlight-off .card-back .speaking-sentence,
+  html.highlight-off .on-dark-surface .speaking-sentence,
+  html.highlight-off .tutor-card .speaking-sentence,
+  html.highlight-off .biome-detail .speaking-sentence {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font-weight: inherit !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
   }
 
   /* AUDIO PLAYER BAR */
@@ -3164,6 +3185,7 @@ class SpeechController {
 
   _highlightSentence(idx) {
     this._clearAllHighlights();
+    if (document.documentElement.classList.contains('highlight-off')) return;
     if (!this.containerEl) return;
     const sentence = this.sentences[idx];
     if (!sentence) return;
@@ -3177,6 +3199,7 @@ class SpeechController {
   }
 
   _highlightWordInSentence(sentenceIdx, charIndexInSentence) {
+    if (document.documentElement.classList.contains('highlight-off')) return false;
     if (!this.containerEl) {
       if (window.rdbg) rdbg('ERROR', this._id, 'highlight: no containerEl');
       return false;
@@ -5737,6 +5760,11 @@ function applyHighlightPrefs() {
   // Apply on/off via class on <html>
   const voiceOff = typeof isVoiceOff === 'function' && isVoiceOff();
   document.documentElement.classList.toggle('highlight-off', on === 'off' || voiceOff);
+  if ((on === 'off' || voiceOff) && window.SpeechController && SpeechController._registry) {
+    SpeechController._registry.forEach(ctrl => {
+      try { ctrl._clearAllHighlights(); } catch {}
+    });
+  }
   const hlSel = document.getElementById('highlightToggle');
   if (hlSel) hlSel.disabled = voiceOff;
   const hlRow = document.getElementById('hlColorRow');
