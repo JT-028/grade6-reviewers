@@ -1054,9 +1054,10 @@
 
   /* RESULTS / REPORT CARD */
   .quiz-results { text-align: center; padding: 18px 0; }
-  .quiz-results .score-circle { width: 130px; height: 130px; margin: 0 auto 16px; border-radius: 50%; background: linear-gradient(135deg, var(--leaf), var(--leaf-bright)); color: var(--cream); display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Fraunces', serif; box-shadow: 0 8px 24px rgba(46,93,58,0.3); animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .quiz-results .score-num { font-size: 38px; font-weight: 800; line-height: 1; }
-  .quiz-results .score-total { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .quiz-results .score-circle, .pq-celebration .score-circle { width: 148px; height: 148px; margin: 0 auto 16px; border-radius: 50%; background: linear-gradient(135deg, var(--leaf), var(--leaf-bright)); color: var(--cream); display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Fraunces', serif; box-shadow: 0 8px 24px rgba(46,93,58,0.3); animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .quiz-results .score-grade, .pq-celebration .score-grade { font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.92; }
+  .quiz-results .score-num, .pq-celebration .score-num { font-size: 34px; font-weight: 800; line-height: 1; }
+  .quiz-results .score-total, .pq-celebration .score-total { font-size: 13px; opacity: 0.9; margin-top: 4px; }
   .quiz-results h3 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--leaf); margin-bottom: 8px; }
   .quiz-results p { color: var(--ink-soft); margin-bottom: 18px; max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.5; font-size: 14px; }
   .quiz-results .exam-miss p { color: var(--ink); margin: 0 0 4px; max-width: none; text-align: left; }
@@ -1070,7 +1071,7 @@
   .report-header .meta { font-size: 13px; color: var(--ink-soft); font-style: italic; }
   .report-section { margin-bottom: 22px; }
   .report-section h4 { font-family: 'Fraunces', serif; font-size: 16px; color: var(--leaf); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px dashed var(--bg-deep); }
-  .report-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 8px; padding: 8px 10px; font-size: 13px; align-items: center; }
+  .report-row { display: grid; grid-template-columns: 1.5fr 0.8fr 0.8fr 1.4fr 0.7fr; gap: 8px; padding: 8px 10px; font-size: 13px; align-items: center; }
   .report-row.head { background: rgba(46,93,58,0.08); font-weight: 700; color: var(--leaf); border-radius: 8px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
   .report-row .first-attempt { color: var(--berry); font-weight: 600; }
   .report-row .final { color: var(--leaf); font-weight: 700; }
@@ -1120,7 +1121,7 @@
     .biome-card { padding: 16px; }
     .diagram-block { padding: 16px; }
     .diagram-block svg { max-height: 340px; }
-    .report-row { grid-template-columns: 1.5fr 1fr 1fr 1fr; font-size: 11.5px; gap: 4px; }
+    .report-row { grid-template-columns: 1.3fr 0.7fr 0.7fr 1.1fr 0.6fr; font-size: 10.5px; gap: 3px; }
   }
   @media (max-width: 380px) {
     .name-form { gap: 8px; }
@@ -3836,7 +3837,7 @@ function refreshBiomeViewMarks() {
 // ============================================================
 // Language 6 Q1 Review — Version 1.0
 // ============================================================
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '1.1.0';
 const APP_BUILD_DATE = '2026-09-21';
 const APP_BUILD_HASH = 'lang6q1b';
 
@@ -4344,36 +4345,16 @@ const TRY_AGAIN = ["So close — try again 💪", "Not quite — give it another
 
 let pq = null; // pop quiz state
 function startPopQuiz(module) {
-  const questions = POP_QUIZZES[module];
-  if (!questions) return;
-  // Shuffle questions on every quiz launch — different order each time
-  const shuffled = questions.slice();
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  // Convert ~33% of questions to True/False format (alternates question style)
-  const tfShuffled = shuffled.map((q, idx) => {
-    if (q.type === 'fill' || q.type === 'tf') return q;
-    if (idx % 3 !== 0) {
-      // For multiple-choice: shuffle option positions so correct isn't always B/C
-      return shuffleQuestionOptions(q);
-    }
-    const showTrue = Math.random() < 0.5;
-    const statement = showTrue ? q.opts[q.ans] : q.opts[(q.ans + 1 + Math.floor(Math.random() * (q.opts.length - 1))) % q.opts.length];
-    return {
-      q: q.q.replace(/\?$/, ':') + ' "' + statement + '"',
-      opts: ['True ✓', 'False ✗'],
-      ans: showTrue ? 0 : 1,
-      _isTF: true
-    };
-  });
+  const pool = subjectQuestionPool();
+  if (!pool.length) return;
+  const sampled = sampleItems(pool, Math.min(20, pool.length));
+  const tfShuffled = sampled.map((q, idx) => varyQuestionFormat(q, idx));
   pq = {
     module, questions: tfShuffled,
     idx: 0,
     firstAttemptScore: 0, // count of questions correct on FIRST try
     finalScore: 0, // count of questions eventually correct
-    attempts: questions.map(() => 0), // attempts per Q
+    attempts: tfShuffled.map(() => 0), // attempts per Q
     startedAt: Date.now(),
     timeLimit: 0, // no limit — count up
     streak: 0,
@@ -4501,6 +4482,9 @@ function finishPopQuiz(timedOut) {
     firstAttemptScore: pq.firstAttemptScore,
     finalScore: pq.finalScore,
     total: total,
+    pct: firstPct,
+    grade: gradeFromPercent(firstPct).name,
+    gradeLetter: gradeFromPercent(firstPct).letter,
     timeSec: elapsed,
     perfectFirst: pq.perfectFirst,
     bestStreak: pq.bestStreakInQuiz,
@@ -4521,14 +4505,22 @@ function finishPopQuiz(timedOut) {
 
   const moduleName = { flashcards: 'Flashcards', biomes: 'Concepts', diagrams: 'Step-by-Step Solver', tutor: 'Tutor', cheat: 'Cheat Sheet', practice: 'Practice Sets' }[pq.module];
   const min = Math.floor(elapsed / 60); const sec = elapsed % 60;
-  const star = pq.perfectFirst ? '⭐' : firstPct >= 80 ? '🌟' : firstPct >= 60 ? '💚' : '🌱';
+  const grade = gradeFromPercent(firstPct);
+  const star = pq.perfectFirst ? '⭐' : firstPct >= 90 ? '🏆' : firstPct >= 80 ? '🌟' : firstPct >= 75 ? '💚' : '🌱';
 
   document.getElementById('popquizModal').innerHTML = `
     <div class="pq-celebration">
       <span class="star">${star}</span>
       <h3>${moduleName} done!</h3>
+      <div class="score-circle" style="margin:10px auto 8px;">
+        <div class="score-grade">${grade.letter}</div>
+        <div class="score-num">${firstPct}%</div>
+        <div class="score-total">${pq.firstAttemptScore} / ${total}</div>
+      </div>
+      <h4 style="color:${gradeColorCss(grade)};margin:0 0 8px;font-family:'Fraunces',serif;">${grade.name}</h4>
       <div class="xp-earned">+${20 + (pq.perfectFirst ? 50 : 0) + (elapsed < 180 ? 20 : 0) + (pq.firstAttemptScore * 5) + ((pq.finalScore - pq.firstAttemptScore) * 2)} XP earned</div>
-      <p><strong>First-try score:</strong> ${pq.firstAttemptScore} / ${total} (${firstPct}%)<br>
+      <p><strong>Grade:</strong> ${formatGrade(grade)}<br>
+      <strong>First-try score:</strong> ${pq.firstAttemptScore} / ${total} (${firstPct}%)<br>
       <strong>Final score:</strong> ${pq.finalScore} / ${total}<br>
       <strong>Time:</strong> ${min}:${sec.toString().padStart(2,'0')} ${elapsed < 180 ? '⚡ FAST!' : ''}<br>
       <strong>Best streak:</strong> ${pq.bestStreakInQuiz} 🔥</p>
@@ -4630,7 +4622,7 @@ function renderExamReady() {
     <div class="exam-ready">
       <span class="ribbon">🏆</span>
       <h3>Practice Exams Unlocked!</h3>
-      <p>The real exam is 70 questions. Each Practice Exam below is also 70 questions, drawn from every page of the workbook. Different questions in each. Time limit: 25 minutes.</p>
+      <p>The real exam is 70 questions. Each Practice Exam below draws a fresh mix of 70 questions from the full workbook bank, so a retake is not the same paper. No time limit — go at your own pace.</p>
       <button class="start-btn" id="startExam1">${exam1Done ? '🔁 Retake Exam 1' : '▶ Start Exam 1'} (70 Q)</button>
       <button class="start-btn alt" id="startExam2">${exam2Done ? '🔁 Retake Exam 2' : '▶ Start Exam 2'} (70 Q)</button>
     </div>
@@ -4653,15 +4645,16 @@ function startExam(examNum) {
 }
 
 function actuallyStartExam(examNum) {
-  const baseQs = examNum === 1 ? EXAM_SET_1 : EXAM_SET_2;
-  // Shuffle questions on every exam launch
-  const questions = baseQs.slice();
-  for (let i = questions.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [questions[i], questions[j]] = [questions[j], questions[i]];
+  const pool = examQuestionPool();
+  const take = Math.min(70, pool.length);
+  let questionsShuffledOpts = sampleItems(pool, take).map(q => shuffleQuestionOptions(q));
+  const lastFp = progress.lastExamFingerprints && progress.lastExamFingerprints[examNum];
+  if (lastFp && fingerprintQuestions(questionsShuffledOpts) === lastFp && pool.length > take) {
+    questionsShuffledOpts = sampleItems(pool, take).map(q => shuffleQuestionOptions(q));
   }
-  // Shuffle option positions for every question — fixes any answer-position bias
-  const questionsShuffledOpts = questions.map(q => shuffleQuestionOptions(q));
+  if (!progress.lastExamFingerprints) progress.lastExamFingerprints = {};
+  progress.lastExamFingerprints[examNum] = fingerprintQuestions(questionsShuffledOpts);
+  if (currentUser) saveProgress(currentUser, progress);
   exam = {
     examNum, questions: questionsShuffledOpts,
     idx: 0, score: 0,
@@ -4834,6 +4827,8 @@ function finishExam(timedOut) {
     score: exam.score,
     total,
     pct,
+    grade: gradeFromPercent(pct).name,
+    gradeLetter: gradeFromPercent(pct).letter,
     timeSec: elapsed,
     timedOut,
     date: new Date().toISOString(),
@@ -4852,8 +4847,9 @@ function finishExam(timedOut) {
 
   // Render results
   const min = Math.floor(elapsed / 60); const sec = elapsed % 60;
-  const verdict = pct >= 90 ? '🏆 Outstanding!' : pct >= 80 ? '⭐ Great work!' : pct >= 70 ? '💚 Solid effort' : pct >= 60 ? '🌱 Keep practicing' : '🌿 More review needed';
-  const verdictColor = pct >= 80 ? 'var(--leaf)' : pct >= 60 ? 'var(--sun)' : 'var(--berry)';
+  const grade = gradeFromPercent(pct);
+  const verdict = grade.name;
+  const verdictColor = gradeColorCss(grade);
   const misses = (exam.answers || []).filter(a => !a.correct);
   const missHtml = misses.length ? `<div class="exam-misses"><h4>Wrong answers</h4>${misses.map(a => `<article class="exam-miss"><p>${escExam(a.q)}</p><p>You picked: ${escExam(a.pickedText)}</p><p>Correct answer: ${escExam(a.correctText)}</p>${a.why ? `<p class="why">${escExam(a.why)}</p>` : ''}</article>`).join('')}</div>` : '';
 
@@ -4862,11 +4858,13 @@ function finishExam(timedOut) {
     <div class="quiz-shell">
       <div class="quiz-results">
         <div class="score-circle">
+          <div class="score-grade">${grade.letter}</div>
           <div class="score-num">${pct}%</div>
           <div class="score-total">${exam.score} / ${total}</div>
         </div>
         <h3 style="color:${verdictColor}">${verdict}</h3>
         <p><strong>Exam ${exam.examNum} complete!</strong><br>
+        Score: ${exam.score} / ${total} · ${pct}% · ${formatGrade(grade)}<br>
         Time: ${min}:${sec.toString().padStart(2,'0')} ${timedOut ? '(timed out)' : ''}<br>
         XP earned: <strong>+${xpEarned}</strong></p>
         ${record.missedTopics.length > 0 ? `<p><strong>Topics to review:</strong> ${record.missedTopics.join(', ')}</p>` : ''}
@@ -4912,7 +4910,8 @@ POP QUIZ SCORES
     const label = labelMap[m] || m;
     if (!r) { out += `${label}: not yet attempted\n`; return; }
     const min = Math.floor(r.timeSec/60); const sec = r.timeSec%60;
-    out += `${label}: 1st try ${r.firstAttemptScore}/20, final ${r.finalScore}/20 — ${min}:${sec.toString().padStart(2,'0')}\n`;
+    const g = gradeFromScores(r.firstAttemptScore, r.total || 20);
+    out += `${label}: 1st try ${r.firstAttemptScore}/${r.total || 20} (${g.pct}% ${formatGrade(g)}), final ${r.finalScore}/${r.total || 20} — ${min}:${sec.toString().padStart(2,'0')}\n`;
   });
 
   out += `\nPRACTICE EXAM SCORES\n--------------------\n`;
@@ -4920,7 +4919,8 @@ POP QUIZ SCORES
   else examHistory.forEach(e => {
     const min = Math.floor(e.timeSec/60); const sec = e.timeSec%60;
     const pct = Math.round(e.score / e.total * 100);
-    out += `Exam ${e.examNum}: ${e.score}/${e.total} (${pct}%) — ${min}:${sec.toString().padStart(2,'0')}\n`;
+    const g = gradeFromPercent(pct);
+    out += `Exam ${e.examNum}: ${e.score}/${e.total} (${pct}% · ${formatGrade(g)}) — ${min}:${sec.toString().padStart(2,'0')}\n`;
   });
 
   if ((progress.achievements || []).length > 0) {
@@ -4963,22 +4963,26 @@ function renderReportCard() {
   const popRows = REQUIRED_MODULES.map(m => {
     const r = progress.popQuizResults && progress.popQuizResults[m];
     const label = { flashcards: 'Flashcards', biomes: 'Concepts', diagrams: 'Step-by-Step Solver', tutor: 'Tutor', cheat: 'Cheat Sheet', practice: 'Practice Sets' }[m];
-    if (!r) return `<div class="report-row"><span>${label}</span><span style="color:var(--ink-soft);">—</span><span>—</span><span>—</span></div>`;
+    if (!r) return `<div class="report-row"><span>${label}</span><span style="color:var(--ink-soft);">—</span><span>—</span><span>—</span><span>—</span></div>`;
     const min = Math.floor(r.timeSec / 60); const sec = r.timeSec % 60;
+    const g = gradeFromScores(r.firstAttemptScore, r.total);
     return `<div class="report-row">
       <span>${label}</span>
       <span class="first-attempt">${r.firstAttemptScore}/${r.total}</span>
       <span class="final">${r.finalScore}/${r.total}</span>
+      <span class="final">${formatGrade(g)}</span>
       <span>${min}:${sec.toString().padStart(2,'0')}</span>
     </div>`;
   }).join('');
 
   const examRows = history.map(h => {
     const min = Math.floor(h.timeSec / 60); const sec = h.timeSec % 60;
+    const g = gradeFromScores(h.score, h.total);
     return `<div class="report-row">
       <span><strong>Exam ${h.examNum}</strong></span>
       <span class="final">${h.score}/${h.total}</span>
-      <span class="final">${h.pct}%</span>
+      <span class="final">${g.pct}%</span>
+      <span class="final">${formatGrade(g)}</span>
       <span>${min}:${sec.toString().padStart(2,'0')}</span>
     </div>`;
   }).join('');
@@ -4998,12 +5002,12 @@ function renderReportCard() {
       </div>
       <div class="report-section">
         <h4>Pop Quiz Scores</h4>
-        <div class="report-row head"><span>Module</span><span>1st Try</span><span>Final</span><span>Time</span></div>
+        <div class="report-row head"><span>Module</span><span>1st Try</span><span>Final</span><span>Grade</span><span>Time</span></div>
         ${popRows}
       </div>
       <div class="report-section">
         <h4>Practice Exam Scores</h4>
-        <div class="report-row head"><span>Exam</span><span>Score</span><span>%</span><span>Time</span></div>
+        <div class="report-row head"><span>Exam</span><span>Score</span><span>%</span><span>Grade</span><span>Time</span></div>
         ${examRows}
       </div>
       ${ach ? `<div class="report-section"><h4>Achievements</h4><div class="achievements">${ach}</div></div>` : ''}
@@ -5043,7 +5047,7 @@ function buildShortSummary() {
   out += `Pop quizzes done: ${popDone}/${REQUIRED_MODULES.length}\n`;
   if (examBest) {
     const pct = Math.round(examBest.score / examBest.total * 100);
-    out += `Best practice exam: ${examBest.score}/${examBest.total} (${pct}%)\n`;
+    out += `Best practice exam: ${examBest.score}/${examBest.total} (${pct}% · ${formatGrade(gradeFromPercent(pct))})\n`;
   } else {
     out += `Practice exam: not yet attempted\n`;
   }
@@ -5631,17 +5635,19 @@ function renderReportCardMain() {
   const popRows = REQUIRED_MODULES.map(m => {
     const r = popResults[m];
     const label = labelMap[m] || m;
-    if (!r) return `<div class="report-row"><span>${label}</span><span style="color:var(--ink-soft);font-style:italic;font-size:12px;">— not yet attempted</span><span></span><span></span></div>`;
+    if (!r) return `<div class="report-row"><span>${label}</span><span style="color:var(--ink-soft);font-style:italic;font-size:12px;">— not yet attempted</span><span></span><span></span><span></span></div>`;
     const min = Math.floor(r.timeSec/60); const sec = r.timeSec%60;
-    return `<div class="report-row"><span>${label}</span><span>${r.firstAttemptScore}/20</span><span>${r.finalScore}/20</span><span>${min}:${sec.toString().padStart(2,'0')}</span></div>`;
+    const g = gradeFromScores(r.firstAttemptScore, r.total || 20);
+    return `<div class="report-row"><span>${label}</span><span>${r.firstAttemptScore}/${r.total || 20}</span><span>${r.finalScore}/${r.total || 20}</span><span>${formatGrade(g)}</span><span>${min}:${sec.toString().padStart(2,'0')}</span></div>`;
   }).join('');
 
   const examRows = examHistory.length === 0
-    ? `<div class="report-row"><span style="color:var(--ink-soft);font-style:italic;font-size:12px;">— No practice exam yet</span><span></span><span></span><span></span></div>`
+    ? `<div class="report-row"><span style="color:var(--ink-soft);font-style:italic;font-size:12px;">— No practice exam yet</span><span></span><span></span><span></span><span></span></div>`
     : examHistory.map(e => {
         const min = Math.floor(e.timeSec/60); const sec = e.timeSec%60;
         const pct = Math.round(e.score / e.total * 100);
-        return `<div class="report-row"><span>Exam ${e.examNum}</span><span>${e.score}/${e.total}</span><span>${pct}%</span><span>${min}:${sec.toString().padStart(2,'0')}</span></div>`;
+        const g = gradeFromPercent(pct);
+        return `<div class="report-row"><span>Exam ${e.examNum}</span><span>${e.score}/${e.total}</span><span>${pct}%</span><span>${formatGrade(g)}</span><span>${min}:${sec.toString().padStart(2,'0')}</span></div>`;
       }).join('');
 
   const ach = (progress.achievements || []).map(id => {
@@ -5672,12 +5678,12 @@ function renderReportCardMain() {
       </div>
       <div class="report-section">
         <h4>Pop Quiz Scores</h4>
-        <div class="report-row head"><span>Module</span><span>1st Try</span><span>Final</span><span>Time</span></div>
+        <div class="report-row head"><span>Module</span><span>1st Try</span><span>Final</span><span>Grade</span><span>Time</span></div>
         ${popRows}
       </div>
       <div class="report-section">
         <h4>Practice Exam Scores</h4>
-        <div class="report-row head"><span>Exam</span><span>Score</span><span>%</span><span>Time</span></div>
+        <div class="report-row head"><span>Exam</span><span>Score</span><span>%</span><span>Grade</span><span>Time</span></div>
         ${examRows}
       </div>
       ${ach ? `<div class="report-section"><h4>Achievements</h4><div class="achievements">${ach}</div></div>` : ''}
@@ -5896,6 +5902,86 @@ function promptAdminPasscode() {
   setTimeout(refreshAdminBanner, 200);
 })();
 
+
+
+// ============================================================
+// === Grades, sampling, and option shuffle ===================
+// ============================================================
+function gradeFromPercent(pct) {
+  if (pct >= 90) return { letter: 'O', name: 'Outstanding', color: 'leaf' };
+  if (pct >= 85) return { letter: 'VS', name: 'Very Satisfactory', color: 'leaf' };
+  if (pct >= 80) return { letter: 'S', name: 'Satisfactory', color: 'leaf' };
+  if (pct >= 75) return { letter: 'FS', name: 'Fairly Satisfactory', color: 'sun' };
+  return { letter: 'DNME', name: 'Did Not Meet Expectations', color: 'berry' };
+}
+function gradeColorCss(grade) {
+  if (grade.color === 'berry') return 'var(--berry)';
+  if (grade.color === 'sun') return 'var(--sun)';
+  return 'var(--leaf)';
+}
+function gradeFromScores(score, total) {
+  const t = Number(total) || 0;
+  const pct = t ? Math.round(100 * score / t) : 0;
+  const g = gradeFromPercent(pct);
+  return { pct, letter: g.letter, name: g.name, color: g.color };
+}
+function formatGrade(g) {
+  return g.name + ' (' + g.letter + ')';
+}
+function shuffleInPlace(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  return arr;
+}
+function uniqueByQuestion(items) {
+  const map = new Map();
+  (items || []).forEach(q => {
+    if (!q || q.q == null) return;
+    map.set(String(q.q), q);
+  });
+  return Array.from(map.values());
+}
+function sampleItems(items, n) {
+  const copy = (items || []).slice();
+  shuffleInPlace(copy);
+  return copy.slice(0, Math.max(0, n));
+}
+function examQuestionPool() {
+  const a = typeof EXAM_SET_1 !== 'undefined' ? EXAM_SET_1 : [];
+  const b = typeof EXAM_SET_2 !== 'undefined' ? EXAM_SET_2 : [];
+  return uniqueByQuestion(a.concat(b));
+}
+function subjectQuestionPool() {
+  const pop = [];
+  if (typeof POP_QUIZZES === 'object' && POP_QUIZZES) {
+    Object.keys(POP_QUIZZES).forEach(k => {
+      (POP_QUIZZES[k] || []).forEach(q => pop.push(q));
+    });
+  }
+  return uniqueByQuestion(pop.concat(examQuestionPool()));
+}
+function fingerprintQuestions(qs) {
+  return (qs || []).map(q => q && q.q).join('\n');
+}
+function varyQuestionFormat(q, idx) {
+  if (!q) return q;
+  if (q.type === 'fill') return q;
+  if (!Array.isArray(q.opts) || q.opts.length < 2) return shuffleQuestionOptions(q);
+  if (idx % 3 !== 0) return shuffleQuestionOptions(q);
+  const showTrue = Math.random() < 0.5;
+  const distractorIdx = (q.ans + 1 + Math.floor(Math.random() * (q.opts.length - 1))) % q.opts.length;
+  const statement = showTrue ? q.opts[q.ans] : q.opts[distractorIdx];
+  return shuffleQuestionOptions({
+    q: String(q.q).replace(/\?$/, ':') + ' "' + statement + '"',
+    opts: ['True', 'False'],
+    ans: showTrue ? 0 : 1,
+    why: q.why,
+    topic: q.topic,
+    _isTF: true
+  });
+}
 
 // ============================================================
 // === Option-position shuffler (fixes B/C answer bias) ===
@@ -6237,17 +6323,18 @@ function downloadScorecardImage() {
 
   const popRows = REQUIRED_MODULES.map(m => {
     const r = popResults[m]; const label = labelMap[m] || m;
-    if (!r) return [label, '—', '—', '—'];
+    if (!r) return [label, '—', '—', '—', '—'];
     const min = Math.floor(r.timeSec/60), sec = r.timeSec%60;
-    return [label, `${r.firstAttemptScore}/${r.total}`, `${r.finalScore}/${r.total}`, `${min}:${sec.toString().padStart(2,'0')}`];
+    const g = gradeFromScores(r.firstAttemptScore, r.total);
+    return [label, `${r.firstAttemptScore}/${r.total}`, `${r.finalScore}/${r.total}`, g.letter, `${min}:${sec.toString().padStart(2,'0')}`];
   });
 
   const examRows = examHistory.length === 0
-    ? [['—', 'No practice exam yet', '', '']]
+    ? [['—', 'No practice exam yet', '', '', '']]
     : examHistory.map(e => {
         const min = Math.floor(e.timeSec/60), sec = e.timeSec%60;
         const pct = Math.round(e.score / e.total * 100);
-        return [`Exam ${e.examNum}`, `${e.score}/${e.total}`, `${pct}%`, `${min}:${sec.toString().padStart(2,'0')}`];
+        return [`Exam ${e.examNum}`, `${e.score}/${e.total}`, `${pct}%`, gradeFromPercent(pct).letter, `${min}:${sec.toString().padStart(2,'0')}`];
       });
 
   const achievementsList = (progress.achievements || []).map(id => {
@@ -6256,7 +6343,7 @@ function downloadScorecardImage() {
   }).filter(Boolean);
 
   // === Layout (logical pixels — we'll multiply by DPR for sharpness) ===
-  const W = 600;
+  const W = 680;
   const PAD = 30;
   const HEAD_H = 110;     // header zone
   const SECTION_GAP = 18;
@@ -6335,12 +6422,12 @@ function downloadScorecardImage() {
 
   // Pop Quiz section
   y = drawSection(ctx, 'POP QUIZ SCORES', y, W, PAD, colors);
-  y = drawTable(ctx, ['Module','1st Try','Final','Time'], popRows, y, W, PAD, colors, ROW_H);
+  y = drawTable(ctx, ['Module','1st Try','Final','Grade','Time'], popRows, y, W, PAD, colors, ROW_H);
   y += SECTION_GAP;
 
   // Practice Exam section
   y = drawSection(ctx, 'PRACTICE EXAM SCORES', y, W, PAD, colors);
-  y = drawTable(ctx, ['Exam','Score','%','Time'], examRows, y, W, PAD, colors, ROW_H);
+  y = drawTable(ctx, ['Exam','Score','%','Grade','Time'], examRows, y, W, PAD, colors, ROW_H);
   y += SECTION_GAP;
 
   // Achievements section
