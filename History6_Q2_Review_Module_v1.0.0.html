@@ -1982,7 +1982,11 @@ function loadProgress(name) {
   try {
     const raw = localStorage.getItem(storageKey(name));
     if (!raw) return JSON.parse(JSON.stringify(DEFAULT_PROGRESS));
-    return Object.assign(JSON.parse(JSON.stringify(DEFAULT_PROGRESS)), JSON.parse(raw));
+    const loaded = Object.assign(JSON.parse(JSON.stringify(DEFAULT_PROGRESS)), JSON.parse(raw));
+    if (capStoredScores(loaded)) {
+      try { localStorage.setItem(storageKey(name), JSON.stringify(loaded)); } catch {}
+    }
+    return loaded;
   } catch { return JSON.parse(JSON.stringify(DEFAULT_PROGRESS)); }
 }
 // Track save-failure state across calls so we don't spam alerts.
@@ -4672,6 +4676,9 @@ function startPopQuizTimer() {
 }
 
 function renderPopQuestion() {
+  if (pq.questions[pq.idx] && pq.questions[pq.idx].type === 'fill') {
+    pq.questions[pq.idx] = shuffleQuestionOptions(pq.questions[pq.idx]);
+  }
   const q = pq.questions[pq.idx];
   const modal = document.getElementById('popquizModal');
   const moduleName = { flashcards: 'Flashcards', biomes: 'Concepts', diagrams: 'Step-by-Step Solver', tutor: 'Tutor', cheat: 'Cheat Sheet', practice: 'Practice Sets' }[pq.module];
@@ -4709,7 +4716,7 @@ function renderPopQuestion() {
   q.opts.forEach((opt, i) => {
     const b = document.createElement('button');
     b.className = 'pq-option';
-    b.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span>${opt}</span>`;
+    b.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span>${escExam(opt)}</span>`;
     b.addEventListener('click', () => answerPop(i, b));
     opts.appendChild(b);
   });
@@ -4727,9 +4734,11 @@ function renderPopQuestion() {
 
 function answerPop(idx, btn) {
   const q = pq.questions[pq.idx];
+  if (!q || q._answered) return;
   pq.attempts[pq.idx]++;
   const fb = document.getElementById('pqFeedback');
   if (idx === q.ans) {
+    q._answered = true;
     btn.classList.add('correct');
     document.querySelectorAll('.pq-option').forEach(b => b.disabled = true);
     if (pq.attempts[pq.idx] === 1) {
@@ -4764,6 +4773,8 @@ function finishPopQuiz(timedOut) {
   if (window._popTimer) clearInterval(window._popTimer);
   const elapsed = Math.round((Date.now() - pq.startedAt) / 1000);
   const total = pq.questions.length;
+  pq.firstAttemptScore = Math.min(pq.firstAttemptScore, total);
+  pq.finalScore = Math.min(pq.finalScore, total);
   const firstPct = Math.round(100 * pq.firstAttemptScore / total);
 
   // Save first-attempt + final scores
@@ -5005,6 +5016,9 @@ function startExamTimer() {
 }
 
 function renderExamQuestion() {
+  if (exam.questions[exam.idx] && exam.questions[exam.idx].type === 'fill') {
+    exam.questions[exam.idx] = shuffleQuestionOptions(exam.questions[exam.idx]);
+  }
   const q = exam.questions[exam.idx];
   const total = exam.questions.length;
   const elapsedNow = Math.round((Date.now() - exam.startedAt) / 1000);
@@ -5052,7 +5066,7 @@ function renderExamQuestion() {
   q.opts.forEach((opt, i) => {
     const b = document.createElement('button');
     b.className = 'quiz-option';
-    b.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span>${opt}</span>`;
+    b.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span>${escExam(opt)}</span>`;
     b.addEventListener('click', () => answerExam(i, b));
     opts.appendChild(b);
   });
@@ -5078,6 +5092,8 @@ function escExam(s) {
 
 function answerExam(picked, btn) {
   const q = exam.questions[exam.idx];
+  if (!q || q._answered) return;
+  q._answered = true;
   const correct = picked === q.ans;
   const pickedText = q._pickedText != null ? q._pickedText : ((q.opts && q.opts[picked] != null) ? q.opts[picked] : '');
   const correctText = q._correctText != null ? q._correctText : ((q.opts && q.opts[q.ans] != null) ? q.opts[q.ans] : String(q.ans));
@@ -5107,7 +5123,15 @@ function finishExam(timedOut) {
   if (window._examTimer) clearInterval(window._examTimer);
   const elapsed = Math.round((Date.now() - exam.startedAt) / 1000);
   const total = exam.questions.length;
-  const pct = Math.round(100 * exam.score / total);
+  const seenIdx = {};
+  let scored = 0;
+  (exam.answers || []).forEach(a => {
+    if (!a || seenIdx[a.idx]) return;
+    seenIdx[a.idx] = true;
+    if (a.correct) scored++;
+  });
+  exam.score = Math.min(scored, total);
+  const pct = total ? Math.round(100 * exam.score / total) : 0;
 
   if (!progress.examHistory) progress.examHistory = [];
   // Replace previous attempt at this exam number, OR push new
@@ -6257,7 +6281,7 @@ function fingerprintQuestions(qs) {
 }
 function varyQuestionFormat(q, idx) {
   if (!q) return q;
-  if (q.type === 'fill') return q;
+  if (q.type === 'fill') return shuffleQuestionOptions(q);
   if (!Array.isArray(q.opts) || q.opts.length < 2) return shuffleQuestionOptions(q);
   if (idx % 3 !== 0) return shuffleQuestionOptions(q);
   const showTrue = Math.random() < 0.5;
@@ -6274,9 +6298,118 @@ function varyQuestionFormat(q, idx) {
 }
 
 // ============================================================
+function capStoredScores(data) {
+  if (!data) return false;
+  let changed = false;
+  (data.examHistory || []).forEach(h => {
+    const total = Number(h && h.total) || 0;
+    if (total > 0 && Number(h.score) > total) {
+      changed = true;
+      h.score = total;
+      h.pct = 100;
+      const g = gradeFromPercent(100);
+      h.grade = g.name;
+      h.gradeLetter = g.letter;
+    }
+  });
+  const pops = data.popQuizResults || {};
+  Object.keys(pops).forEach(k => {
+    const r = pops[k];
+    const total = Number(r && r.total) || 0;
+    if (!total) return;
+    if (Number(r.firstAttemptScore) > total) { r.firstAttemptScore = total; changed = true; }
+    if (Number(r.finalScore) > total) { r.finalScore = total; changed = true; }
+    r.pct = Math.round(100 * Number(r.firstAttemptScore) / total);
+    const g = gradeFromPercent(r.pct);
+    r.grade = g.name;
+    r.gradeLetter = g.letter;
+  });
+  return changed;
+}
+function answerTextOf(q) {
+  if (!q) return '';
+  if (q.type === 'fill') return String(q.ans == null ? '' : q.ans);
+  if (Array.isArray(q.opts) && typeof q.ans === 'number' && q.opts[q.ans] != null) return String(q.opts[q.ans]);
+  return '';
+}
+function choiceBank() {
+  const items = [];
+  if (typeof POP_QUIZZES === 'object' && POP_QUIZZES) {
+    Object.keys(POP_QUIZZES).forEach(k => {
+      (POP_QUIZZES[k] || []).forEach(q => items.push(q));
+    });
+  }
+  if (typeof EXAM_SET_1 !== 'undefined') EXAM_SET_1.forEach(q => items.push(q));
+  if (typeof EXAM_SET_2 !== 'undefined') EXAM_SET_2.forEach(q => items.push(q));
+  return items;
+}
+function looksNumeric(text) {
+  return /^-?\d+(\.\d+)?$/.test(String(text).trim()) || /^-?\d+\s*\/\s*\d+$/.test(String(text).trim());
+}
+function cleanFillStem(stem, answer) {
+  let s = String(stem || '');
+  const ans = String(answer || '').trim().toLowerCase();
+  s = s.replace(/\s*\(([^)]*)\)/g, (full, inner) => {
+    const low = String(inner).toLowerCase();
+    if (/write the|type the|exponent as/.test(low)) return '';
+    if (ans && low.indexOf(ans) >= 0) return '';
+    return full;
+  });
+  return s.replace(/\s{2,}/g, ' ').trim();
+}
+function fillToMultipleChoice(q) {
+  const correct = String(q.ans == null ? '' : q.ans).trim();
+  const banned = {};
+  banned[correct.toLowerCase()] = true;
+  (q.accept || []).forEach(a => { banned[String(a).toLowerCase().trim()] = true; });
+  const numeric = looksNumeric(correct);
+  const same = [];
+  const rest = [];
+  choiceBank().forEach(item => {
+    if (!item || item === q || item.type !== 'fill') return;
+    const text = String(item.ans == null ? '' : item.ans).trim();
+    if (!text || text.length > 32 || banned[text.toLowerCase()]) return;
+    if (looksNumeric(text) !== numeric) return;
+    if (!numeric && text.split(/\s+/).length > 3) return;
+    if (!numeric && correct.length > 2 && text.length < 3) return;
+    const list = (item.topic && q.topic && item.topic === q.topic) ? same : rest;
+    if (same.concat(rest).some(x => x.toLowerCase() === text.toLowerCase())) return;
+    list.push(text);
+  });
+  const pool = same.concat(rest);
+  shuffleInPlace(pool);
+  const distractors = [];
+  pool.forEach(text => {
+    if (distractors.length >= 3) return;
+    if (distractors.some(d => d.toLowerCase() === text.toLowerCase())) return;
+    distractors.push(text);
+  });
+  if (numeric) {
+    const n = Number(String(correct).replace(/\s/g, ''));
+    [n + 1, n - 1, n * 2, n + 10, n * 10, 0, 1, 2, 3, 4, 5, 10].forEach(v => {
+      if (distractors.length >= 3 || !isFinite(v)) return;
+      const text = String(v);
+      if (banned[text.toLowerCase()] || distractors.some(d => d === text)) return;
+      distractors.push(text);
+    });
+  }
+  ['none of these', 'not used in the booklet', 'the same unit either way'].forEach(text => {
+    if (distractors.length >= 3 || banned[text.toLowerCase()]) return;
+    distractors.push(text);
+  });
+  return {
+    q: cleanFillStem(q.q, correct),
+    opts: [correct].concat(distractors.slice(0, 3)),
+    ans: 0,
+    why: q.why,
+    topic: q.topic,
+    _fromFill: true
+  };
+}
 // === Option-position shuffler (fixes B/C answer bias) ===
 // ============================================================
 function shuffleQuestionOptions(q) {
+  if (q && q.type === 'fill') q = fillToMultipleChoice(q);
   if (!q || !Array.isArray(q.opts)) return q;
   const n = q.opts.length;
   if (n < 2) return q;
