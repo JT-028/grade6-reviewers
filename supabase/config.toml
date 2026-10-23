@@ -1,0 +1,26 @@
+project_id = "grade6-reviewers-family"
+
+[api]
+enabled = true
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+port = 54321
+
+[db]
+port = 54322
+major_version = 17
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:8766/family.html"
+enable_signup = false
+enable_anonymous_sign_ins = false
+
+[auth.email]
+enable_signup = false
+enable_confirmations = true
+
+[functions.family-api]
+enabled = true
+verify_jwt = false
+entrypoint = "./functions/family-api/index.ts"

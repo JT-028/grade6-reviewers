@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "@supabase/supabase-js": "npm:@supabase/supabase-js@2.118.0"
+  },
+  "compilerOptions": { "strict": true, "lib": ["deno.window", "dom", "dom.iterable"] },
+  "fmt": { "lineWidth": 100, "semiColons": true },
+  "tasks": {
+    "check": "deno check index.ts auth.ts validation.ts crypto.ts",
+    "test": "deno test --allow-env --allow-read --allow-sys ../../../tests/family"
+  }
+}

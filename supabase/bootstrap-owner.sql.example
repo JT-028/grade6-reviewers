@@ -1,0 +1,6 @@
+begin;
+insert into private.families(owner_auth_id)
+select id from auth.users where id = '00000000-0000-4000-8000-000000000000'::uuid
+  and email_confirmed_at is not null;
+select count(*) as provisioned_family_count from private.families;
+commit;

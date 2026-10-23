@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Family progress · Grade 6 study guides</title>
+    <style>
+      :root {
+        --paper: #f4efe6;
+        --card: #fffdf7;
+        --ink: #1f2a1c;
+        --muted: #56614e;
+        --green: #2e5d3a;
+        --line: #d8decf;
+        --soft: #edf2e7;
+        --red: #983e2b;
+        --gold: #d6a24d;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          16px/1.55 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      a {
+        color: var(--green);
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button,
+      a,
+      input,
+      select {
+        touch-action: manipulation;
+      }
+      button {
+        min-height: 44px;
+        cursor: pointer;
+        border: 1px solid var(--green);
+        border-radius: 11px;
+        padding: 0.65rem 1rem;
+        font-weight: 650;
+        color: var(--card);
+        background: var(--green);
+      }
+      button.secondary {
+        color: var(--green);
+        background: transparent;
+      }
+      button.danger {
+        color: var(--red);
+        border-color: var(--red);
+        background: transparent;
+      }
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 3px;
+      }
+      header,
+      main,
+      footer {
+        width: min(1080px, 100% - 40px);
+        margin: auto;
+      }
+      header {
+        padding: 24px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+      .back {
+        font-size: 0.9rem;
+        font-weight: 650;
+        text-decoration: none;
+      }
+      .tag {
+        font-size: 0.75rem;
+        border: 1px solid #b9c7ae;
+        border-radius: 100px;
+        padding: 4px 10px;
+        color: var(--green);
+      }
+      main {
+        padding: 20px 0 52px;
+      }
+      .eyebrow {
+        font-size: 0.76rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 750;
+        color: var(--green);
+        margin: 0;
+      }
+      h1 {
+        font:
+          700 clamp(2.1rem, 5vw, 3.8rem)/1.08 Georgia,
+          serif;
+        letter-spacing: -0.04em;
+        margin: 12px 0 16px;
+      }
+      h2 {
+        font:
+          700 1.5rem/1.2 Georgia,
+          serif;
+        margin: 0 0 8px;
+      }
+      h3 {
+        font-size: 1rem;
+        margin: 0 0 8px;
+      }
+      .lead {
+        color: var(--muted);
+        max-width: 660px;
+        font-size: 1.1rem;
+      }
+      .notice {
+        background: var(--soft);
+        border: 1px solid #bdcdb1;
+        border-left: 4px solid var(--green);
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin: 24px 0;
+        color: var(--ink);
+      }
+      .notice p {
+        margin: 5px 0;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin: 28px 0;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: 0 8px 28px #1f2a1c07;
+      }
+      .card p,
+      .small {
+        color: var(--muted);
+      }
+      .small {
+        font-size: 0.86rem;
+      }
+      .step {
+        display: inline-grid;
+        place-items: center;
+        background: var(--soft);
+        border-radius: 50%;
+        width: 34px;
+        height: 34px;
+        color: var(--green);
+        font-weight: 750;
+        margin-bottom: 18px;
+      }
+      label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 650;
+        margin: 18px 0 6px;
+      }
+      input:not([type="checkbox"]),
+      select {
+        width: 100%;
+        padding: 11px 12px;
+        border: 1px solid #a9b59f;
+        background: #fff;
+        border-radius: 9px;
+        color: var(--ink);
+        min-height: 46px;
+      }
+      form button {
+        margin-top: 18px;
+      }
+      fieldset {
+        border: 0;
+        padding: 0;
+        margin: 14px 0;
+      }
+      legend {
+        font-weight: 650;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
+      .check {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin: 8px 0;
+      }
+      .check input {
+        width: 20px;
+        height: 20px;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .row {
+        padding: 14px 0;
+        border-top: 1px solid var(--line);
+      }
+      .row:first-child {
+        border-top: 0;
+      }
+      .row strong {
+        display: block;
+      }
+      .row .actions {
+        margin-top: 10px;
+      }
+      .state {
+        font-size: 0.8rem;
+        font-weight: 650;
+        color: var(--green);
+      }
+      .paircode {
+        font:
+          700 clamp(1.2rem, 3vw, 1.7rem)/1.6 ui-monospace,
+          monospace;
+        letter-spacing: 0.08em;
+        overflow-wrap: anywhere;
+        background: var(--soft);
+        border-radius: 10px;
+        padding: 12px 16px;
+        display: block;
+        margin: 15px 0;
+      }
+      #status {
+        min-height: 1.5em;
+        margin: 16px 0;
+        color: var(--green);
+        font-weight: 600;
+      }
+      #status.error {
+        color: var(--red);
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .sectionhead {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin: 26px 0 16px;
+      }
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 20px 0 32px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      details {
+        margin-top: 16px;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--green);
+        font-weight: 600;
+      }
+      .empty {
+        border: 1px dashed #c4cdbb;
+        border-radius: 12px;
+        padding: 18px;
+        color: var(--muted);
+      }
+      @media (max-width: 720px) {
+        header,
+        main,
+        footer {
+          width: calc(100% - 32px);
+        }
+        .grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .card {
+          padding: 22px;
+        }
+        .sectionhead {
+          align-items: flex-start;
+        }
+        .tag {
+          white-space: nowrap;
+        }
+        main {
+          padding-top: 10px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a class="back" href="index.html">← All study guides</a
+      ><span class="tag">Private family space</span>
+    </header>
+    <main>
+      <p class="eyebrow">Grade 6 · Your own learning journey</p>
+      <h1>A little effort.<br />A growing confidence.</h1>
+      <p class="lead">
+        A private space for your family. Parents approve devices and manage profiles. Children use
+        their own PIN.
+      </p>
+      <div id="setupNotice" class="notice" role="note">
+        <strong>Family access is being prepared.</strong>
+        <p>
+          Private sign-in is not available yet. Your public study guides and existing browser
+          progress are still available.
+        </p>
+        <a href="index.html">Keep studying →</a>
+      </div>
+      <div id="status" role="status" aria-live="polite" aria-atomic="true"></div>
+      <section id="entry" aria-label="Choose family access">
+        <div class="grid">
+          <article class="card">
+            <span class="step" aria-hidden="true">1</span>
+            <h2>For parents</h2>
+            <p>Sign in to create children’s profiles and approve the devices they use.</p>
+            <form id="parentLogin">
+              <label for="parentEmail">Parent email</label
+              ><input
+                id="parentEmail"
+                type="email"
+                autocomplete="username"
+                required
+                maxlength="254"
+              /><label for="parentPassword">Password</label
+              ><input
+                id="parentPassword"
+                type="password"
+                autocomplete="current-password"
+                required
+                maxlength="256"
+              /><button type="submit" data-private>Parent sign-in</button>
+            </form>
+            <p class="small">
+              Use the parent account set up for this family. Public account registration is
+              unavailable.
+            </p>
+          </article>
+          <article class="card">
+            <span class="step" aria-hidden="true">2</span>
+            <h2>For children</h2>
+            <p>
+              First time on this device? Ask your parent to approve it. Then choose your profile and
+              enter your PIN.
+            </p>
+            <form id="pairForm">
+              <label for="deviceLabel">Device name</label
+              ><input
+                id="deviceLabel"
+                autocomplete="off"
+                placeholder="For example, study tablet"
+                maxlength="60"
+                required
+              /><button type="submit" data-private>Ask parent to approve</button>
+            </form>
+            <div id="pairPending" hidden>
+              <p>Show this pairing code to your parent:</p>
+              <output id="pairCode" class="paircode" aria-label="Pairing code"></output>
+              <p>Device: <strong id="pendingDeviceLabel"></strong></p>
+              <p class="small" id="pairExpiry"></p>
+              <div class="actions">
+                <button id="checkPair" class="secondary" data-private>Check approval</button
+                ><button id="cancelPair" class="secondary">Cancel</button>
+              </div>
+            </div>
+            <div id="unlockPanel" hidden>
+              <form id="childUnlock">
+                <label for="childChoice">Your profile</label
+                ><select id="childChoice" required></select
+                ><label for="childPin">Six-digit PIN</label
+                ><input
+                  id="childPin"
+                  type="password"
+                  inputmode="numeric"
+                  pattern="[0-9]{6}"
+                  maxlength="6"
+                  autocomplete="off"
+                  required
+                /><button type="submit" data-private>Unlock my profile</button>
+              </form>
+            </div>
+            <p class="small">PINs are checked online. Use a trusted family device.</p>
+          </article>
+        </div>
+      </section>
+      <section id="parentPanel" hidden aria-label="Parent management">
+        <div class="sectionhead">
+          <div>
+            <p class="eyebrow">Parent space</p>
+            <h2>Your family</h2>
+          </div>
+          <div class="actions">
+            <button id="refreshFamily" class="secondary">Refresh</button
+            ><button id="parentLogout" class="secondary">Sign out</button>
+          </div>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h3>Children’s profiles</h3>
+            <div id="childList"></div>
+            <details>
+              <summary>Add a child</summary>
+              <form id="addChild">
+                <label for="childName">Display name</label
+                ><input id="childName" maxlength="40" autocomplete="off" required /><label
+                  for="newPin"
+                  >Choose a six-digit PIN</label
+                ><input
+                  id="newPin"
+                  type="password"
+                  inputmode="numeric"
+                  pattern="[0-9]{6}"
+                  maxlength="6"
+                  autocomplete="new-password"
+                  required
+                /><button type="submit">Create profile</button>
+              </form>
+            </details>
+            <div id="editChildPanel" hidden>
+              <form id="editChild">
+                <h3>Update profile</h3>
+                <input id="editChildId" type="hidden" /><label for="editChildName"
+                  >Display name</label
+                ><input id="editChildName" maxlength="40" required /><label for="editChildPin"
+                  >New PIN (leave empty to keep it)</label
+                ><input
+                  id="editChildPin"
+                  type="password"
+                  inputmode="numeric"
+                  pattern="[0-9]{6}"
+                  maxlength="6"
+                  autocomplete="new-password"
+                />
+                <div class="actions">
+                  <button type="submit">Save changes</button
+                  ><button id="cancelEdit" type="button" class="secondary">Cancel</button>
+                </div>
+                <p class="small">Changing a PIN locks this child’s existing sessions.</p>
+              </form>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Approve a device</h3>
+            <p class="small">
+              Enter the code shown on your child’s device. Check its name before confirming.
+            </p>
+            <form id="approvePair">
+              <label for="approvalCode">Pairing code</label
+              ><input
+                id="approvalCode"
+                maxlength="20"
+                autocomplete="off"
+                required
+                spellcheck="false"
+              />
+              <fieldset id="approvalChildren">
+                <legend>Profiles allowed on this device</legend>
+              </fieldset>
+              <label for="replacementDevice">Device to approve</label
+              ><select id="replacementDevice">
+                <option value="">A new device</option>
+              </select>
+              <p class="small">
+                Replacing an existing approval preserves its saved encrypted work and invalidates
+                the old access token.
+              </p>
+              <button type="submit">Review approval</button>
+            </form>
+            <div id="approvalReview" class="notice" hidden>
+              <strong>Approve this pairing code?</strong>
+              <p id="approvalSummary"></p>
+              <div class="actions">
+                <button id="confirmApproval">Approve selected profiles</button
+                ><button id="cancelApproval" class="secondary">Cancel</button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <article class="card">
+          <h3>Approved devices</h3>
+          <div id="deviceList"></div>
+        </article>
+      </section>
+      <section id="childPanel" hidden class="card" aria-label="Your unlocked profile">
+        <p class="eyebrow">Your private profile</p>
+        <h2 id="childGreeting"></h2>
+        <p>Your profile is unlocked on this device.</p>
+        <div class="notice">
+          <strong>Study history is not available yet.</strong>
+          <p>
+            The study guides currently save their progress in this browser. They do not yet record
+            results or study time to this family profile.
+          </p>
+        </div>
+        <div class="actions">
+          <a href="index.html">Open public study guides →</a
+          ><button id="childLock" class="secondary">Lock my profile</button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      Private records are available only after authorized sign-in. Family access requires an
+      internet connection to unlock.
+    </footer>
+    <script>
+      "use strict";
+      const FAMILY_ENABLED = false;
+      const FAMILY_SUPABASE_URL = "https://hzgvhkgsxvodmdurysvf.supabase.co";
+      const FAMILY_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_8x8A8Xja_0SzOwZQVSEqnQ_8g7zEWcg";
+      const FAMILY_CLIENT_VERSION = 1;
+      (() => {
+        const byId = (id) => document.getElementById(id);
+        const ready =
+          FAMILY_ENABLED &&
+          /^https:\/\/[a-z0-9]+\.supabase\.co$/.test(FAMILY_SUPABASE_URL) &&
+          FAMILY_SUPABASE_PUBLISHABLE_KEY.startsWith("sb_publishable_");
+        const API = FAMILY_SUPABASE_URL + "/functions/v1/family-api/v1";
+        const STORAGE = { parent: "grade6-family-parent-v1", child: "grade6-family-child-v1" };
+        let parent = null,
+          child = null,
+          device = null,
+          pairing = null,
+          pairIntent = null,
+          family = null,
+          approval = null;
+        let pairTimer = null,
+          busy = false,
+          activityAt = Date.now();
+        let accessGeneration = 0;
+        const pendingMutations = new Map();
+        const channel =
+          "BroadcastChannel" in window ? new BroadcastChannel("grade6-family-lock-v1") : null;
+        const uuid = () => crypto.randomUUID();
+        const randomHex = () =>
+          Array.from(crypto.getRandomValues(new Uint8Array(32)), (byte) =>
+            byte.toString(16).padStart(2, "0"),
+          ).join("");
+        const digest = async (value) =>
+          Array.from(
+            new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value))),
+            (byte) => byte.toString(16).padStart(2, "0"),
+          ).join("");
+        const status = (message, error = false) => {
+          byId("status").textContent = message;
+          byId("status").classList.toggle("error", error);
+        };
+        function storeSession(key, value) {
+          try {
+            value
+              ? sessionStorage.setItem(key, JSON.stringify(value))
+              : sessionStorage.removeItem(key);
+          } catch {
+            throw new Error(
+              "This browser could not save a private session. Allow browser storage and try again.",
+            );
+          }
+        }
+        function readSession(key) {
+          try {
+            const value = JSON.parse(sessionStorage.getItem(key) || "null");
+            return value && typeof value === "object" ? value : null;
+          } catch {
+            return null;
+          }
+        }
+        function validSession(value) {
+          return (
+            value &&
+            typeof value.token === "string" &&
+            typeof value.expires_at === "string" &&
+            Date.parse(value.expires_at) > Date.now()
+          );
+        }
+        function database() {
+          return new Promise((resolve, reject) => {
+            const request = indexedDB.open("grade6-family-v1", 1);
+            request.onupgradeneeded = () => {
+              const db = request.result;
+              if (!db.objectStoreNames.contains("credentials")) db.createObjectStore("credentials");
+            };
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () =>
+              reject(new Error("Browser storage is unavailable. Device approval was not saved."));
+          });
+        }
+        async function deviceStore(value) {
+          const db = await database();
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction(
+              "credentials",
+              value === undefined ? "readonly" : "readwrite",
+            );
+            const request =
+              value === undefined
+                ? tx.objectStore("credentials").get("device")
+                : tx.objectStore("credentials").put(value, "device");
+            let result;
+            request.onsuccess = () => {
+              result = request.result;
+            };
+            tx.oncomplete = () => {
+              db.close();
+              resolve(result);
+            };
+            tx.onerror = tx.onabort = () => {
+              db.close();
+              reject(new Error("Could not save the device approval. Please try again."));
+            };
+          });
+        }
+        function showPanel(which) {
+          byId("entry").hidden = which !== "entry";
+          byId("parentPanel").hidden = which !== "parent";
+          byId("childPanel").hidden = which !== "child";
+        }
+        function lockChild(broadcast = true) {
+          accessGeneration++;
+          pendingMutations.clear();
+          const hadChild = !!child;
+          child = null;
+          storeSession(STORAGE.child, null);
+          byId("childPin").value = "";
+          byId("childGreeting").textContent = "";
+          if (broadcast && hadChild) channel?.postMessage({ type: "lock" });
+          showPanel(parent ? "parent" : "entry");
+        }
+        function signOut(broadcast = true) {
+          parent = null;
+          storeSession(STORAGE.parent, null);
+          byId("parentPassword").value = "";
+          byId("childList").replaceChildren();
+          byId("deviceList").replaceChildren();
+          family = null;
+          lockChild(broadcast);
+          if (broadcast) channel?.postMessage({ type: "parent-lock" });
+          showPanel("entry");
+        }
+        async function request(
+          path,
+          { method = "GET", token, body, idempotency, authPath = false } = {},
+        ) {
+          const generation = accessGeneration;
+          const ensureCurrentAccess = () => {
+            if (generation !== accessGeneration)
+              throw new Error("Your access changed. Unlock or sign in again.");
+          };
+          if (!ready)
+            throw new Error(
+              "Family access is not available yet. You can still use the public study guides.",
+            );
+          const headers = {
+            apikey: FAMILY_SUPABASE_PUBLISHABLE_KEY,
+            "Content-Type": "application/json",
+          };
+          if (token) headers.Authorization = "Bearer " + token;
+          const serializedBody = body === undefined ? undefined : JSON.stringify(body);
+          let mutationKey;
+          if (method !== "GET" && !authPath) {
+            if (!idempotency) {
+              mutationKey = method + ":" + path;
+              const fingerprint = await digest(serializedBody || "");
+              ensureCurrentAccess();
+              const pending = pendingMutations.get(mutationKey);
+              idempotency = pending?.fingerprint === fingerprint ? pending.id : uuid();
+              pendingMutations.set(mutationKey, { fingerprint, id: idempotency });
+            }
+            headers["Idempotency-Key"] = idempotency;
+          }
+          const completeMutation = () => {
+            if (mutationKey && pendingMutations.get(mutationKey)?.id === idempotency)
+              pendingMutations.delete(mutationKey);
+          };
+          let response;
+          try {
+            response = await fetch(
+              authPath ? FAMILY_SUPABASE_URL + "/auth/v1/" + path : API + path,
+              {
+                method,
+                headers,
+                body: serializedBody,
+                cache: "no-store",
+                signal: AbortSignal.timeout(10000),
+              },
+            );
+          } catch {
+            throw new Error("Could not reach family access. Check your connection and try again.");
+          }
+          ensureCurrentAccess();
+          if (response.status === 204 && authPath) return {};
+          let value;
+          try {
+            value = await response.json();
+          } catch {
+            throw new Error("Family access returned an unreadable response. Please try again.");
+          }
+          ensureCurrentAccess();
+          if (!response.ok) {
+            if (response.status < 500 && response.status !== 429) completeMutation();
+            if (response.status === 401 && !authPath) {
+              if (path.startsWith("/parent/")) signOut();
+              else if (path.startsWith("/child/")) lockChild();
+            }
+            const message = value?.error?.message || value?.msg || value?.error_description;
+            throw new Error(
+              typeof message === "string"
+                ? message
+                : "Family access is unavailable. Please try again.",
+            );
+          }
+          if (
+            !value ||
+            typeof value !== "object" ||
+            Array.isArray(value) ||
+            (!authPath && value.api_version !== FAMILY_CLIENT_VERSION)
+          )
+            throw new Error("Family access needs an update. Please refresh this page.");
+          completeMutation();
+          return value;
+        }
+        async function parentToken() {
+          if (!parent) throw new Error("Sign in as a parent first.");
+          if (Date.parse(parent.expires_at) - Date.now() < 60000) {
+            const refreshed = await request("token?grant_type=refresh_token", {
+              method: "POST",
+              authPath: true,
+              body: { refresh_token: parent.refresh_token },
+            });
+            acceptParent(refreshed);
+          }
+          return parent.token;
+        }
+        function acceptParent(value) {
+          if (
+            typeof value.access_token !== "string" ||
+            typeof value.refresh_token !== "string" ||
+            !Number.isFinite(value.expires_in)
+          )
+            throw new Error("Could not validate the parent session.");
+          parent = {
+            token: value.access_token,
+            refresh_token: value.refresh_token,
+            expires_at: new Date(Date.now() + value.expires_in * 1000).toISOString(),
+          };
+          storeSession(STORAGE.parent, parent);
+        }
+        async function parentRequest(path, options = {}) {
+          return request(path, { ...options, token: await parentToken() });
+        }
+        async function run(action) {
+          if (busy) return;
+          busy = true;
+          document.querySelectorAll("button").forEach((button) => (button.disabled = true));
+          status("Working…");
+          try {
+            await action();
+            activityAt = Date.now();
+          } catch (error) {
+            status(error.message || "Please try again.", true);
+          } finally {
+            busy = false;
+            document
+              .querySelectorAll("button")
+              .forEach(
+                (button) => (button.disabled = !ready && button.hasAttribute("data-private")),
+              );
+          }
+        }
+        function element(tag, text, className) {
+          const node = document.createElement(tag);
+          if (text !== undefined) node.textContent = text;
+          if (className) node.className = className;
+          return node;
+        }
+        function button(label, action, className = "secondary") {
+          const node = element("button", label, className);
+          node.type = "button";
+          node.addEventListener("click", () => run(action));
+          return node;
+        }
+        function checkedChildren() {
+          return Array.from(
+            byId("approvalChildren").querySelectorAll("input:checked"),
+            (input) => input.value,
+          );
+        }
+        function renderFamily() {
+          byId("childList").replaceChildren();
+          byId("deviceList").replaceChildren();
+          byId("approvalChildren").replaceChildren(
+            element("legend", "Profiles allowed on this device"),
+          );
+          byId("replacementDevice").replaceChildren(new Option("A new device", ""));
+          family.children.forEach((profile) => {
+            const row = element("div", undefined, "row");
+            row.append(
+              element("strong", profile.display_name),
+              element("span", profile.archived ? "Archived" : "Active", "state"),
+            );
+            const actions = element("div", undefined, "actions");
+            actions.append(
+              button("Edit profile", async () => {
+                byId("editChildPanel").hidden = false;
+                byId("editChildId").value = profile.id;
+                byId("editChildName").value = profile.display_name;
+                byId("editChildPin").value = "";
+                byId("editChildName").focus();
+                status("Update the name or set a new PIN.");
+              }),
+              button(profile.archived ? "Restore" : "Archive", async () => {
+                await parentRequest("/parent/children/" + profile.id, {
+                  method: "PATCH",
+                  body: { archived: !profile.archived },
+                });
+                await loadFamily();
+                status("Profile updated.");
+              }),
+            );
+            row.append(actions);
+            byId("childList").append(row);
+            if (!profile.archived) {
+              const label = element("label", undefined, "check");
+              const input = document.createElement("input");
+              input.type = "checkbox";
+              input.value = profile.id;
+              label.append(input, document.createTextNode(profile.display_name));
+              byId("approvalChildren").append(label);
+            }
+          });
+          if (!family.children.length)
+            byId("childList").append(
+              element("p", "No profiles yet. Add a child to get started.", "empty"),
+            );
+          family.devices.forEach((approved) => {
+            const row = element("div", undefined, "row");
+            const active = !approved.revoked_at && Date.parse(approved.expires_at) > Date.now();
+            row.append(
+              element("strong", approved.label),
+              element("span", active ? "Approved" : "Needs approval", "state"),
+              element(
+                "p",
+                "Profiles: " +
+                  approved.child_ids
+                    .map(
+                      (id) =>
+                        family.children.find((profile) => profile.id === id)?.display_name ||
+                        "Archived profile",
+                    )
+                    .join(", "),
+                "small",
+              ),
+            );
+            if (active)
+              row.append(
+                button(
+                  "Revoke approval",
+                  async () => {
+                    if (
+                      !window.confirm(
+                        "Revoke this device? Its private sessions will stop working online. Saved encrypted work will remain.",
+                      )
+                    )
+                      return;
+                    await parentRequest("/parent/devices/" + approved.id, {
+                      method: "PATCH",
+                      body: { revoked: true },
+                    });
+                    await loadFamily();
+                    status("Device approval revoked.");
+                  },
+                  "danger",
+                ),
+              );
+            byId("deviceList").append(row);
+            byId("replacementDevice").append(
+              new Option(
+                approved.label + (active ? " (replace approval)" : " (approve again)"),
+                approved.id,
+              ),
+            );
+          });
+          if (!family.devices.length)
+            byId("deviceList").append(element("p", "No approved devices yet.", "empty"));
+        }
+        async function loadFamily() {
+          const value = await parentRequest("/parent/family");
+          if (!Array.isArray(value.children) || !Array.isArray(value.devices))
+            throw new Error("Could not validate family settings.");
+          family = value;
+          renderFamily();
+          showPanel("parent");
+        }
+        async function loadProfiles() {
+          if (!device?.token) return;
+          const value = await request("/device/children", { token: device.token });
+          if (!Array.isArray(value.children)) throw new Error("Could not load approved profiles.");
+          byId("childChoice").replaceChildren();
+          value.children.forEach((profile) => {
+            if (typeof profile.id === "string" && typeof profile.display_name === "string")
+              byId("childChoice").append(new Option(profile.display_name, profile.id));
+          });
+          byId("unlockPanel").hidden = false;
+          byId("pairForm").hidden = true;
+          byId("pairPending").hidden = true;
+        }
+        function stopPair() {
+          clearTimeout(pairTimer);
+          pairTimer = null;
+        }
+        async function checkPair() {
+          if (!pairing || document.hidden) return;
+          if (busy) {
+            pairTimer = setTimeout(checkPair, 5000);
+            return;
+          }
+          if (Date.parse(pairing.expires_at) <= Date.now()) {
+            stopPair();
+            pairing = null;
+            byId("pairPending").hidden = true;
+            byId("pairForm").hidden = false;
+            status("The pairing code expired. Request a new one.", true);
+            return;
+          }
+          try {
+            const value = await request("/pair-requests/" + pairing.id + "/claim", {
+              method: "POST",
+              token: pairing.secret,
+              body: {},
+              idempotency: pairing.claimId,
+            });
+            if (value.status === "approved") {
+              if (!/^[a-f0-9]{64}$/.test(value.device_token) || typeof value.device_id !== "string")
+                throw new Error("Could not validate this device approval.");
+              device = {
+                id: value.device_id,
+                token: value.device_token,
+                expires_at: value.expires_at,
+              };
+              await deviceStore(device);
+              stopPair();
+              pairing = null;
+              await loadProfiles();
+              status("Device approved. Choose your profile.");
+              return;
+            }
+            if (value.status !== "pending") throw new Error("Could not read the approval status.");
+            status("Waiting for your parent’s approval.");
+          } catch (error) {
+            status(error.message, true);
+          }
+          if (pairing && !document.hidden) pairTimer = setTimeout(checkPair, 5000);
+        }
+        byId("parentLogin").addEventListener("submit", (event) => {
+          event.preventDefault();
+          run(async () => {
+            const password = byId("parentPassword").value;
+            byId("parentPassword").value = "";
+            const value = await request("token?grant_type=password", {
+              method: "POST",
+              authPath: true,
+              body: { email: byId("parentEmail").value.trim(), password },
+            });
+            lockChild();
+            acceptParent(value);
+            await loadFamily();
+            status("Parent account signed in.");
+          });
+        });
+        byId("pairForm").addEventListener("submit", (event) => {
+          event.preventDefault();
+          run(async () => {
+            const label = byId("deviceLabel").value.trim();
+            if (!pairIntent || pairIntent.label !== label)
+              pairIntent = { id: uuid(), secret: randomHex(), mutationId: uuid(), label };
+            const { id, secret } = pairIntent;
+            const value = await request("/pair-requests", {
+              method: "POST",
+              idempotency: pairIntent.mutationId,
+              body: {
+                request_id: id,
+                poll_hash: await digest(secret),
+                device_label: label,
+              },
+            });
+            if (typeof value.approval_code !== "string" || !value.expires_at)
+              throw new Error("Could not validate the pairing response.");
+            pairing = { id, secret, expires_at: value.expires_at, claimId: uuid() };
+            pairIntent = null;
+            byId("pendingDeviceLabel").textContent = byId("deviceLabel").value.trim();
+            byId("pairCode").textContent = value.approval_code.match(/.{1,4}/g).join(" ");
+            byId("pairExpiry").textContent = "This code expires in ten minutes.";
+            byId("pairPending").hidden = false;
+            byId("pairForm").hidden = true;
+            status("Show this code to your parent.");
+            pairTimer = setTimeout(checkPair, 5000);
+          });
+        });
+        byId("checkPair").addEventListener("click", () => {
+          stopPair();
+          checkPair();
+        });
+        byId("cancelPair").addEventListener("click", () => {
+          stopPair();
+          pairing = null;
+          pairIntent = null;
+          byId("pairPending").hidden = true;
+          byId("pairForm").hidden = false;
+          status("Pairing cancelled.");
+        });
+        byId("childUnlock").addEventListener("submit", (event) => {
+          event.preventDefault();
+          run(async () => {
+            const enteredPin = byId("childPin").value;
+            byId("childPin").value = "";
+            const value = await request("/child/unlock", {
+              method: "POST",
+              token: device.token,
+              body: { child_id: byId("childChoice").value, pin: enteredPin },
+            });
+            if (
+              !/^[a-f0-9]{64}$/.test(value.child_session_token) ||
+              !value.child?.id ||
+              !/^[a-f0-9]{64}$/.test(value.cache_key)
+            )
+              throw new Error("Could not validate the private session.");
+            signOut(false);
+            channel?.postMessage({ type: "lock" });
+            child = {
+              token: value.child_session_token,
+              expires_at: value.expires_at,
+              child: value.child,
+              cache_key: value.cache_key,
+              child_session_id: value.child_session_id,
+            };
+            storeSession(STORAGE.child, child);
+            byId("childGreeting").textContent = "Hello, " + child.child.display_name + ".";
+            showPanel("child");
+            status("Your profile is unlocked.");
+          });
+        });
+        byId("addChild").addEventListener("submit", (event) => {
+          event.preventDefault();
+          run(async () => {
+            const enteredPin = byId("newPin").value;
+            byId("newPin").value = "";
+            await parentRequest("/parent/children", {
+              method: "POST",
+              body: { display_name: byId("childName").value.trim(), pin: enteredPin },
+            });
+            byId("childName").value = "";
+            await loadFamily();
+            status("Profile created.");
+          });
+        });
+        byId("editChild").addEventListener("submit", (event) => {
+          event.preventDefault();
+          run(async () => {
+            const body = { display_name: byId("editChildName").value.trim() };
+            if (byId("editChildPin").value) body.pin = byId("editChildPin").value;
+            byId("editChildPin").value = "";
+            await parentRequest("/parent/children/" + byId("editChildId").value, {
+              method: "PATCH",
+              body,
+            });
+            byId("editChildPanel").hidden = true;
+            await loadFamily();
+            status("Profile updated.");
+          });
+        });
+        byId("cancelEdit").addEventListener("click", () => {
+          byId("editChildPanel").hidden = true;
+          byId("editChildPin").value = "";
+        });
+        byId("approvePair").addEventListener("submit", (event) => {
+          event.preventDefault();
+          const children = checkedChildren();
+          if (!children.length) {
+            status("Select at least one child profile.", true);
+            return;
+          }
+          approval = {
+            approval_code: byId("approvalCode").value.replace(/[- ]/g, "").toUpperCase(),
+            child_ids: children,
+          };
+          if (byId("replacementDevice").value)
+            approval.replace_device_id = byId("replacementDevice").value;
+          byId("approvalSummary").textContent =
+            "Code " +
+            approval.approval_code +
+            " · Profiles: " +
+            children
+              .map((id) => family.children.find((profile) => profile.id === id).display_name)
+              .join(", ") +
+            ". Confirm the device name with your child before approving.";
+          byId("approvalReview").hidden = false;
+          byId("confirmApproval").focus();
+        });
+        byId("confirmApproval").addEventListener("click", () =>
+          run(async () => {
+            if (!approval) return;
+            await parentRequest("/parent/pair-approvals", { method: "POST", body: approval });
+            approval = null;
+            byId("approvalReview").hidden = true;
+            byId("approvalCode").value = "";
+            await loadFamily();
+            status("Device approved. Your child can now choose their profile.");
+          }),
+        );
+        byId("cancelApproval").addEventListener("click", () => {
+          approval = null;
+          byId("approvalReview").hidden = true;
+        });
+        byId("refreshFamily").addEventListener("click", () =>
+          run(async () => {
+            await loadFamily();
+            status("Family settings refreshed.");
+          }),
+        );
+        byId("parentLogout").addEventListener("click", () => {
+          const token = parent?.token;
+          signOut();
+          status("Signed out on this browser.");
+          if (token)
+            request("logout", { method: "POST", token, body: {}, authPath: true }).catch(() =>
+              status("Signed out locally. The server session will expire automatically."),
+            );
+        });
+        byId("childLock").addEventListener("click", () => {
+          const token = child?.token;
+          lockChild();
+          status("Profile locked.");
+          if (token)
+            request("/child/lock", { method: "POST", token, body: {} }).catch(() =>
+              status("Profile locked locally. Connect online to unlock again."),
+            );
+        });
+        ["pointerdown", "keydown", "scroll", "touchstart"].forEach((type) =>
+          document.addEventListener(
+            type,
+            (event) => {
+              if (event.isTrusted) activityAt = Date.now();
+            },
+            { passive: true },
+          ),
+        );
+        channel?.addEventListener("message", (event) => {
+          if (event.data?.type === "lock") {
+            lockChild(false);
+            status("Profile locked on this device.");
+          } else if (event.data?.type === "parent-lock") {
+            signOut(false);
+            status("Parent session locked on this device.");
+          }
+        });
+        setInterval(() => {
+          if (child && (!validSession(child) || Date.now() - activityAt >= 15 * 60000)) {
+            lockChild();
+            status("Your profile locked. Unlock online to continue.");
+          }
+          if (parent && Date.now() - activityAt >= 30 * 60000) {
+            signOut();
+            status("Parent session locked after inactivity.");
+          }
+        }, 10000);
+        document.addEventListener("visibilitychange", () => {
+          stopPair();
+          if (document.hidden) {
+            byId("parentPanel").hidden = true;
+            byId("childPanel").hidden = true;
+            return;
+          }
+          if (pairing) checkPair();
+          if (parent)
+            run(async () => {
+              try {
+                await loadFamily();
+                status("Parent access checked.");
+              } catch (error) {
+                signOut();
+                throw error;
+              }
+            });
+          else if (child)
+            run(async () => {
+              try {
+                if (!validSession(child))
+                  throw new Error("Your session expired. Unlock online again.");
+                await request("/child/bootstrap", { token: child.token });
+                showPanel("child");
+              } catch (error) {
+                lockChild();
+                throw error;
+              }
+              status("Private profile checked.");
+            });
+        });
+        async function init() {
+          byId("setupNotice").hidden = ready;
+          document
+            .querySelectorAll("[data-private]")
+            .forEach((button) => (button.disabled = !ready));
+          if (!ready) return;
+          parent = readSession(STORAGE.parent);
+          child = readSession(STORAGE.child);
+          device = await deviceStore();
+          if (parent) {
+            await loadFamily();
+            status("Parent session restored.");
+            return;
+          }
+          if (validSession(child)) {
+            await request("/child/bootstrap", { token: child.token });
+            byId("childGreeting").textContent = "Hello, " + child.child.display_name + ".";
+            showPanel("child");
+            status("Your private profile is unlocked.");
+            return;
+          }
+          lockChild(false);
+          if (device?.token) await loadProfiles();
+        }
+        init().catch((error) => {
+          signOut(false);
+          status(error.message, true);
+        });
+      })();
+    </script>
+  </body>
+</html>

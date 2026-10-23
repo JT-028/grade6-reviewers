@@ -1,0 +1,12 @@
+# Local credentials and development state must never be published by Pages.
+.env
+.env.*
+!.env.example
+supabase/.temp/
+supabase/.branches/
+supabase/functions/.env
+supabase/functions/.env.*
+!supabase/functions/.env.example
+node_modules/
+.cache/
+test-results/
