@@ -205,6 +205,7 @@ async function harness(module_key: string, enabled = true, fixture?: { html: str
     settled,
     records,
     decrypt,
+    getFunction,
   };
 }
 
@@ -414,4 +415,79 @@ Deno.test("M2-A start-time epoch mismatch and expiry erase private credentials",
   expired.storage.set("grade6-family-child-v1", JSON.stringify({ ...expired.session, expires_at: new Date(Date.now() - 1).toISOString() }));
   expired.callbacks.shift()!();
   assert(!expired.storage.has("grade6-family-child-v1") && capture.session === null && expired.run("pq") === null, "Expiry clears credentials and private quiz");
+});
+
+Deno.test("Quinn M2-A ciphertext rejects wrong store and child AAD and modified bytes", async () => {
+  const h = await harness("Math6_Q2_Review_Module_v1.0.0");
+  h.run("startPopQuiz('practice')");
+  const capture = h.run("pq.familyCapture");
+  await capture.ready;
+  h.run("pq.firstAttemptScore=12;pq.finalScore=20;pq.attempts.fill(1);finishPopQuiz(false)");
+  await h.settled(capture);
+  const record = (await h.records())[0], pending = (await h.records("outbox"))[0];
+  assert((await h.decrypt(capture, record)).envelope.attempt.first_correct === 12, "Untouched ciphertext decrypts to the saved baseline");
+  assert(String(record.iv) !== String(pending.iv), "Independent encrypted stores use different IVs");
+  for (const changed of ["store", "child", "bytes"]) {
+    const previous = h.session.child.id;
+    if (changed === "child") h.session.child.id = "20000000-0000-4000-8000-000000000099";
+    const candidate = { ...record };
+    if (changed === "bytes") { const bytes = new Uint8Array(record.ciphertext.slice(0)); bytes[0] ^= 1; candidate.ciphertext = bytes.buffer; }
+    let rejected = false;
+    try { await h.decrypt(capture, candidate, changed === "store" ? "outbox" : "records"); } catch { rejected = true; }
+    h.session.child.id = previous;
+    assert(rejected, `AES-GCM rejects altered ${changed}`);
+  }
+});
+
+Deno.test("Quinn M2-A crypto and quota failures retain prior rows and keyboard retry target", async () => {
+  for (const failure of ["crypto", "quota"]) {
+    const h = await harness("Math6_Q2_Review_Module_v1.0.0");
+    h.run("startPopQuiz('practice')");
+    const earlier = h.run("pq.familyCapture"); await earlier.ready;
+    h.run("pq.firstAttemptScore=12;pq.finalScore=20;pq.attempts.fill(1);finishPopQuiz(false)"); await h.settled(earlier);
+    h.run("startPopQuiz('practice')");
+    const capture = h.run("pq.familyCapture"); await capture.ready;
+    if (failure === "crypto") h.run("globalThis.savedKey=pq.familyCapture.session.cache_key;pq.familyCapture.session.cache_key='bad'");
+    else h.run("globalThis.originalDatabase=familyDatabase;familyDatabase=async()=>{throw Object.assign(new Error('Quota exceeded'),{name:'QuotaExceededError'})}");
+    h.run("pq.firstAttemptScore=16;pq.finalScore=20;pq.attempts.fill(1);finishPopQuiz(false)"); await h.settled(capture);
+    assert(!capture.saved, `${failure} failure never acknowledges saved`);
+    const time = capture.frozen.attempt.completed_at, identity = capture.id;
+    const retry = h.nodes.get("familyCaptureStatus")!.children[1];
+    assert(retry.textContent === "Retry saving" && retry.events.has("click"), "Failure exposes native retry button event");
+    if (failure === "crypto") h.run("pq.familyCapture.session.cache_key=savedKey"); else h.run("familyDatabase=originalDatabase");
+    assert((await h.records()).length === 1 && (await h.records("outbox")).length === 1, "Failure retains preceding durable result");
+    retry.events.get("click")!(); await h.settled(capture);
+    assert(capture.saved && capture.id === identity && capture.frozen.attempt.completed_at === time && (await h.records()).length === 2 && (await h.records("outbox")).length === 2, "Retry retains frozen identity/time and both stores");
+  }
+});
+
+Deno.test("Quinn M2-A real close handler abandons pop without a finalized row in all eight", async () => {
+  for (const module of new Set((await inventory()).map(row => row.module_key))) {
+    const h = await harness(module);
+    h.run(h.getFunction("closePopQuizModal"));
+    h.run("startPopQuiz('practice')"); const capture = h.run("pq.familyCapture"); await capture.ready;
+    h.run("globalThis.abandonedCapture=pq.familyCapture");
+    h.run("closePopQuizModal()");
+    assert(h.run("pq") === null && capture.session === null, "Close clears the quiz and private capture credentials");
+    h.run("familyFinalize(globalThis.abandonedCapture,12,20,20,20)");
+    await h.settled(capture);
+    assert(!capture.frozen && (await h.records()).length === 0 && (await h.records("outbox")).length === 0, "Abandon does not finalize a private pop");
+  }
+});
+
+Deno.test("Quinn M2-A all 64 actual set starts retain their own reviewed identity", async () => {
+  for (const module of new Set((await inventory()).map(row => row.module_key))) {
+    const h = await harness(module);
+    const rows = (await inventory()).filter(row => row.module_key === module);
+    for (const row of rows) {
+      h.run(row.kind === "pop" ? `startPopQuiz(${JSON.stringify(row.set_key)})` : `actuallyStartExam(${Number(row.set_key.replace('exam-', ''))})`);
+      const capture = h.run(row.kind === "pop" ? "pq.familyCapture" : "exam.familyCapture");
+      await capture.ready;
+      assert(capture.assessment.id === row.id, `Actual start owns ${row.id}`);
+      h.run(row.kind === "pop" ? "pq.firstAttemptScore=12;pq.finalScore=20;pq.attempts.fill(1);finishPopQuiz(false)" : "finishExam(false)");
+      await h.settled(capture);
+      assert(capture.saved, `Actual finalized set saves ${row.id}`);
+    }
+    assert((await h.records()).length === 8, "Six pop and both exam sets retained independently");
+  }
 });
