@@ -1,7 +1,8 @@
 # M1 setup and verification
 
-Date: 2026-10-23 (Asia/Manila). Implementation is local; remote setup
-and deployment remain gated by Luna PASS, Quinn PASS and the authorized Dep handoff.
+Date: 2026-10-24 (Asia/Manila). The user has authorized hosted M1 setup and
+family-access activation preparation. Hosted preparation is recorded in
+`DEP_HOSTED_M1_PREPARATION_v1.md`; public activation remains a separate gated handoff.
 
 ## Existing project
 
@@ -11,10 +12,13 @@ created it in Tokyo (`ap-northeast-1`), so no Singapore project or region move i
 needed. The project URL and publishable key in `family.html` are browser-public
 configuration; neither grants access to private family tables.
 
-Read-only dashboard inspection found no Auth users and no public application
-tables. Email Auth is enabled, public signup is currently enabled, anonymous
-sign-in is disabled and email confirmation is enabled. No dashboard setting or
-record was changed by this handoff.
+The initial read-only inspection found no Auth users or application tables.
+During the authorized 2026-10-24 Dep preparation, the reviewed M1 schema and
+`family-api` were deployed, public signup was disabled, and the owner privately
+created the confirmed parent account. The singleton family is bound to that
+confirmed account. Email Auth remains enabled, anonymous sign-in remains disabled,
+and email confirmation remains required. See the preparation report for verified
+checks and outstanding authenticated smoke tests; do not reapply the SQL blindly.
 
 ## Authorized backend setup, after gates
 
@@ -45,8 +49,15 @@ record was changed by this handoff.
    access or dispatcher execution to make an error disappear.
 7. Run real integration checks below using synthetic profiles. Benchmark PIN
    hashing on the hosted Edge runtime; keep PBKDF2-HMAC-SHA256 at 600,000 iterations.
-8. Keep `FAMILY_ENABLED = false` in production until M2–M5 and all release gates
-   are complete. A local/isolated M1 client may enable the flag only for verification.
+8. Keep `FAMILY_ENABLED = false` in production during preparation. The user's
+   approved staged path allows M1 parent login, profiles, PINs and pairing to
+   activate independently after hosted checks and a new Mason activation change,
+   Luna PASS, Quinn PASS and authorized Dep release. M1 must truthfully explain
+   that study history is unavailable. Every reviewer flag remains false/null until
+   its hosted history contract exists and passes its own gates. M2-A currently
+   supplies local fixtures only; it does not supply hosted history endpoints.
+   A loopback-only M1 client may enable its response configuration for hosted
+   verification while tracked and published flags remain false.
 
 No custom SMTP, paid service, billing upgrade, child email or public registration
 is needed. Free project pause/resume and manual backups follow Aria's runbook.
