@@ -2,7 +2,7 @@
 
 Date: 2026-10-24 (Asia/Manila). The user has authorized hosted M1 setup and
 family-access activation preparation. Hosted preparation is recorded in
-`DEP_HOSTED_M1_PREPARATION_v1.md`; public activation remains a separate gated handoff.
+`DEP_HOSTED_M1_PREPARATION_v2.md`; public activation remains a separate gated handoff.
 
 ## Existing project
 
@@ -17,8 +17,9 @@ During the authorized 2026-10-24 Dep preparation, the reviewed M1 schema and
 `family-api` were deployed, public signup was disabled, and the owner privately
 created the confirmed parent account. The singleton family is bound to that
 confirmed account. Email Auth remains enabled, anonymous sign-in remains disabled,
-and email confirmation remains required. See the preparation report for verified
-checks and outstanding authenticated smoke tests; do not reapply the SQL blindly.
+and email confirmation remains required. Hosted operational checks and synthetic
+cleanup are complete; see the v2 preparation report for evidence and limitations.
+Do not reapply the SQL blindly.
 
 ## Authorized backend setup, after gates
 
