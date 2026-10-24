@@ -1,8 +1,9 @@
 # M1 setup and verification
 
-Date: 2026-10-24 (Asia/Manila). The user has authorized hosted M1 setup and
-family-access activation preparation. Hosted preparation is recorded in
-`DEP_HOSTED_M1_PREPARATION_v2.md`; public activation remains a separate gated handoff.
+Date: 2026-10-24 (Asia/Manila). The user has authorized M1 family-access activation
+through Mason, Luna review/local commit, Quinn verification and Dep publication.
+Hosted preparation is recorded in `DEP_HOSTED_M1_PREPARATION_v2.md`; the local
+activation change still requires its own Luna and Quinn gates before publication.
 
 ## Existing project
 
@@ -50,15 +51,16 @@ Do not reapply the SQL blindly.
    access or dispatcher execution to make an error disappear.
 7. Run real integration checks below using synthetic profiles. Benchmark PIN
    hashing on the hosted Edge runtime; keep PBKDF2-HMAC-SHA256 at 600,000 iterations.
-8. Keep `FAMILY_ENABLED = false` in production during preparation. The user's
-   approved staged path allows M1 parent login, profiles, PINs and pairing to
-   activate independently after hosted checks and a new Mason activation change,
-   Luna PASS, Quinn PASS and authorized Dep release. M1 must truthfully explain
-   that study history is unavailable. Every reviewer flag remains false/null until
+8. The M1 activation change sets `FAMILY_ENABLED = true` only in `family.html`.
+   Hosted checks are complete; publication requires Luna PASS with a local commit,
+   Quinn PASS on that commit and the authorized Dep release. M1 parent login,
+   profiles, PINs and pairing activate independently of future history work. M1
+   explicitly states that study history and family statistics are unavailable.
+   Every reviewer flag remains false/null until
    its hosted history contract exists and passes its own gates. M2-A currently
    supplies local fixtures only; it does not supply hosted history endpoints.
-   A loopback-only M1 client may enable its response configuration for hosted
-   verification while tracked and published flags remain false.
+   To contain an access incident, set the family page flag false and release that
+   reviewed rollback; preserve the owner, family and schema while investigating.
 
 No custom SMTP, paid service, billing upgrade, child email or public registration
 is needed. Free project pause/resume and manual backups follow Aria's runbook.
@@ -104,12 +106,13 @@ Optional local synthetic browser fixture (use instead of `serve`, same port):
 npx --yes deno run --allow-read --allow-net=127.0.0.1:8766 tests/family/browser_fixture_server.ts
 ```
 
-- `http://127.0.0.1:8766/family.html` shows the real disabled configuration.
+- `http://127.0.0.1:8766/family.html` shows the real enabled M1 configuration and
+  contacts the hosted backend after sign-in, pairing or stored-session restoration.
 - `http://127.0.0.1:8766/__family_m1_fixture__.html` serves an enabled, visibly
   labeled synthetic fixture. No requests reach Supabase. Fixture parent email and
   password may be arbitrary test values; the child PIN fixture is `123456`.
-- The fixture transforms configuration only in its HTTP response. The real file
-  remains disabled. It serves only root HTML documents, not `.env`, `.git`, server
+- The fixture transforms configuration only in its HTTP response. It serves only
+  root HTML documents, not `.env`, `.git`, server
   sources or credentials. Never deploy or expose this development server publicly.
 - Deno's SDK import is pinned to npm `@supabase/supabase-js@2.118.0`; its lockfile
   records resolved dependencies. Browser calls use native fetch as Aria specified.

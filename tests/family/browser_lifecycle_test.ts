@@ -32,11 +32,15 @@ function node() {
   };
 }
 
-async function browser(fetcher: typeof fetch) {
+async function browser(
+  fetcher: typeof fetch,
+  configuration: "production" | "disabled" | "invalid" = "production",
+) {
   const html = await Deno.readTextFile(new URL("../../family.html", import.meta.url));
   const source = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
   assert(source, "The family page must have its production browser script");
   const nodes = new Map<string, ReturnType<typeof node>>();
+  const privateButtons = [node(), node(), node()];
   const storage = new Map<string, string>();
   const context = vm.createContext({
     crypto,
@@ -64,22 +68,30 @@ async function browser(fetcher: typeof fetch) {
       createElement: node,
       createTextNode: (value: string) => value,
       addEventListener() {},
-      querySelectorAll: () => [],
+      querySelectorAll: (selector: string) => selector === "[data-private]" ? privateButtons : [],
     },
     Option: class {
       constructor(public text: string, public value: string) {}
     },
   });
-  const instrumented = source.replace("const FAMILY_ENABLED = false", "const FAMILY_ENABLED = true")
-    .replace(
-      "init().catch",
-      `globalThis.familyTest = {
-      request, loadFamily, acceptParent, signOut, lockChild, accessEpoch,
+  const configured = configuration === "disabled"
+    ? source.replace("const FAMILY_ENABLED = true", "const FAMILY_ENABLED = false")
+    : configuration === "invalid"
+    ? source.replace(
+      /const FAMILY_SUPABASE_URL = [^;]+;/,
+      'const FAMILY_SUPABASE_URL = "http://untrusted.invalid";',
+    )
+    : source;
+  const instrumented = configured.replace(
+    "init().catch",
+    `globalThis.familyTest = {
+      init, request, loadFamily, acceptParent, signOut, lockChild, accessEpoch,
       parent: () => parent, child: () => child,
     }; Promise.resolve().catch`,
-    );
+  );
   vm.runInContext(instrumented, context);
   const api = context.familyTest as {
+    init(): Promise<void>;
     request(path: string, options?: Record<string, unknown>): Promise<Record<string, unknown>>;
     loadFamily(): Promise<void>;
     acceptParent(value: Record<string, unknown>): void;
@@ -90,7 +102,46 @@ async function browser(fetcher: typeof fetch) {
     child(): unknown;
   };
   assert(api, "Instrument the actual page functions without changing production exports");
-  return { api, nodes, storage };
+  return { api, nodes, storage, privateButtons };
+}
+
+Deno.test("M1 production initialization enables access without sending anonymous private requests", async () => {
+  let requests = 0;
+  const page = await browser((() => {
+    requests++;
+    return Promise.reject(new Error("No network expected before sign-in or pairing"));
+  }) as typeof fetch);
+  await page.api.init();
+  assert(page.nodes.get("setupNotice")?.hidden === true, "Ready configuration hides unavailable notice");
+  assert(
+    page.privateButtons.every((button) => !button.disabled),
+    "Parent and child entry controls are enabled",
+  );
+  assert(requests === 0, "Anonymous initialization must not query private endpoints");
+});
+
+for (const configuration of ["disabled", "invalid"] as const) {
+  Deno.test(`M1 ${configuration} configuration keeps access closed`, async () => {
+    let requests = 0;
+    const page = await browser((() => {
+      requests++;
+      return Promise.reject(new Error("No network expected"));
+    }) as typeof fetch, configuration);
+    await page.api.init();
+    assert(
+      page.nodes.get("setupNotice")?.hidden === false,
+      "Unavailable configuration shows fallback notice",
+    );
+    assert(
+      page.privateButtons.every((button) => button.disabled),
+      "Unavailable configuration disables private entry",
+    );
+    await page.api.request("/parent/family").then(
+      () => { throw new Error("Unavailable configuration must reject private requests"); },
+      () => {},
+    );
+    assert(requests === 0, "Unavailable configuration cannot contact the backend");
+  });
 }
 
 const parentSession = {
