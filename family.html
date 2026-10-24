@@ -605,12 +605,18 @@
         }
         function database() {
           return new Promise((resolve, reject) => {
-            const request = indexedDB.open("grade6-family-v1", 1);
+            const request = indexedDB.open("grade6-family-v1", 2);
             request.onupgradeneeded = () => {
               const db = request.result;
               if (!db.objectStoreNames.contains("credentials")) db.createObjectStore("credentials");
+              for (const store of ["records", "outbox", "metadata"])
+                if (!db.objectStoreNames.contains(store)) db.createObjectStore(store);
             };
-            request.onsuccess = () => resolve(request.result);
+            request.onblocked = () => reject(new Error("Close older family tabs and reload."));
+            request.onsuccess = () => {
+              request.result.onversionchange = () => request.result.close();
+              resolve(request.result);
+            };
             request.onerror = () =>
               reject(new Error("Browser storage is unavailable. Device approval was not saved."));
           });
@@ -640,6 +646,21 @@
             };
           });
         }
+        async function accessEpoch(advance = false) {
+          const db = await database();
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction("metadata", advance ? "readwrite" : "readonly");
+            const store = tx.objectStore("metadata");
+            const request = store.get("access_epoch");
+            let epoch = 0;
+            request.onsuccess = () => {
+              epoch = (request.result || 0) + (advance ? 1 : 0);
+              if (advance) store.put(epoch, "access_epoch");
+            };
+            tx.oncomplete = () => { db.close(); resolve(epoch); };
+            tx.onabort = tx.onerror = () => { db.close(); reject(new Error("Access check failed. Reload and unlock again.")); };
+          });
+        }
         function showPanel(which) {
           byId("entry").hidden = which !== "entry";
           byId("parentPanel").hidden = which !== "parent";
@@ -648,12 +669,13 @@
         function lockChild(broadcast = true) {
           accessGeneration++;
           pendingMutations.clear();
-          const hadChild = !!child;
           child = null;
           storeSession(STORAGE.child, null);
           byId("childPin").value = "";
           byId("childGreeting").textContent = "";
-          if (broadcast && hadChild) channel?.postMessage({ type: "lock" });
+          if (broadcast)
+            accessEpoch(true).then(() => channel?.postMessage({ type: "lock" }))
+              .catch(() => status("Access changed. Reload and unlock again.", true));
           showPanel(parent ? "parent" : "entry");
         }
         function signOut(broadcast = true) {
@@ -1055,6 +1077,10 @@
             )
               throw new Error("Could not validate the private session.");
             signOut(false);
+            const unlockGeneration = accessGeneration;
+            const epoch = await accessEpoch(true);
+            if (unlockGeneration !== accessGeneration)
+              throw new Error("Your access changed. Unlock your profile again.");
             channel?.postMessage({ type: "lock" });
             child = {
               token: value.child_session_token,
@@ -1062,6 +1088,7 @@
               child: value.child,
               cache_key: value.cache_key,
               child_session_id: value.child_session_id,
+              access_epoch: epoch,
             };
             storeSession(STORAGE.child, child);
             byId("childGreeting").textContent = "Hello, " + child.child.display_name + ".";

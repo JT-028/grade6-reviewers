@@ -2,7 +2,8 @@
   "version": "5",
   "specifiers": {
     "npm:@electric-sql/pglite@0.5.11": "0.5.11",
-    "npm:@supabase/supabase-js@2.118.0": "2.118.0"
+    "npm:@supabase/supabase-js@2.118.0": "2.118.0",
+    "npm:fake-indexeddb@6.2.4": "6.2.4"
   },
   "npm": {
     "@electric-sql/pglite@0.5.11": {
@@ -52,6 +53,9 @@
         "@supabase/realtime-js",
         "@supabase/storage-js"
       ]
+    },
+    "fake-indexeddb@6.2.4": {
+      "integrity": "sha512-INKeIKEtSViN4yVtEWEUqbsqmaIy7Ls+MfU0yxQVXg67pOJ/sH1ZxcVrP8XrKULUFohcPD9gnmym+qBfEybACw=="
     },
     "iceberg-js@0.8.1": {
       "integrity": "sha512-1dhVQZXhcHje7798IVM+xoo/1ZdVfzOMIc8/rgVSijRK38EDqOJoGula9N/8ZI5RD8QTxNQtK/Gozpr+qUqRRA=="

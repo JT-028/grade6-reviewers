@@ -1,3 +1,5 @@
+import { m2BrowserFixture } from "./m2_browser_fixture.ts";
+const m2Fixture = await m2BrowserFixture();
 const root = new URL("../../", import.meta.url);
 const children: { id: string; display_name: string; archived: boolean }[] = [];
 const devices: {
@@ -21,6 +23,8 @@ const response = (body: Record<string, unknown>, status = 200) =>
     request_id: crypto.randomUUID(),
   }, { status, headers: { "Cache-Control": "no-store" } });
 Deno.serve({ hostname: "127.0.0.1", port: 8766 }, async (request) => {
+  const m2Response = await m2Fixture(request);
+  if (m2Response) return m2Response;
   const path = new URL(request.url).pathname;
   if (path === "/auth/v1/token") {
     return Response.json({

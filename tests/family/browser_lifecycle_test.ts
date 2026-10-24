@@ -1,4 +1,5 @@
 import vm from "node:vm";
+import { IDBFactory } from "npm:fake-indexeddb@6.2.4";
 
 function assert(value: unknown, message: string): asserts value {
   if (!value) throw new Error(message);
@@ -39,6 +40,7 @@ async function browser(fetcher: typeof fetch) {
   const storage = new Map<string, string>();
   const context = vm.createContext({
     crypto,
+    indexedDB: new IDBFactory(),
     TextEncoder,
     Date,
     URL,
@@ -72,7 +74,7 @@ async function browser(fetcher: typeof fetch) {
     .replace(
       "init().catch",
       `globalThis.familyTest = {
-      request, loadFamily, acceptParent, signOut, lockChild,
+      request, loadFamily, acceptParent, signOut, lockChild, accessEpoch,
       parent: () => parent, child: () => child,
     }; Promise.resolve().catch`,
     );
@@ -82,6 +84,7 @@ async function browser(fetcher: typeof fetch) {
     loadFamily(): Promise<void>;
     acceptParent(value: Record<string, unknown>): void;
     signOut(broadcast?: boolean): void;
+    accessEpoch(advance?: boolean): Promise<number>;
     lockChild(broadcast?: boolean): void;
     parent(): unknown;
     child(): unknown;
@@ -187,4 +190,12 @@ Deno.test("a delayed unlock cannot return private credentials after a profile lo
     credentials === undefined && page.api.child() === null,
     "An old unlock response must not reach the credential-persisting continuation",
   );
+});
+
+Deno.test("parent sign-out advances durable access epoch without a local child session", async () => {
+  const page = await browser((() => Promise.reject(new Error("No network expected"))) as typeof fetch);
+  page.api.acceptParent(parentSession);
+  assert(await page.api.accessEpoch() === 0, "Fresh local scope starts at epoch zero");
+  page.api.signOut();
+  assert(await page.api.accessEpoch() === 1, "Parent lock invalidates reviewer clones even when its broadcast is missed");
 });

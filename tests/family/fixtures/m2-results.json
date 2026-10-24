@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic_local_fixture",
+  "inventory": [
+    {
+      "module_key": "History6_Review_Module_v1.0.0",
+      "pop_pool": 258,
+      "exam_pool": 140,
+      "pop_total": 20,
+      "exam_total": 70,
+      "pop_digest": "af21cfdbd723f8a561675ace1f310d0a477c50b5129240f38d1dbb8b25b4a05d",
+      "exam_digest": "c8333093f728f26d9ffdbb5ca1bc3a76488cedb2a3b5289b6e56bbb2244a2b60"
+    },
+    {
+      "module_key": "History6_Q2_Review_Module_v1.0.0",
+      "pop_pool": 257,
+      "exam_pool": 139,
+      "pop_total": 20,
+      "exam_total": 70,
+      "pop_digest": "cfbce3a685780ac7c326ecdaffefa2f15ea66d33de157767b04424589f794275",
+      "exam_digest": "014ad99399a81ccd5ecea280d74482172b11ba31355b7866aeb2b94f3d2feabc"
+    },
+    {
+      "module_key": "Math6_Review_Module_v1.0.0",
+      "pop_pool": 248,
+      "exam_pool": 140,
+      "pop_total": 20,
+      "exam_total": 70,
+      "pop_digest": "99c512ed33868402ab051703f372008e8a9d915ee967ee29ba1b5e4b10b6c3de",
+      "exam_digest": "fd83fe906f693e455a2f3056abfaf078688a62f21fcd70b5237c3e91788321fe"
+    },
+    {
+      "module_key": "Math6_Q2_Review_Module_v1.0.0",
+      "pop_pool": 248,
+      "exam_pool": 140,
+      "pop_total": 20,
+      "exam_total": 70,
+      "pop_digest": "0814400a8a95fbfa31ffd28c2b16396767213c2016c8c2e9f45da96940a987d3",
+      "exam_digest": "b6cbc35d043e8cac65afaffa8808bfc7e7de7fb683541f999cb4ccd1cbb13cf4"
+    },
+    {
+      "module_key": "Geography6_Review_Module_v1.0.0",
+      "pop_pool": 260,
+      "exam_pool": 140,
+      "pop_total": 20,
+      "exam_total": 70,
+      "pop_digest": "6aeae81de08de71734ccac3df19c9da4a585e4dc8ea8dd8a6b5c22fc478f294c",
+      "exam_digest": "55d417dbcd222fa4af4dda3b46cf32adf3ba0352d298f32084becd87f8daf632"
+    },
+    {
+      "module_key": "Geography6_Q2_Review_Module_v1.0.0",
+      "pop_pool": 258,
+      "exam_pool": 140,
+      "pop_total": 20,
+      "exam_total": 70,
+      "pop_digest": "36557026c08f5e9e39e99f695ac7174c7b28aa533f823a850f24ee59cc37464c",
+      "exam_digest": "4f91b8787430346051edfc87da7feb40aef6531a22247fd5f0972cb75e8947ae"
+    },
+    {
+      "module_key": "Language6_Review_Module_v1.0.0",
+      "pop_pool": 259,
+      "exam_pool": 140,
+      "pop_total": 20,
+      "exam_total": 70,
+      "pop_digest": "fe406106bade38860b4aeb4341486bb6fb96999367f57ce34077d86b6bc8b804",
+      "exam_digest": "409b905e2dca2a5d2546f1fc712e05c696b01f613488e94d65cf1ac5ead4d1b7"
+    },
+    {
+      "module_key": "Language6_Q2_Review_Module_v1.0.0",
+      "pop_pool": 258,
+      "exam_pool": 140,
+      "pop_total": 20,
+      "exam_total": 70,
+      "pop_digest": "ea5e8fed4e25408aed3f0a3a730a58da3c3d206e64dd2a288c5c1a480a4f288b",
+      "exam_digest": "9a7383abc46d991309724702a1773f8fec32e0c0d2405b5440ed2fe9d1603a12"
+    }
+  ],
+  "cases": [
+    {
+      "kind": "pop",
+      "total": 10,
+      "first_correct": 6,
+      "answered_count": 10,
+      "correction": 10,
+      "percentage": 60,
+      "letter": "DNME"
+    },
+    {
+      "kind": "pop",
+      "total": 10,
+      "first_correct": 8,
+      "answered_count": 10,
+      "percentage": 80,
+      "letter": "S"
+    },
+    {
+      "kind": "exam",
+      "total": 70,
+      "first_correct": 0,
+      "answered_count": 0,
+      "percentage": 0,
+      "letter": "DNME"
+    },
+    {
+      "kind": "exam",
+      "total": 70,
+      "first_correct": 53,
+      "answered_count": 70,
+      "percentage": 75.71,
+      "letter": "FS"
+    }
+  ]
+}
