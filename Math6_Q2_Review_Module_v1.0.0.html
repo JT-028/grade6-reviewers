@@ -5101,6 +5101,7 @@ async function academicDigest(projection) {
 }
 
   let owner = null, generation = 0;
+  class ReportAccessChanged extends Error {}
   const node = (tag, text) => { const element = document.createElement(tag); if (text !== undefined) element.textContent = text; return element; };
   function clear(message = 'Unlock online to view your private report.') {
     generation++;
@@ -5134,7 +5135,10 @@ async function academicDigest(projection) {
   async function cache(state, projection, sequence) {
     if (state.role !== 'child' || !current(state)) return;
     const keyBytes = new Uint8Array(state.session.cache_key.match(/../g).map(pair => parseInt(pair,16)));
-    try { state.key = await crypto.subtle.importKey('raw',keyBytes,'AES-GCM',false,['encrypt','decrypt']); } finally { keyBytes.fill(0); }
+    let importedKey;
+    try { importedKey = await crypto.subtle.importKey('raw',keyBytes,'AES-GCM',false,['encrypt','decrypt']); } finally { keyBytes.fill(0); }
+    if (!current(state) || state.sequence !== sequence) return;
+    state.key = importedKey;
     const key = [state.child.id,'quarter-'+state.quarter], iv = crypto.getRandomValues(new Uint8Array(12));
     const additionalData = new TextEncoder().encode(canonicalJson(['reports',key,1]));
     const ciphertext = await crypto.subtle.encrypt({name:'AES-GCM',iv,additionalData},state.key,new TextEncoder().encode(canonicalJson({projection,catalog:state.catalog,confirmed_at:projection.last_confirmed_at})));
@@ -5142,9 +5146,10 @@ async function academicDigest(projection) {
     const database = await db();
     await new Promise((resolve,reject) => {
       const tx = database.transaction(['metadata','reports'],'readwrite'), access = tx.objectStore('metadata').get('access_epoch');
-      access.onsuccess = () => { if (!current(state) || state.sequence !== sequence || (access.result || 0) !== state.epoch) { tx.abort(); return; } tx.objectStore('reports').put({schema_version:1,iv,ciphertext},key); };
+      let accessChanged = false;
+      access.onsuccess = () => { accessChanged = (access.result || 0) !== state.epoch; if (!current(state) || state.sequence !== sequence || accessChanged) { tx.abort(); return; } tx.objectStore('reports').put({schema_version:1,iv,ciphertext},key); };
       tx.oncomplete = () => { database.close(); resolve(); };
-      tx.onerror = tx.onabort = () => { database.close(); reject(new Error('Report not saved on this device.')); };
+      tx.onerror = tx.onabort = () => { database.close(); reject(accessChanged ? new ReportAccessChanged('Access changed.') : new Error('Report not saved on this device.')); };
     });
   }
   async function pendingResults(state) {
@@ -5152,7 +5157,7 @@ async function academicDigest(projection) {
     const database = await db();
     const encrypted = await new Promise((resolve,reject)=>{
       const tx = database.transaction(['records','metadata'],'readonly'), store = tx.objectStore('records'), keys = store.getAllKeys(), values = store.getAll(), access = tx.objectStore('metadata').get('access_epoch');
-      tx.oncomplete = () => { database.close(); if((access.result || 0)!==state.epoch || !current(state))reject(new Error('Access changed'));else resolve(keys.result.map((key,index)=>({key,value:values.result[index]})).filter(row=>Array.isArray(row.key)&&row.key[0]===state.child.id)); };
+      tx.oncomplete = () => { database.close(); if((access.result || 0)!==state.epoch || !current(state))reject(new ReportAccessChanged('Access changed.'));else resolve(keys.result.map((key,index)=>({key,value:values.result[index]})).filter(row=>Array.isArray(row.key)&&row.key[0]===state.child.id)); };
       tx.onerror = tx.onabort = () => {database.close();reject(new Error('Private storage unavailable'));};
     });
     const bytes = new Uint8Array(state.session.cache_key.match(/../g).map(pair=>parseInt(pair,16)));
@@ -5234,7 +5239,7 @@ async function academicDigest(projection) {
           if (!current(state) || sequence !== requestSequence) return;
           const historyEpoch=await epoch();
           if(!current(state) || sequence !== requestSequence)return;
-          if (historyEpoch !== state.epoch) { clear(); return; }
+          if (historyEpoch !== state.epoch) { const lock=state.onLock; clear(); lock?.(); return; }
           if (!Array.isArray(page.items) || page.items.some(row=>{reportResult(row,state.catalog);return row.child_id!==state.child.id || row.assessment.quarter!==state.quarter || row.assessment.subject!==subject.subject || row.assessment.kind!==kind;}) || (cursor && revision !== page.revision)) throw new Error('Invalid history scope.');
           if (!cursor) detail.replaceChildren(node('p','History snapshot revision '+page.revision+' · '+date(page.as_of)));
           revision = page.revision;
@@ -5259,23 +5264,23 @@ async function academicDigest(projection) {
       if (!access.capabilities?.includes('assessment_history_v1') || !access.capabilities?.includes('progress_summary_v1') || access.contract_version !== 1 || access.child.id !== state.child.id || access.catalog_digest !== state.catalogDigest) throw new Error('Family history is not available.');
       const bootstrapEpoch=await epoch();
       if(!current(state) || sequence !== state.sequence)return;
-      if (bootstrapEpoch !== state.epoch) { clear(); return; }
+      if (bootstrapEpoch !== state.epoch) throw new ReportAccessChanged('Access changed.');
       const progress = await state.adapter.progress(state.session,state.role,state.child,state.quarter,state.controller.signal);
       if (!current(state) || sequence !== state.sequence) return;
       if (progress.child.id !== state.child.id || progress.quarter !== state.quarter || progress.catalog_digest !== state.catalogDigest || (previous && BigInt(progress.revision) < BigInt(previous.revision))) throw new Error('Invalid report scope.');
       let projection = await overlay(state,progress);
       const responseEpoch=await epoch();
       if(!current(state) || sequence !== state.sequence)return;
-      if (responseEpoch !== state.epoch) { clear(); return; }
+      if (responseEpoch !== state.epoch) throw new ReportAccessChanged('Access changed.');
       state.projection = projection;
       state.notice = '';
-      try { await cache(state,projection,sequence); } catch { if (current(state)) state.notice = 'Report loaded; encrypted report cache was not saved. Retry online.'; }
+      try { await cache(state,projection,sequence); } catch (error) { if (error instanceof ReportAccessChanged) throw error; if (current(state)) state.notice = 'Report loaded; encrypted report cache was not saved. Retry online.'; }
       if (!current(state) || sequence !== state.sequence) return;
       draw(state,projection);
       if (state.onAuthorized) state.onAuthorized();
     } catch (error) {
       if (!current(state) || sequence !== state.sequence) return;
-      if (error.status === 401 || error.status === 403) { const lock = state.onLock; clear(); lock?.(); return; }
+      if (error instanceof ReportAccessChanged || error.status === 401 || error.status === 403) { const lock = state.onLock; clear(); lock?.(); return; }
       if (previous && navigator.onLine === false) { state.projection = {...previous,stale:true}; state.notice = 'Previously authorized report; offline remote revocation cannot be checked.'; draw(state,state.projection); }
       else { state.projection = null; state.key = null; state.host.replaceChildren(node('p','Family history is not available. Connect online and retry.'), retryButton(state)); }
     }

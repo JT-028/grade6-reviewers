@@ -104,3 +104,81 @@ Deno.test('Luna history refresh starts a new revision and rejects malformed rows
   assert(card.textContent.includes('History unavailable')&&!card.textContent.includes('99.00%'),'malformed history never renders');
   h.report.clear();
 });
+Deno.test('Quinn epoch advance during report encryption clears private projection before redraw',async()=>{
+  const h=await harness('Math6_Q2_Review_Module_v1.0.0');
+  let encryptStarted!:()=>void,releaseEncrypt!:()=>void;
+  const started=new Promise<void>(resolve=>{encryptStarted=resolve;});
+  const gate=new Promise<void>(resolve=>{releaseEncrypt=resolve;});
+  const subtle=new Proxy(crypto.subtle,{get(target,property){
+    if(property==='encrypt')return async(...args:Parameters<SubtleCrypto['encrypt']>)=>{encryptStarted();await gate;return crypto.subtle.encrypt(...args);};
+    const method=Reflect.get(target,property);return typeof method==='function'?method.bind(target):method;
+  }});
+  h.context.crypto={subtle,getRandomValues:crypto.getRandomValues.bind(crypto)};
+  const loading=h.report.show(h.host,h.options);
+  await started;
+  const database=await new Promise<IDBDatabase>((resolve,reject)=>{const request=h.indexedDB.open('grade6-family-v1',3);request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});
+  await new Promise<void>((resolve,reject)=>{const tx=database.transaction('metadata','readwrite');tx.objectStore('metadata').put(1,'access_epoch');tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});
+  releaseEncrypt();await loading;
+  const projection=h.report.projection;
+  const visible=h.host.textContent.includes('80.00%');
+  const saved=await new Promise<unknown>(resolve=>{const tx=database.transaction('reports'),request=tx.objectStore('reports').get([child.id,'quarter-2']);tx.oncomplete=()=>resolve(request.result);});
+  database.close();h.report.clear();
+  assert(saved===undefined,'epoch mismatch prevents durable report write');
+  assert(projection===null&&!visible,'Expected null private projection and no 80.00% after epoch advanced; actual projection='+Boolean(projection)+' visible80='+visible);
+});
+
+Deno.test('Mason all-nine cache epoch loss locks offline refresh and preserves ciphertext',async()=>{
+  const modules=[...new Set((await inventory()).map(row=>row.module_key)),'family'];
+  for(const module of modules){
+    const h=await harness(module);let locked=0,authorized=0;
+    await h.report.show(h.host,{...h.options,onLock:()=>{locked++;},onAuthorized:()=>{authorized++;}});
+    const database=await new Promise<IDBDatabase>((resolve,reject)=>{const request=h.indexedDB.open('grade6-family-v1',3);request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});
+    const saved=await new Promise<any>(resolve=>{const tx=database.transaction('reports'),request=tx.objectStore('reports').get([child.id,'quarter-2']);tx.oncomplete=()=>resolve(request.result);});
+    const sentinel={schema_version:1,iv:new Uint8Array([1,2,3]),ciphertext:new Uint8Array([9,8,7]).buffer};
+    await new Promise<void>(resolve=>{const tx=database.transaction(['records','outbox'],'readwrite');tx.objectStore('records').put(sentinel,'retained-record');tx.objectStore('outbox').put(sentinel,'retained-outbox');tx.oncomplete=()=>resolve();});
+    let release!:()=>void,started!:()=>void;
+    const gate=new Promise<void>(resolve=>{release=resolve;}),waiting=new Promise<void>(resolve=>{started=resolve;});
+    h.context.crypto={getRandomValues:crypto.getRandomValues.bind(crypto),subtle:new Proxy(crypto.subtle,{get(target,property){if(property==='encrypt')return async(...args:Parameters<SubtleCrypto['encrypt']>)=>{started();await gate;return crypto.subtle.encrypt(...args);};const method=Reflect.get(target,property);return typeof method==='function'?method.bind(target):method;}})};
+    const refresh=click(h.host.children.find((element:Element)=>element.tagName==='button'&&element.textContent==='Refresh report'));
+    await waiting;
+    await new Promise<void>(resolve=>{const tx=database.transaction('metadata','readwrite');tx.objectStore('metadata').put(1,'access_epoch');tx.oncomplete=()=>resolve();});
+    h.context.navigator.onLine=false;release();await refresh;h.report.offline();
+    assert(locked===1&&authorized===1&&h.report.projection===null&&!h.host.textContent.includes('80.00%'),'epoch loss locks before stale fallback/authorized callback '+module);
+    const retained=await new Promise<any>(resolve=>{const tx=database.transaction(['reports','records','outbox']),report=tx.objectStore('reports').get([child.id,'quarter-2']),record=tx.objectStore('records').get('retained-record'),outbox=tx.objectStore('outbox').get('retained-outbox');tx.oncomplete=()=>resolve({report:report.result,record:record.result,outbox:outbox.result});});
+    assert(canonicalJson(retained.report.iv)===canonicalJson(saved.iv)&&canonicalJson(Array.from(new Uint8Array(retained.report.ciphertext)))===canonicalJson(Array.from(new Uint8Array(saved.ciphertext))),'failed save preserves earlier encrypted report '+module);
+    assert(new Uint8Array(retained.record.ciphertext).join() === '9,8,7'&&new Uint8Array(retained.outbox.ciphertext).join() === '9,8,7','immutable work and outbox retained '+module);
+    database.close();h.report.clear();
+  }
+});
+
+Deno.test('Mason ordinary cache crypto and transaction failures retain valid same-scope report',async()=>{
+  for(const failure of ['crypto','transaction']){
+    const h=await harness('Math6_Q2_Review_Module_v1.0.0');let locked=false;
+    if(failure==='crypto')h.context.crypto={getRandomValues:crypto.getRandomValues.bind(crypto),subtle:new Proxy(crypto.subtle,{get(target,property){if(property==='encrypt')return ()=>Promise.reject(new Error('encryption unavailable'));const method=Reflect.get(target,property);return typeof method==='function'?method.bind(target):method;}})};
+    else {
+      const original=h.indexedDB.open.bind(h.indexedDB);
+      h.indexedDB.open=((...args:Parameters<IDBFactory['open']>)=>{const request=original(...args);request.addEventListener('success',()=>{const database=request.result,transaction=database.transaction.bind(database);database.transaction=((...txArgs:Parameters<IDBDatabase['transaction']>)=>{const tx=transaction(...txArgs);if(txArgs[1]==='readwrite'&&Array.from(tx.objectStoreNames).includes('reports'))tx.objectStore('reports').put=(()=>{tx.abort();}) as unknown as IDBObjectStore['put'];return tx;}) as IDBDatabase['transaction'];});return request;}) as IDBFactory['open'];
+    }
+    await h.report.show(h.host,{...h.options,onLock:()=>{locked=true;}});
+    assert(!locked&&h.report.projection!==null&&h.host.textContent.includes('80.00%')&&h.host.textContent.includes('cache was not saved'),'ordinary cache failure keeps valid projection and honest notice '+failure);
+    h.context.navigator.onLine=false;h.report.offline();assert(h.report.projection.stale&&h.host.textContent.includes('Stale'),'valid same-scope offline report remains available '+failure);
+    h.report.clear();
+  }
+});
+
+Deno.test('Mason superseded key import or encryption cannot lock or redraw the new report owner',async()=>{
+  for(const phase of ['importKey','encrypt']){
+  const h=await harness('Math6_Q2_Review_Module_v1.0.0');let release!:()=>void,started!:()=>void,locked=false,oldEncryptions=0,intercepted=false,oldKey:CryptoKey|undefined;
+  const gate=new Promise<void>(resolve=>{release=resolve;}),waiting=new Promise<void>(resolve=>{started=resolve;});
+  h.context.crypto={getRandomValues:crypto.getRandomValues.bind(crypto),subtle:new Proxy(crypto.subtle,{get(target,property){const method=Reflect.get(target,property);
+    if(property==='encrypt')return async(...args:Parameters<SubtleCrypto['encrypt']>)=>{if(phase==='encrypt'&&!intercepted){intercepted=true;oldEncryptions++;started();await gate;}else if(phase==='importKey'&&args[1]===oldKey)oldEncryptions++;return method.apply(target,args);};
+    if(property==='importKey'&&phase==='importKey')return async(...args:Parameters<SubtleCrypto['importKey']>)=>{if(args[4].includes('encrypt')&&!intercepted){intercepted=true;started();await gate;oldKey=await method.apply(target,args);return oldKey;}return method.apply(target,args);};
+    return typeof method==='function'?method.bind(target):method;}})};
+  const old=h.report.show(h.host,{...h.options,onLock:()=>{locked=true;}});await waiting;
+  await h.report.show(h.host,{...h.options,quarter:1});
+  release();await old;
+  assert(!locked&&h.report.projection.quarter===1&&h.host.textContent.includes('Quarter 1')&&!h.host.textContent.includes('80.00%'),'old '+phase+' cannot resurrect/clear new quarter');
+  assert(oldEncryptions===(phase==='encrypt'?1:0),'superseded cache key import cannot proceed to encryption');
+  h.report.clear();
+  }
+});
