@@ -1,5 +1,5 @@
 // FAMILY_M2_START
-const FAMILY_ENABLED = false;
+const FAMILY_ENABLED = true;
 const FAMILY_LOCAL_ADAPTER = null; // Dedicated local fixture server injects this; no public toggle.
 const FAMILY_CATALOG = /* GENERATED */ [];
 const FAMILY_SESSION_KEY = 'grade6-family-child-v1';
@@ -204,11 +204,7 @@ let familyReportQuarter = null;
 function familyRenderPrivateReport(wrap) {
   if (!FAMILY_HISTORY_ENABLED || !FAMILY_REPORT_ENABLED) return false;
   const session = familySession();
-  if (!session) {
-    wrap.replaceChildren(document.createTextNode('Unlock online to view your private report.'));
-    const link = document.createElement('a'); link.href = 'family.html#q'+(FAMILY_CATALOG[0]?.quarter || 2); link.textContent = 'Open family unlock'; wrap.appendChild(link);
-    return true;
-  }
+  if (!session) { familyClear(); return false; }
   const adapter = FAMILY_LOCAL_ADAPTER || FAMILY_PRODUCTION_ADAPTER;
   familyReport.show(wrap,{role:'child',session,child:session.child,quarter:familyReportQuarter || FAMILY_CATALOG[0].quarter,origin:FAMILY_CATALOG[0].module_key,catalog:adapter.catalog,catalogDigest:adapter.catalogDigest,adapter,isCurrent:()=>familySession()?.token === session.token,onQuarter:quarter=>{familyReportQuarter=quarter;},onLock:familyInvalidate,onAuthorized:()=>{
     document.getElementById('welcomeOverlay')?.classList.add('hidden');

@@ -1,5 +1,7 @@
 # M2 production bridge setup v1
 
+Activation candidate update, 2026-10-25: the reviewed backend is deployed (DEP_M2_BACKEND_REPORT_v1). The current working tree intentionally enables family/reviewer history and reports, leaves JPEG false/adapters null, and repairs additive cold-storage transport initialization. See MASON_M2_ACTIVATION_REPORT_v1 for current checks and rollout/rollback instructions. The closed-gate descriptions below record the earlier bridge build; they are not the activation candidate's current flags. Luna commit, Quinn PASS and Dep publication remain required.
+
 2026-10-25 · Mason build packet · local implementation only. Dep must use a later Luna-committed SHA with Quinn PASS. This document authorizes no hosted operation. JPEG is a separate slice.
 
 ## Exact artifacts and closed client gates

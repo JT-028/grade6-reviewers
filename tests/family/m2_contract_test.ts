@@ -155,9 +155,9 @@ Deno.test("M2-A 64 frozen catalogs match actual eight source inventories and inl
       "Inline catalog must match reviewed inventory",
     );
     assert(
-      html.includes("const FAMILY_ENABLED = false;") &&
+      html.includes("const FAMILY_ENABLED = true;") &&
         html.includes("const FAMILY_LOCAL_ADAPTER = null;"),
-      "Public capture disabled",
+      "Family capture enabled without fixture bypass",
     );
   }
 });

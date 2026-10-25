@@ -1,6 +1,6 @@
 // FAMILY_REPORT_START
-const FAMILY_HISTORY_ENABLED = false;
-const FAMILY_REPORT_ENABLED = false;
+const FAMILY_HISTORY_ENABLED = true;
+const FAMILY_REPORT_ENABLED = true;
 const FAMILY_JPEG_ENABLED = false;
 const familyReport = (() => {
   const canonicalJson = value => Array.isArray(value) ? '[' + value.map(canonicalJson).join(',') + ']' : value && typeof value === 'object' ? '{' + Object.keys(value).sort().map(key => JSON.stringify(key) + ':' + canonicalJson(value[key])).join(',') + '}' : JSON.stringify(value);
@@ -163,7 +163,7 @@ const familyReport = (() => {
       });
       card.append(history,detail); host.append(card);
     }
-    const jpeg = node('button','Prepare JPEG report card'); jpeg.disabled = true; host.append(jpeg,node('p','JPEG preparation is not available in this local statistics slice.'));
+    const jpeg = node('button','Prepare JPEG report card'); jpeg.disabled = true; host.append(jpeg,node('p','JPEG sharing is not available yet.'));
     const status = node('p',state.notice || 'Report loaded.'); status.setAttribute('role','status'); host.append(status);
   }
   async function load(state, refresh = false) {

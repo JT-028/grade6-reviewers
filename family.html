@@ -346,8 +346,8 @@
           Children can pair a device, unlock their profile and lock it when finished.
         </p>
         <p>
-          Study history and family statistics are not available yet. Study guide results and study
-          time are not saved to family profiles; existing progress stays in this browser.
+          Unlock online to check private quiz and exam history and quarter reports. Guest progress
+          stays in this browser. Study time and JPEG sharing are not available yet.
         </p>
       </div>
       <div id="status" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -529,10 +529,10 @@
         <h2 id="childGreeting"></h2>
         <p>Your profile is unlocked on this device.</p>
         <div class="notice">
-          <strong>Study history and family statistics are not available yet.</strong>
+          <strong>Private quiz and exam results</strong>
           <p>
-            The study guides currently save their progress in this browser. They do not yet record
-            results or study time to this family profile.
+            Results from supported quizzes and exams can sync after online access is verified.
+            Check the report below for availability and sync status. Study time is not recorded.
           </p>
         </div>
         <div class="actions">
@@ -612,7 +612,14 @@ const FAMILY_PRODUCTION_ADAPTER = (() => {
   async function flush(session,guard) {
     if(flushing || document.hidden || navigator.onLine===false || !guard.current())return;
     flushing=true;
-    const database=()=>new Promise((resolve,reject)=>{const open=indexedDB.open('grade6-family-v1',3);open.onerror=open.onblocked=()=>reject(new Error('Private storage unavailable.'));open.onsuccess=()=>{open.result.onversionchange=()=>open.result.close();resolve(open.result);};});
+    const database=()=>new Promise((resolve,reject)=>{
+      const open=indexedDB.open('grade6-family-v1',3);
+      let blocked=false;
+      open.onupgradeneeded=()=>{for(const store of ['credentials','records','outbox','metadata','reports'])if(!open.result.objectStoreNames.contains(store))open.result.createObjectStore(store);};
+      open.onerror=()=>reject(new Error('Private storage unavailable.'));
+      open.onblocked=()=>{blocked=true;reject(new Error('Close older family tabs and reload.'));};
+      open.onsuccess=()=>{if(blocked){open.result.close();return;}open.result.onversionchange=()=>open.result.close();resolve(open.result);};
+    });
     const epoch=session.access_epoch;
     try {
       await bootstrap(session,'child',session.child);
@@ -658,8 +665,8 @@ const FAMILY_PRODUCTION_ADAPTER = (() => {
 })();
 // FAMILY_TRANSPORT_END
 // FAMILY_REPORT_START
-const FAMILY_HISTORY_ENABLED = false;
-const FAMILY_REPORT_ENABLED = false;
+const FAMILY_HISTORY_ENABLED = true;
+const FAMILY_REPORT_ENABLED = true;
 const FAMILY_JPEG_ENABLED = false;
 const familyReport = (() => {
   const canonicalJson = value => Array.isArray(value) ? '[' + value.map(canonicalJson).join(',') + ']' : value && typeof value === 'object' ? '{' + Object.keys(value).sort().map(key => JSON.stringify(key) + ':' + canonicalJson(value[key])).join(',') + '}' : JSON.stringify(value);
@@ -954,7 +961,7 @@ async function academicDigest(projection) {
       });
       card.append(history,detail); host.append(card);
     }
-    const jpeg = node('button','Prepare JPEG report card'); jpeg.disabled = true; host.append(jpeg,node('p','JPEG preparation is not available in this local statistics slice.'));
+    const jpeg = node('button','Prepare JPEG report card'); jpeg.disabled = true; host.append(jpeg,node('p','JPEG sharing is not available yet.'));
     const status = node('p',state.notice || 'Report loaded.'); status.setAttribute('role','status'); host.append(status);
   }
   async function load(state, refresh = false) {

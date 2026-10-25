@@ -15,6 +15,7 @@ function element() {
     children: [] as any[],
     events: new Map<string, () => void>(),
     classList: { add() {}, remove() {}, toggle() {} },
+    querySelectorAll: () => [],
     setAttribute() {},
     remove() {},
     addEventListener(name: string, fn: () => void) {
@@ -134,9 +135,9 @@ async function harness(module_key: string, enabled = true, fixture?: { html: str
     source.indexOf("// FAMILY_M2_START"),
     source.indexOf("// FAMILY_M2_END"),
   );
+  helpers = helpers.replace(/const FAMILY_ENABLED = (true|false);/, `const FAMILY_ENABLED = ${enabled};`);
   if (enabled) {
-    helpers = helpers.replace("const FAMILY_ENABLED = false;", "const FAMILY_ENABLED = true;")
-      .replace(
+    helpers = helpers.replace(
         "const FAMILY_LOCAL_ADAPTER = null;",
         "const FAMILY_LOCAL_ADAPTER = fixtureAdapter;",
       );
@@ -489,5 +490,37 @@ Deno.test("Quinn M2-A all 64 actual set starts retain their own reviewed identit
       assert(capture.saved, `Actual finalized set saves ${row.id}`);
     }
     assert((await h.records()).length === 8, "Six pop and both exam sets retained independently");
+  }
+});
+
+Deno.test("Luna activated all-eight guest reports retain PNG control and clear expired private state", async () => {
+  for (const module_key of new Set((await inventory()).map(row => row.module_key))) {
+    const h = await harness(module_key);
+    h.run(`
+      const FAMILY_HISTORY_ENABLED = true, FAMILY_REPORT_ENABLED = true;
+      let privateShows = 0, reportClears = 0, pngClicks = 0;
+      const familyReport = { clear(){ reportClears++; }, show(){ privateShows++; } };
+      const REQUIRED_MODULES = [], ACHIEVEMENTS = {}, SURVEY_QUESTIONS = [], LIKERT_LABELS = [];
+      function ensureFeedbackState(){ progress.feedback ||= {}; }
+      function getRank(){ return { icon:'', name:'Guest' }; }
+      function emailReport(){} function copyReport(){} function downloadReport(){}
+      function downloadScorecardImage(){ pngClicks++; }
+      loadProgress = () => ({ totalXP:0, examHistory:[{examNum:1,score:7,total:10,timeSec:60}], feedback:{} });
+      progress = loadProgress();
+    `);
+    h.run(h.getFunction("renderReportCardMain").split("// Re-render when report tab is opened")[0]);
+    h.storage.delete("grade6-family-child-v1");
+    h.run("renderReportCardMain()");
+    const wrap = h.nodes.get("reportCardWrapMain")!;
+    assert(wrap.innerHTML.includes('id="downloadScorecardImage"') && wrap.innerHTML.includes("7/10"), module_key + " renders guest scores and PNG button");
+    const download = h.nodes.get("downloadScorecardImage")!.events.get("click");
+    assert(download, module_key + " PNG button has an action"); download();
+    assert(h.run("pngClicks") === 1 && h.run("privateShows") === 0, module_key + " guest export reachable without private report call");
+    h.run("window.familyPrivateCaptureActive=true; progress={totalXP:0,examHistory:[{examNum:1,score:99,total:100,timeSec:1}],feedback:{}}; renderReportCardMain()");
+    assert(!wrap.innerHTML.includes("99/100") && wrap.innerHTML.includes("7/10"), module_key + " lost session reloads guest scores before rendering");
+    assert(h.run("window.familyPrivateCaptureActive") === false && h.run("reportClears") > 0, module_key + " clears private capture and report owner");
+    h.storage.set("grade6-family-child-v1", JSON.stringify(h.session));
+    h.run("renderReportCardMain()");
+    assert(h.run("privateShows") === 1, module_key + " valid family session retains private report route");
   }
 });

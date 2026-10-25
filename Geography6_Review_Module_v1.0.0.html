@@ -4650,7 +4650,7 @@ const ENCOURAGEMENTS = ["Yes! 🎯", "Bingo!", "Nailed it ⭐", "Crushing it �
 const TRY_AGAIN = ["So close — try again 💪", "Not quite — give it another shot 🌱", "Almost! Re-read and try once more 🌿", "No worries — pick another option 🍃", "Brain warm-up — try again 🧠", "It's okay — keep going 💚"];
 
 // FAMILY_M2_START
-const FAMILY_ENABLED = false;
+const FAMILY_ENABLED = true;
 const FAMILY_LOCAL_ADAPTER = null; // Dedicated local fixture server injects this; no public toggle.
 const FAMILY_CATALOG = [{"id":"Geography6_Review_Module_v1.0.0:pop:flashcards:r1","module_key":"Geography6_Review_Module_v1.0.0","subject":"geography","quarter":1,"kind":"pop","set_key":"flashcards","content_revision":1,"catalog_digest":"6aeae81de08de71734ccac3df19c9da4a585e4dc8ea8dd8a6b5c22fc478f294c","total":20,"grade_policy":"deped-descriptor-rounded-v1","label":"geography Q1 pop flashcards","retired":false,"source_pool_count":260},{"id":"Geography6_Review_Module_v1.0.0:pop:biomes:r1","module_key":"Geography6_Review_Module_v1.0.0","subject":"geography","quarter":1,"kind":"pop","set_key":"biomes","content_revision":1,"catalog_digest":"6aeae81de08de71734ccac3df19c9da4a585e4dc8ea8dd8a6b5c22fc478f294c","total":20,"grade_policy":"deped-descriptor-rounded-v1","label":"geography Q1 pop biomes","retired":false,"source_pool_count":260},{"id":"Geography6_Review_Module_v1.0.0:pop:diagrams:r1","module_key":"Geography6_Review_Module_v1.0.0","subject":"geography","quarter":1,"kind":"pop","set_key":"diagrams","content_revision":1,"catalog_digest":"6aeae81de08de71734ccac3df19c9da4a585e4dc8ea8dd8a6b5c22fc478f294c","total":20,"grade_policy":"deped-descriptor-rounded-v1","label":"geography Q1 pop diagrams","retired":false,"source_pool_count":260},{"id":"Geography6_Review_Module_v1.0.0:pop:tutor:r1","module_key":"Geography6_Review_Module_v1.0.0","subject":"geography","quarter":1,"kind":"pop","set_key":"tutor","content_revision":1,"catalog_digest":"6aeae81de08de71734ccac3df19c9da4a585e4dc8ea8dd8a6b5c22fc478f294c","total":20,"grade_policy":"deped-descriptor-rounded-v1","label":"geography Q1 pop tutor","retired":false,"source_pool_count":260},{"id":"Geography6_Review_Module_v1.0.0:pop:cheat:r1","module_key":"Geography6_Review_Module_v1.0.0","subject":"geography","quarter":1,"kind":"pop","set_key":"cheat","content_revision":1,"catalog_digest":"6aeae81de08de71734ccac3df19c9da4a585e4dc8ea8dd8a6b5c22fc478f294c","total":20,"grade_policy":"deped-descriptor-rounded-v1","label":"geography Q1 pop cheat","retired":false,"source_pool_count":260},{"id":"Geography6_Review_Module_v1.0.0:pop:practice:r1","module_key":"Geography6_Review_Module_v1.0.0","subject":"geography","quarter":1,"kind":"pop","set_key":"practice","content_revision":1,"catalog_digest":"6aeae81de08de71734ccac3df19c9da4a585e4dc8ea8dd8a6b5c22fc478f294c","total":20,"grade_policy":"deped-descriptor-rounded-v1","label":"geography Q1 pop practice","retired":false,"source_pool_count":260},{"id":"Geography6_Review_Module_v1.0.0:exam:exam-1:r1","module_key":"Geography6_Review_Module_v1.0.0","subject":"geography","quarter":1,"kind":"exam","set_key":"exam-1","content_revision":1,"catalog_digest":"55d417dbcd222fa4af4dda3b46cf32adf3ba0352d298f32084becd87f8daf632","total":70,"grade_policy":"deped-descriptor-rounded-v1","label":"geography Q1 exam exam-1","retired":false,"source_pool_count":140},{"id":"Geography6_Review_Module_v1.0.0:exam:exam-2:r1","module_key":"Geography6_Review_Module_v1.0.0","subject":"geography","quarter":1,"kind":"exam","set_key":"exam-2","content_revision":1,"catalog_digest":"55d417dbcd222fa4af4dda3b46cf32adf3ba0352d298f32084becd87f8daf632","total":70,"grade_policy":"deped-descriptor-rounded-v1","label":"geography Q1 exam exam-2","retired":false,"source_pool_count":140}];
 const FAMILY_SESSION_KEY = 'grade6-family-child-v1';
@@ -4855,11 +4855,7 @@ let familyReportQuarter = null;
 function familyRenderPrivateReport(wrap) {
   if (!FAMILY_HISTORY_ENABLED || !FAMILY_REPORT_ENABLED) return false;
   const session = familySession();
-  if (!session) {
-    wrap.replaceChildren(document.createTextNode('Unlock online to view your private report.'));
-    const link = document.createElement('a'); link.href = 'family.html#q'+(FAMILY_CATALOG[0]?.quarter || 2); link.textContent = 'Open family unlock'; wrap.appendChild(link);
-    return true;
-  }
+  if (!session) { familyClear(); return false; }
   const adapter = FAMILY_LOCAL_ADAPTER || FAMILY_PRODUCTION_ADAPTER;
   familyReport.show(wrap,{role:'child',session,child:session.child,quarter:familyReportQuarter || FAMILY_CATALOG[0].quarter,origin:FAMILY_CATALOG[0].module_key,catalog:adapter.catalog,catalogDigest:adapter.catalogDigest,adapter,isCurrent:()=>familySession()?.token === session.token,onQuarter:quarter=>{familyReportQuarter=quarter;},onLock:familyInvalidate,onAuthorized:()=>{
     document.getElementById('welcomeOverlay')?.classList.add('hidden');
@@ -4962,7 +4958,14 @@ const FAMILY_PRODUCTION_ADAPTER = (() => {
   async function flush(session,guard) {
     if(flushing || document.hidden || navigator.onLine===false || !guard.current())return;
     flushing=true;
-    const database=()=>new Promise((resolve,reject)=>{const open=indexedDB.open('grade6-family-v1',3);open.onerror=open.onblocked=()=>reject(new Error('Private storage unavailable.'));open.onsuccess=()=>{open.result.onversionchange=()=>open.result.close();resolve(open.result);};});
+    const database=()=>new Promise((resolve,reject)=>{
+      const open=indexedDB.open('grade6-family-v1',3);
+      let blocked=false;
+      open.onupgradeneeded=()=>{for(const store of ['credentials','records','outbox','metadata','reports'])if(!open.result.objectStoreNames.contains(store))open.result.createObjectStore(store);};
+      open.onerror=()=>reject(new Error('Private storage unavailable.'));
+      open.onblocked=()=>{blocked=true;reject(new Error('Close older family tabs and reload.'));};
+      open.onsuccess=()=>{if(blocked){open.result.close();return;}open.result.onversionchange=()=>open.result.close();resolve(open.result);};
+    });
     const epoch=session.access_epoch;
     try {
       await bootstrap(session,'child',session.child);
@@ -5008,8 +5011,8 @@ const FAMILY_PRODUCTION_ADAPTER = (() => {
 })();
 // FAMILY_TRANSPORT_END
 // FAMILY_REPORT_START
-const FAMILY_HISTORY_ENABLED = false;
-const FAMILY_REPORT_ENABLED = false;
+const FAMILY_HISTORY_ENABLED = true;
+const FAMILY_REPORT_ENABLED = true;
 const FAMILY_JPEG_ENABLED = false;
 const familyReport = (() => {
   const canonicalJson = value => Array.isArray(value) ? '[' + value.map(canonicalJson).join(',') + ']' : value && typeof value === 'object' ? '{' + Object.keys(value).sort().map(key => JSON.stringify(key) + ':' + canonicalJson(value[key])).join(',') + '}' : JSON.stringify(value);
@@ -5304,7 +5307,7 @@ async function academicDigest(projection) {
       });
       card.append(history,detail); host.append(card);
     }
-    const jpeg = node('button','Prepare JPEG report card'); jpeg.disabled = true; host.append(jpeg,node('p','JPEG preparation is not available in this local statistics slice.'));
+    const jpeg = node('button','Prepare JPEG report card'); jpeg.disabled = true; host.append(jpeg,node('p','JPEG sharing is not available yet.'));
     const status = node('p',state.notice || 'Report loaded.'); status.setAttribute('role','status'); host.append(status);
   }
   async function load(state, refresh = false) {

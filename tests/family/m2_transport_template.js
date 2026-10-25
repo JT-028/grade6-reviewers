@@ -50,7 +50,14 @@ const FAMILY_PRODUCTION_ADAPTER = (() => {
   async function flush(session,guard) {
     if(flushing || document.hidden || navigator.onLine===false || !guard.current())return;
     flushing=true;
-    const database=()=>new Promise((resolve,reject)=>{const open=indexedDB.open('grade6-family-v1',3);open.onerror=open.onblocked=()=>reject(new Error('Private storage unavailable.'));open.onsuccess=()=>{open.result.onversionchange=()=>open.result.close();resolve(open.result);};});
+    const database=()=>new Promise((resolve,reject)=>{
+      const open=indexedDB.open('grade6-family-v1',3);
+      let blocked=false;
+      open.onupgradeneeded=()=>{for(const store of ['credentials','records','outbox','metadata','reports'])if(!open.result.objectStoreNames.contains(store))open.result.createObjectStore(store);};
+      open.onerror=()=>reject(new Error('Private storage unavailable.'));
+      open.onblocked=()=>{blocked=true;reject(new Error('Close older family tabs and reload.'));};
+      open.onsuccess=()=>{if(blocked){open.result.close();return;}open.result.onversionchange=()=>open.result.close();resolve(open.result);};
+    });
     const epoch=session.access_epoch;
     try {
       await bootstrap(session,'child',session.child);
