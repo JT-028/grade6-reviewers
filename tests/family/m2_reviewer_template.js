@@ -52,10 +52,10 @@ function familyStatus(message, retryCapture) {
 }
 function familyDatabase() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('grade6-family-v1', 2);
+    const request = indexedDB.open('grade6-family-v1', 3);
     request.onupgradeneeded = () => {
       const db = request.result;
-      for (const store of ['credentials', 'records', 'outbox', 'metadata']) if (!db.objectStoreNames.contains(store)) db.createObjectStore(store);
+      for (const store of ['credentials', 'records', 'outbox', 'metadata', 'reports']) if (!db.objectStoreNames.contains(store)) db.createObjectStore(store);
     };
     request.onblocked = () => reject(new Error('Close older family tabs and reload to save.'));
     request.onerror = () => reject(new Error('Browser storage is unavailable.'));
@@ -85,6 +85,7 @@ async function familyCheckEpoch() {
   if (epoch === undefined || session.access_epoch !== epoch || [...familyCaptures].some(capture => capture.epoch !== undefined && capture.epoch !== epoch)) familyInvalidate();
 }
 function familyClear() {
+  if (typeof familyReport !== 'undefined') familyReport.clear();
   familyAccessGeneration++;
   for (const capture of familyCaptures) { capture.session = null; capture.frozen = null; }
   familyCaptures.clear();
@@ -196,5 +197,35 @@ async function familyPersist(capture) {
   } catch {
     if (familyCurrent(capture)) { familyStatus('Not saved — local storage or access check failed.', capture); }
   } finally { capture.saving = false; }
+}
+let familyReportQuarter = null;
+function familyRenderPrivateReport(wrap) {
+  if (!FAMILY_HISTORY_ENABLED || !FAMILY_REPORT_ENABLED || !FAMILY_LOCAL_ADAPTER) return false;
+  const session = familySession();
+  if (!session) {
+    wrap.replaceChildren(document.createTextNode('Unlock online to view your private report.'));
+    const link = document.createElement('a'); link.href = 'family.html#q'+(FAMILY_CATALOG[0]?.quarter || 2); link.textContent = 'Open family unlock'; wrap.appendChild(link);
+    return true;
+  }
+  familyReport.show(wrap,{role:'child',session,child:session.child,quarter:familyReportQuarter || FAMILY_CATALOG[0].quarter,origin:FAMILY_CATALOG[0].module_key,catalog:FAMILY_LOCAL_ADAPTER.catalog,catalogDigest:FAMILY_LOCAL_ADAPTER.catalogDigest,adapter:FAMILY_LOCAL_ADAPTER,isCurrent:()=>familySession()?.token === session.token,onQuarter:quarter=>{familyReportQuarter=quarter;},onLock:familyInvalidate,onAuthorized:()=>{
+    document.getElementById('welcomeOverlay')?.classList.add('hidden');
+    const label = document.getElementById('reportTabBtn'); if(label) label.textContent = '📋 '+session.child.display_name+"'s Report Card";
+  }});
+  return true;
+}
+if (FAMILY_LOCAL_ADAPTER) {
+  let reportActivityAt = Date.now();
+  for (const type of ['pointerdown','keydown','scroll','touchstart']) document.addEventListener(type,event=>{if(event.isTrusted)reportActivityAt=Date.now();},{passive:true});
+  if (typeof setInterval === 'function') setInterval(()=>{const stored=familySession();if(stored && Date.now()-reportActivityAt >= 15*60000)familyInvalidate();else if(!stored)familyInvalidate();},10000);
+  const reopen = () => {
+    if (!FAMILY_HISTORY_ENABLED || !FAMILY_REPORT_ENABLED) return;
+    familyReport.clear('Private report hidden. Checking online access…');
+    if (!document.hidden && document.querySelector('.tab-btn[data-tab="report"]')?.classList.contains('active')) renderReportCardMain();
+  };
+  window.addEventListener('focus',reopen);
+  document.addEventListener('visibilitychange',reopen);
+  window.addEventListener('online',reopen);
+  window.addEventListener('offline',()=>familyReport.offline());
+  window.addEventListener('load',()=>{if(typeof FAMILY_REPORT_ENABLED !== 'undefined' && FAMILY_HISTORY_ENABLED && FAMILY_REPORT_ENABLED && location.hash === '#report'){document.getElementById('welcomeOverlay')?.classList.add('hidden');document.getElementById('reportTabBtn')?.click();renderReportCardMain();}});
 }
 // FAMILY_M2_END

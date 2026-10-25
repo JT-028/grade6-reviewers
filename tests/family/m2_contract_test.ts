@@ -22,6 +22,27 @@ async function rejects(run: () => unknown, code: string) {
 }
 const id = (group: number, value: number) =>
   `${group}0000000-0000-4000-8000-${String(value).padStart(12, "0")}`;
+
+Deno.test("M2-B fixed-revision fixture paging, late arrivals, cursor filters and summary scope",async()=>{
+  const f=await fixture(), first=f.make(undefined,1), third=f.make(undefined,3), second=f.make(undefined,2);
+  third.attempt.completed_at="2026-10-24T02:30:00.000Z";third.attempt.first_correct=8;
+  second.attempt.completed_at="2026-10-24T02:00:00.000Z";second.attempt.first_correct=7;
+  await f.write(first);await f.write(third);
+  const page=await f.read("A",{quarter:1,limit:1});
+  assert(page.revision==="2" && (page.items as any[])[0].id===third.attempt.id && page.next_cursor,"first page newest completed");
+  await f.write(second);
+  const old=await f.read("A",{quarter:1,limit:1,cursor:page.next_cursor});
+  assert(old.revision==="2" && (old.items as any[])[0].id===first.attempt.id,"old cursor excludes later accepted middle completion");
+  const progress=await f.repository.dispatch("child_progress",{token_hash:"A"},{quarter:1}) as any;
+  assert(progress.revision==="3" && progress.subjects[0].pop.latest.id===third.attempt.id && progress.subjects[0].pop.prior.id===second.attempt.id,"full scope summary uses chronology at new revision");
+  await rejects(()=>f.read("A",{quarter:2,cursor:page.next_cursor}),"INVALID_CURSOR");
+  await rejects(()=>f.read("B",{quarter:1,cursor:page.next_cursor}),"INVALID_CURSOR");
+  await rejects(()=>f.read("A",{quarter:1,limit:1.5}),"INVALID_FILTER");
+  await rejects(()=>f.read("A",{quarter:1,cursor:"tampered"}),"INVALID_CURSOR");
+  const empty=await f.repository.dispatch("parent_progress",{owner_id:"parentF"},{child_id:id(2,2),quarter:2}) as any;
+  assert(empty.quarter===2 && empty.subjects.every((subject:any)=>subject.pop.state==="empty" && subject.exam.state==="empty"),"selected child empty quarter stays selected");
+  await rejects(()=>f.repository.dispatch("parent_progress",{owner_id:"parentF"},{child_id:id(2,3),quarter:2}),"PROFILE_NOT_FOUND");
+});
 const F = id(1, 1),
   G = id(1, 2),
   A = id(2, 1),
@@ -158,7 +179,7 @@ Deno.test("M2-A baseline, correction, distinct retakes, permanent duplicate and 
     (await f.write(first)).status === "duplicate",
     "Fresh authorized session and receipt preserve permanent identity",
   );
-  const items = (await f.read()).items as any[];
+  const items = ((await f.read()).items as any[]).sort((a,b)=>a.id < b.id ? -1 : 1);
   assert(
     items.length === 2 && items[0].first_correct === 6 && items[0].percentage === 60 &&
       items[0].grade.letter === "DNME" && items[0].correction.final_correct === 10 &&
@@ -167,7 +188,7 @@ Deno.test("M2-A baseline, correction, distinct retakes, permanent duplicate and 
   );
   items[0].first_correct = 10;
   assert(
-    ((await f.read()).items as any[])[0].first_correct === 6,
+    ((await f.read()).items as any[]).find(item=>item.id===first.attempt.id).first_correct === 6,
     "Returned DTO cannot mutate stored baseline",
   );
 });

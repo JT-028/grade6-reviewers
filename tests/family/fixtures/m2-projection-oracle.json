@@ -1,0 +1,188 @@
+{
+  "note": "Independent manually specified expected projection. Numeric fields are fixed; no reducer generated this oracle.",
+  "projection": {
+    "version": 1,
+    "child": {
+      "id": "20000000-0000-4000-8000-000000000001",
+      "display_name": "Synthetic A"
+    },
+    "quarter": 2,
+    "subjects": [
+      {
+        "subject": "history",
+        "pop": {
+          "availability": "ready",
+          "latest": null,
+          "prior": null,
+          "state": "empty",
+          "percentage_points": null,
+          "relative_percent": null,
+          "relative_unavailable_reason": "no_prior",
+          "message": "No results recorded.",
+          "chronology_count": 0,
+          "chronology_example": null
+        },
+        "exam": {
+          "availability": "ready",
+          "latest": null,
+          "prior": null,
+          "state": "empty",
+          "percentage_points": null,
+          "relative_percent": null,
+          "relative_unavailable_reason": "no_prior",
+          "message": "No results recorded.",
+          "chronology_count": 0,
+          "chronology_example": null
+        }
+      },
+      {
+        "subject": "math",
+        "pop": {
+          "availability": "ready",
+          "latest": {
+            "id": "60000000-0000-4000-8000-000000000003",
+            "child_id": "20000000-0000-4000-8000-000000000001",
+            "assessment": {
+              "id": "Math6_Q2_Review_Module_v1.0.0:pop:flashcards:r1",
+              "module_key": "Math6_Q2_Review_Module_v1.0.0",
+              "subject": "math",
+              "quarter": 2,
+              "kind": "pop",
+              "set_key": "flashcards",
+              "content_revision": 1,
+              "label": "Synthetic assessment",
+              "retired": false,
+              "grade_policy": "deped-descriptor-rounded-v1"
+            },
+            "first_correct": 8,
+            "total": 10,
+            "answered_count": 10,
+            "completed_at": "2026-10-24T03:00:00.000Z",
+            "time_quality": "anchored",
+            "administered_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "received_at": "2026-10-24T04:00:00.000Z",
+            "percentage": 80,
+            "grade": {
+              "rounded_pct": 80,
+              "letter": "S",
+              "name": "Satisfactory"
+            },
+            "correction": null
+          },
+          "prior": {
+            "id": "60000000-0000-4000-8000-000000000001",
+            "child_id": "20000000-0000-4000-8000-000000000001",
+            "assessment": {
+              "id": "Math6_Q2_Review_Module_v1.0.0:pop:flashcards:r1",
+              "module_key": "Math6_Q2_Review_Module_v1.0.0",
+              "subject": "math",
+              "quarter": 2,
+              "kind": "pop",
+              "set_key": "flashcards",
+              "content_revision": 1,
+              "label": "Synthetic assessment",
+              "retired": false,
+              "grade_policy": "deped-descriptor-rounded-v1"
+            },
+            "first_correct": 6,
+            "total": 10,
+            "answered_count": 10,
+            "completed_at": "2026-10-24T01:00:00.000Z",
+            "time_quality": "anchored",
+            "administered_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "received_at": "2026-10-24T04:00:00.000Z",
+            "percentage": 60,
+            "grade": {
+              "rounded_pct": 60,
+              "letter": "DNME",
+              "name": "Did Not Meet Expectations"
+            },
+            "correction": null
+          },
+          "state": "improved",
+          "percentage_points": 20,
+          "relative_percent": 33.3,
+          "relative_unavailable_reason": null,
+          "message": "Same assessment version; questions may vary.",
+          "chronology_count": 0,
+          "chronology_example": null
+        },
+        "exam": {
+          "availability": "ready",
+          "latest": null,
+          "prior": null,
+          "state": "empty",
+          "percentage_points": null,
+          "relative_percent": null,
+          "relative_unavailable_reason": "no_prior",
+          "message": "No results recorded.",
+          "chronology_count": 0,
+          "chronology_example": null
+        }
+      },
+      {
+        "subject": "geography",
+        "pop": {
+          "availability": "ready",
+          "latest": null,
+          "prior": null,
+          "state": "empty",
+          "percentage_points": null,
+          "relative_percent": null,
+          "relative_unavailable_reason": "no_prior",
+          "message": "No results recorded.",
+          "chronology_count": 0,
+          "chronology_example": null
+        },
+        "exam": {
+          "availability": "ready",
+          "latest": null,
+          "prior": null,
+          "state": "empty",
+          "percentage_points": null,
+          "relative_percent": null,
+          "relative_unavailable_reason": "no_prior",
+          "message": "No results recorded.",
+          "chronology_count": 0,
+          "chronology_example": null
+        }
+      },
+      {
+        "subject": "language",
+        "pop": {
+          "availability": "ready",
+          "latest": null,
+          "prior": null,
+          "state": "empty",
+          "percentage_points": null,
+          "relative_percent": null,
+          "relative_unavailable_reason": "no_prior",
+          "message": "No results recorded.",
+          "chronology_count": 0,
+          "chronology_example": null
+        },
+        "exam": {
+          "availability": "ready",
+          "latest": null,
+          "prior": null,
+          "state": "empty",
+          "percentage_points": null,
+          "relative_percent": null,
+          "relative_unavailable_reason": "no_prior",
+          "message": "No results recorded.",
+          "chronology_count": 0,
+          "chronology_example": null
+        }
+      }
+    ],
+    "revision": "2",
+    "catalog_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "as_of": "2026-10-24T04:00:00.000Z",
+    "last_confirmed_at": "2026-10-24T04:00:00.000Z",
+    "provenance": "local_fixture",
+    "pending_count": 0,
+    "completeness": "complete",
+    "stale": false,
+    "timezone": "Asia/Manila"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "fixture_version": 1,
+  "cases": [
+    {"prior":[6,10],"latest":[8,10],"percentage":80,"pp":20,"relative":33.3,"state":"improved","grade":"S"},
+    {"prior":[42,70],"latest":[53,70],"percentage":75.71,"pp":15.71,"relative":26.2,"state":"improved","grade":"FS"},
+    {"prior":[60,100],"latest":[75,100],"percentage":75,"pp":15,"relative":25,"state":"improved","grade":"FS"},
+    {"prior":[75,100],"latest":[60,100],"percentage":60,"pp":-15,"relative":-20,"state":"declined","grade":"DNME"},
+    {"prior":[0,10],"latest":[0,10],"percentage":0,"pp":0,"relative":null,"state":"unchanged","grade":"DNME"},
+    {"prior":[0,10],"latest":[1,10],"percentage":10,"pp":10,"relative":null,"state":"improved","grade":"DNME"},
+    {"prior":[1,10],"latest":[0,10],"percentage":0,"pp":-10,"relative":-100,"state":"declined","grade":"DNME"},
+    {"prior":[61,100],"latest":[62,100],"percentage":62,"pp":1,"relative":1.6,"state":"improved","grade":"DNME"}
+  ],
+  "chronology":{"accepted":["t1","t3","t2"],"completion_order":["t1","t2","t3"],"latest":"t3","prior":"t2","old_cursor_excludes":"t2"},
+  "scope":{"subjects":["history","math","geography","language"],"quarter":2,"cards":8,"provenance":"local_fixture"}
+}

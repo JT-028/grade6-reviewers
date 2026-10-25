@@ -14,6 +14,9 @@ export interface Assessment {
   label: string;
   retired: boolean;
 }
+export function catalogEntries(rows: readonly Assessment[]): Assessment[] {
+  return rows.map(({id,module_key,subject,quarter,kind,set_key,content_revision,catalog_digest,total,grade_policy,label,retired}) => ({id,module_key,subject,quarter,kind,set_key,content_revision,catalog_digest,total,grade_policy,label,retired})).sort((a,b)=>a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+}
 export interface SourceSession {
   id: string;
   child_id: string;
@@ -225,7 +228,7 @@ export function resultDTO(
     time_quality: attempt.time_quality,
     administered_fingerprint: attempt.administered_fingerprint,
     received_at,
-    percentage: Number((100 * attempt.first_correct / attempt.total).toFixed(2)),
+    percentage: Math.floor((10000 * attempt.first_correct * 2 + attempt.total) / (2 * attempt.total)) / 100,
     grade: resultGrade(attempt.first_correct, attempt.total),
     correction: envelope.correction ? { ...envelope.correction, total: attempt.total } : null,
   };

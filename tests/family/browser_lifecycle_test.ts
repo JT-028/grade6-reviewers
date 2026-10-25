@@ -54,7 +54,8 @@ async function browser(
     setInterval() {},
     setTimeout() {},
     clearTimeout() {},
-    window: {},
+    window: { addEventListener() {} },
+    location: { hash: "#q2" },
     sessionStorage: {
       getItem: (key: string) => storage.get(key) ?? null,
       setItem: (key: string, value: string) => storage.set(key, value),
