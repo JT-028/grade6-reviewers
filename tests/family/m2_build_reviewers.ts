@@ -8,6 +8,7 @@ function change(old: string, replacement: string) {
     replacement.split("\n").map((line) => "+" + line).join("\n") + "\n";
 }
 for (const module_key of new Set(rows.map((row) => row.module_key))) {
+  if(Deno.args[0] && Deno.args[0]!==module_key+'.html')continue;
   const source = (await Deno.readTextFile(new URL(`../../${module_key}.html`, import.meta.url)))
     .replace(/\r/g, "");
   patch += `*** Update File: ${module_key}.html\n`;

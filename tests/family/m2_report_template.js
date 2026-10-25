@@ -173,6 +173,7 @@ const familyReport = (() => {
     try {
       const access = await state.adapter.bootstrap(state.session,state.role,state.child,state.controller.signal);
       if (!current(state) || sequence !== state.sequence) return;
+      if (!state.catalog) state.catalog = state.adapter.catalog;
       if (!access.capabilities?.includes('assessment_history_v1') || !access.capabilities?.includes('progress_summary_v1') || access.contract_version !== 1 || access.child.id !== state.child.id || access.catalog_digest !== state.catalogDigest) throw new Error('Family history is not available.');
       const bootstrapEpoch=await epoch();
       if(!current(state) || sequence !== state.sequence)return;

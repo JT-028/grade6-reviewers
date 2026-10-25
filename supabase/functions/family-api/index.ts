@@ -9,6 +9,7 @@ import {
   sha256,
 } from "./crypto.ts";
 import { ApiError, fields, HEX_256, ids, jsonBody, pin, text, uuid } from "./validation.ts";
+import { m2Compatible, m2Dispatch, m2Filters, M2_CAPABILITIES } from "./m2-bridge.ts";
 
 const ALLOWED_ORIGINS = new Set(["https://jt-028.github.io", "http://127.0.0.1:8766"]);
 const BASE_PATH = "/family-api/v1";
@@ -33,8 +34,15 @@ function route(method: string, path: string): Route {
     "POST /child/unlock": { operation: "unlock_finish", auth: "device" },
     "POST /child/lock": { operation: "child_lock", auth: "child" },
     "GET /child/bootstrap": { operation: "child_bootstrap", auth: "child" },
+    "GET /child/catalog": { operation: "child_catalog", auth: "child" },
+    "GET /parent/catalog": { operation: "parent_catalog", auth: "parent" },
+    "POST /child/attempts": { operation: "child_attempt_record", auth: "child" },
+    "GET /child/progress": { operation: "child_progress", auth: "child" },
+    "GET /child/attempts": { operation: "child_attempts", auth: "child" },
   };
   if (direct[`${method} ${path}`]) return direct[`${method} ${path}`];
+  const report = /^\/parent\/children\/([^/]+)\/(progress|attempts)$/.exec(path);
+  if (method === "GET" && report) return {operation:"parent_"+report[2],auth:"parent",id:uuid(report[1])};
   let match = /^\/pair-requests\/([^/]+)\/claim$/.exec(path);
   if (method === "POST" && match) {
     return { operation: "pair_claim", auth: "poll", id: uuid(match[1]) };
@@ -91,12 +99,14 @@ export function createHandler(repository: FamilyRepository, config: FamilyConfig
       }
       const url = new URL(request.url);
       const marker = url.pathname.indexOf(BASE_PATH);
-      if (marker < 0 || url.search) {
+      if (marker < 0) {
         throw new ApiError(404, "NOT_FOUND", "This endpoint is not available.");
       }
       const endpoint = route(request.method, url.pathname.slice(marker + BASE_PATH.length));
+      const filtered = ["child_progress","parent_progress","child_attempts","parent_attempts"].includes(endpoint.operation);
+      if (url.search && !filtered) throw new ApiError(404,"NOT_FOUND","This endpoint is not available.");
       if (endpoint.operation === "health") {
-        return respond({ status: "ok", min_client_version: 1, capabilities: ["family_access"] });
+        return respond({ status: "ok", min_client_version: 1, capabilities: await m2Compatible(repository) ? M2_CAPABILITIES : ["family_access"] });
       }
       if (!/^[a-f0-9]{64,}$/i.test(config.pinPepper) || !HEX_256.test(config.claimKey)) {
         throw new ApiError(503, "SERVER_CONFIGURATION", "Family access is not configured yet.");
@@ -116,6 +126,11 @@ export function createHandler(repository: FamilyRepository, config: FamilyConfig
       } else if (endpoint.auth === "device" || endpoint.auth === "child") {
         context.token_hash = await sha256(bearer(request, true));
       } else if (endpoint.auth === "poll") context.poll_hash = await sha256(bearer(request, true));
+      if (filtered || endpoint.operation.endsWith("_catalog") || endpoint.operation==="child_attempt_record") {
+        const input = filtered ? {...m2Filters(url.search,endpoint.operation.endsWith("_attempts")),...(endpoint.id?{child_id:endpoint.id}:{})} : body;
+        const result = await m2Dispatch(repository,endpoint.operation,context,input,config.pinPepper);
+        return respond(result,endpoint.operation==="child_attempt_record" && result.status==="accepted"?201:200);
+      }
       let payload: Record<string, unknown> = {};
       if (endpoint.operation === "pair_create") {
         fields(body, ["request_id", "poll_hash", "device_label"], [

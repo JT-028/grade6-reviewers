@@ -19,6 +19,10 @@ export async function sha256(value: string): Promise<string> {
 }
 
 export async function mutationDigest(value: string, secret: string): Promise<string> {
+  return await hmacSha256(`family-mutation-v1:${value}`, secret);
+}
+
+export async function hmacSha256(value: string, secret: string): Promise<string> {
   const key = await crypto.subtle.importKey(
     "raw",
     fromHex(secret),
@@ -31,7 +35,7 @@ export async function mutationDigest(value: string, secret: string): Promise<str
       await crypto.subtle.sign(
         "HMAC",
         key,
-        encoder.encode(`family-mutation-v1:${value}`),
+        encoder.encode(value),
       ),
     ),
   );

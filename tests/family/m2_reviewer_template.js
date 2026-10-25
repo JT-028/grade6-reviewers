@@ -33,7 +33,7 @@ function familyCurrent(capture) {
   return !!capture && capture.generation === familyAccessGeneration && capture.session && current && current.token === capture.session.token && current.child.id === capture.session.child.id && current.child_session_id === capture.session.child_session_id;
 }
 function familyStatus(message, retryCapture) {
-  if (!FAMILY_ENABLED || !FAMILY_LOCAL_ADAPTER) return;
+  if (!FAMILY_ENABLED || (!FAMILY_LOCAL_ADAPTER && !FAMILY_HISTORY_ENABLED)) return;
   let node = document.getElementById('familyCaptureStatus');
   if (!node) {
     node = document.createElement('aside');
@@ -76,7 +76,7 @@ async function familyEpoch() {
   });
 }
 async function familyCheckEpoch() {
-  if (!FAMILY_ENABLED || !FAMILY_LOCAL_ADAPTER) return;
+  if (!FAMILY_ENABLED || (!FAMILY_LOCAL_ADAPTER && !FAMILY_HISTORY_ENABLED)) return;
   const session = familySession(), generation = familyAccessGeneration;
   if (!session) { familyInvalidate(); return; }
   let epoch;
@@ -85,6 +85,7 @@ async function familyCheckEpoch() {
   if (epoch === undefined || session.access_epoch !== epoch || [...familyCaptures].some(capture => capture.epoch !== undefined && capture.epoch !== epoch)) familyInvalidate();
 }
 function familyClear() {
+  if (!FAMILY_LOCAL_ADAPTER && typeof FAMILY_PRODUCTION_ADAPTER !== 'undefined') FAMILY_PRODUCTION_ADAPTER.invalidate();
   if (typeof familyReport !== 'undefined') familyReport.clear();
   familyAccessGeneration++;
   for (const capture of familyCaptures) { capture.session = null; capture.frozen = null; }
@@ -112,7 +113,7 @@ window.addEventListener('focus', familyCheckEpoch);
 window.addEventListener('pagehide', familyClear);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) familyCheckEpoch(); });
 function familyBegin(kind, setKey, questions) {
-  if (!FAMILY_ENABLED || !FAMILY_LOCAL_ADAPTER || !questions.length) return null;
+  if (!FAMILY_ENABLED || (!FAMILY_LOCAL_ADAPTER && !FAMILY_HISTORY_ENABLED) || !questions.length) return null;
   const session = familySession();
   const assessment = FAMILY_CATALOG.find(row => row.kind === kind && row.set_key === setKey);
   if (!session || !assessment || questions.length !== assessment.total) return null;
@@ -123,7 +124,7 @@ function familyBegin(kind, setKey, questions) {
     capture.epoch = await familyEpoch();
     if (!familyCurrent(capture)) throw new Error('Access changed.');
     if (session.access_epoch !== capture.epoch) { familyInvalidate(); throw new Error('Access changed.'); }
-    const verified = await FAMILY_LOCAL_ADAPTER.authorize(session, assessment);
+    const verified = await (FAMILY_LOCAL_ADAPTER || FAMILY_PRODUCTION_ADAPTER).authorize(session, assessment);
     if (!familyCurrent(capture) || capture.session.access_epoch !== capture.epoch || verified.catalog_version !== 1 || verified.catalog_digest !== assessment.catalog_digest) throw new Error('Access or assessment version changed.');
     capture.fingerprint = await familyHash(semanticSample);
     capture.clock = verified.clock || null;
@@ -193,27 +194,29 @@ async function familyPersist(capture) {
     });
     if (!familyCurrent(capture)) return;
     capture.saved = true;
-    familyStatus('Saved on this device — not synced. Local demonstration.');
+    familyStatus(FAMILY_LOCAL_ADAPTER ? 'Saved on this device — not synced. Local demonstration.' : 'Saved on this device — not synced.');
+    if (!FAMILY_LOCAL_ADAPTER) familyFlush();
   } catch {
     if (familyCurrent(capture)) { familyStatus('Not saved — local storage or access check failed.', capture); }
   } finally { capture.saving = false; }
 }
 let familyReportQuarter = null;
 function familyRenderPrivateReport(wrap) {
-  if (!FAMILY_HISTORY_ENABLED || !FAMILY_REPORT_ENABLED || !FAMILY_LOCAL_ADAPTER) return false;
+  if (!FAMILY_HISTORY_ENABLED || !FAMILY_REPORT_ENABLED) return false;
   const session = familySession();
   if (!session) {
     wrap.replaceChildren(document.createTextNode('Unlock online to view your private report.'));
     const link = document.createElement('a'); link.href = 'family.html#q'+(FAMILY_CATALOG[0]?.quarter || 2); link.textContent = 'Open family unlock'; wrap.appendChild(link);
     return true;
   }
-  familyReport.show(wrap,{role:'child',session,child:session.child,quarter:familyReportQuarter || FAMILY_CATALOG[0].quarter,origin:FAMILY_CATALOG[0].module_key,catalog:FAMILY_LOCAL_ADAPTER.catalog,catalogDigest:FAMILY_LOCAL_ADAPTER.catalogDigest,adapter:FAMILY_LOCAL_ADAPTER,isCurrent:()=>familySession()?.token === session.token,onQuarter:quarter=>{familyReportQuarter=quarter;},onLock:familyInvalidate,onAuthorized:()=>{
+  const adapter = FAMILY_LOCAL_ADAPTER || FAMILY_PRODUCTION_ADAPTER;
+  familyReport.show(wrap,{role:'child',session,child:session.child,quarter:familyReportQuarter || FAMILY_CATALOG[0].quarter,origin:FAMILY_CATALOG[0].module_key,catalog:adapter.catalog,catalogDigest:adapter.catalogDigest,adapter,isCurrent:()=>familySession()?.token === session.token,onQuarter:quarter=>{familyReportQuarter=quarter;},onLock:familyInvalidate,onAuthorized:()=>{
     document.getElementById('welcomeOverlay')?.classList.add('hidden');
     const label = document.getElementById('reportTabBtn'); if(label) label.textContent = '📋 '+session.child.display_name+"'s Report Card";
   }});
   return true;
 }
-if (FAMILY_LOCAL_ADAPTER) {
+if (FAMILY_LOCAL_ADAPTER || FAMILY_ENABLED) {
   let reportActivityAt = Date.now();
   for (const type of ['pointerdown','keydown','scroll','touchstart']) document.addEventListener(type,event=>{if(event.isTrusted)reportActivityAt=Date.now();},{passive:true});
   if (typeof setInterval === 'function') setInterval(()=>{const stored=familySession();if(stored && Date.now()-reportActivityAt >= 15*60000)familyInvalidate();else if(!stored)familyInvalidate();},10000);
@@ -227,5 +230,32 @@ if (FAMILY_LOCAL_ADAPTER) {
   window.addEventListener('online',reopen);
   window.addEventListener('offline',()=>familyReport.offline());
   window.addEventListener('load',()=>{if(typeof FAMILY_REPORT_ENABLED !== 'undefined' && FAMILY_HISTORY_ENABLED && FAMILY_REPORT_ENABLED && location.hash === '#report'){document.getElementById('welcomeOverlay')?.classList.add('hidden');document.getElementById('reportTabBtn')?.click();renderReportCardMain();}});
+}
+let familyFlushing = false, familyFlushRetry = null, familyFlushFailures = 0;
+function familySyncNotice(message, retry = true) {
+  familyStatus(message);
+  const host=document.getElementById('familyCaptureStatus');
+  if(retry && host){const button=document.createElement('button');button.textContent='Sync remaining';button.addEventListener('click',()=>familyFlush());host.appendChild(button);}
+}
+async function familyFlush() {
+  if(FAMILY_LOCAL_ADAPTER || !FAMILY_ENABLED || typeof FAMILY_HISTORY_ENABLED==='undefined' || !FAMILY_HISTORY_ENABLED || familyFlushing || document.hidden || navigator.onLine===false)return;
+  const session=familySession(),generation=familyAccessGeneration;
+  if(!session)return;
+  familyFlushing=true;clearTimeout(familyFlushRetry);
+  const current=()=>generation===familyAccessGeneration && familySession()?.token===session.token && Date.parse(session.expires_at)>Date.now();
+  try {
+    await FAMILY_PRODUCTION_ADAPTER.flush(session,{current,lock:familyInvalidate,status:(message,retry,error)=>{
+      if(!current())return;
+      familySyncNotice(message,retry);
+      if(error?.retryable && !document.hidden){const seconds=Math.min(30,2**Math.min(familyFlushFailures++,5));familyFlushRetry=setTimeout(()=>{if(current() && !document.hidden)familyFlush();},(seconds+Math.random()*0.25)*1000);}
+      else if(!error){familyFlushFailures=0;if(message.startsWith('Pending results synced') && document.querySelector('.tab-btn[data-tab="report"]')?.classList.contains('active'))renderReportCardMain();}
+    }});
+  } finally {familyFlushing=false;}
+}
+if(!FAMILY_LOCAL_ADAPTER){
+  window.addEventListener('load',familyFlush);
+  window.addEventListener('online',familyFlush);
+  window.addEventListener('focus',familyFlush);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)familyFlush();});
 }
 // FAMILY_M2_END
